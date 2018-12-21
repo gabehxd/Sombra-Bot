@@ -23,8 +23,11 @@ namespace Sombra_Bot.Commands
                 case 2:
                     await Context.Guild.AddBanAsync(user, reason: reason);
                     await Context.Channel.TriggerTypingAsync();
-                    await Task.Delay(800);
+                    await Task.Delay(500);
                     await Context.Channel.SendMessageAsync(Getmessage());
+                    await Context.Channel.TriggerTypingAsync();
+                    await Task.Delay(500);
+                    await Context.Channel.SendMessageAsync($"{user} Hacked!");
                     break;
             }
         }
@@ -37,9 +40,8 @@ namespace Sombra_Bot.Commands
                     return("Initiating the hack.");
                 case 2:
                     return("Iniciando el hackeo.");
-                default:
-                    return("");
             }
+            return("");
         }
     }
 }

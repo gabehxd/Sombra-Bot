@@ -54,11 +54,10 @@ namespace Sombra_Bot
             if (Context.User.IsBot) return;
             int ArgPos = 0;
 
-
             if (!Message.HasStringPrefix("s.", ref ArgPos))
             {
                 Random rng = new Random();
-                if (Shoulditbelikethat(Message) && rng.Next(0, 4) == 0)
+                if (rng.Next(0, 4) == 0 && Shoulditbelikethat(Message))
                 {
                     await Message.Channel.TriggerTypingAsync();
                     await Task.Delay(800);
@@ -72,7 +71,7 @@ namespace Sombra_Bot
             {
                 EmbedBuilder builder = new EmbedBuilder();
                 builder.WithTitle("Error");
-                builder.AddField(Result.ErrorReason, "View the help menu for commands");
+                builder.AddField(Result.ErrorReason, "View the help menu for commands.");
                 builder.WithColor(Color.Red);
                 builder.WithTimestamp(DateTimeOffset.Now);
                 await Message.Channel.SendMessageAsync("", embed: builder);
@@ -86,6 +85,7 @@ namespace Sombra_Bot
             Config config = new Config();
             token = config.Token;
         }
+
         private static bool Shoulditbelikethat(SocketUserMessage message)
         {
             string[] messagearray = message.Content.Split(' ');
