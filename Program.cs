@@ -4,8 +4,9 @@ using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
 using Configsys;
+using System.Reflection;
 
-namespace Sunny_Bot
+namespace Sombra_Bot
 {
     class Program
     {
@@ -26,11 +27,12 @@ namespace Sunny_Bot
 
             Commands = new CommandService(new CommandServiceConfig
             {
-                CaseSensitiveCommands = true,
+                CaseSensitiveCommands = false,
                 DefaultRunMode = RunMode.Async,
             });
             client.MessageReceived += MessageReceived;
             client.Ready += Client_Ready;
+            await Commands.AddModulesAsync(Assembly.GetEntryAssembly());
             await client.LoginAsync(TokenType.Bot, token);
             await client.StartAsync();
 
@@ -45,27 +47,33 @@ namespace Sunny_Bot
 
         private async Task MessageReceived(SocketMessage arg)
         {
-            var Message = arg as SocketUserMessage;
-            var Context = new SocketCommandContext(client, Message);
+            SocketUserMessage Message = arg as SocketUserMessage;
+            SocketCommandContext Context = new SocketCommandContext(client, Message);
 
-            if (Context.Message.Content == "") return;
+            if (Context.Message == null || Context.Message.Content == "") return;
             if (Context.User.IsBot) return;
-
-            Random rng = new Random();
-            if (Shoulditbelikethat(Message) && rng.Next(0, 4) == 0)
-            {
-                await Message.Channel.TriggerTypingAsync();
-                await Task.Delay(1000);
-                await Message.Channel.SendMessageAsync("Because it :b: like that.");
-            }
-            /*
             int ArgPos = 0;
-            if (!(Message.HasStringPrefix("s!", ref ArgPos) || Message.HasMentionPrefix(client.CurrentUser, ref ArgPos))) return;
 
-            var Result = await Commands.ExecuteAsync(Context, ArgPos);
+
+            if (!Message.HasStringPrefix("s.", ref ArgPos))
+            {
+                Random rng = new Random();
+                if (Shoulditbelikethat(Message) && rng.Next(0, 4) == 0)
+                {
+                    await Message.Channel.TriggerTypingAsync();
+                    await Task.Delay(1000);
+                    await Message.Channel.SendMessageAsync("Because it :b: like that.");
+                    return;
+                }
+            }
+
+            IResult Result = await Commands.ExecuteAsync(Context, ArgPos);
             if (!Result.IsSuccess)
+            {
                 Console.WriteLine($"{DateTime.Now} at Commands] Something went wrong with executing a command. Text: {Context.Message.Content} | Error: {Result.ErrorReason}");
-                */
+                return;
+            }
+
         }
 
         private static void LoadConfig()
