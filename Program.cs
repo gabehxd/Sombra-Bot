@@ -5,6 +5,7 @@ using Discord.Commands;
 using Discord.WebSocket;
 using Configsys;
 using System.Reflection;
+using Sombra_Bot.Utils;
 
 namespace Sombra_Bot
 {
@@ -69,12 +70,7 @@ namespace Sombra_Bot
             IResult Result = await Commands.ExecuteAsync(Context, ArgPos);
             if (!Result.IsSuccess)
             {
-                EmbedBuilder builder = new EmbedBuilder();
-                builder.WithTitle("Error");
-                builder.AddField(Result.ErrorReason, "View the help menu for command usage.");
-                builder.WithColor(Color.Red);
-                builder.WithTimestamp(DateTimeOffset.Now);
-                await Message.Channel.SendMessageAsync("", embed: builder);
+                await ErrorEmbedBuild.SendError(Result.ErrorReason, Message);
 
                 //Console.WriteLine($"{DateTime.Now} at Commands] Something went wrong with executing a command. Text: {Context.Message.Content} | Error: {Result.ErrorReason}");
             }
