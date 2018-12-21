@@ -71,19 +71,13 @@ namespace Sombra_Bot
             {
                 EmbedBuilder builder = new EmbedBuilder();
                 builder.WithTitle("Error");
-                builder.AddField(Result.ErrorReason, "View the help menu for commands.");
+                builder.AddField(Result.ErrorReason, "View the help menu for command usage.");
                 builder.WithColor(Color.Red);
                 builder.WithTimestamp(DateTimeOffset.Now);
                 await Message.Channel.SendMessageAsync("", embed: builder);
 
                 //Console.WriteLine($"{DateTime.Now} at Commands] Something went wrong with executing a command. Text: {Context.Message.Content} | Error: {Result.ErrorReason}");
             }
-        }
-
-        private static void LoadConfig()
-        {
-            Config config = new Config();
-            token = config.Token;
         }
 
         private static bool Shoulditbelikethat(SocketUserMessage message)
@@ -99,6 +93,12 @@ namespace Sombra_Bot
                 }
             }
             return false;
+        }
+
+        private static void LoadConfig()
+        {
+            Config config = new Config();
+            token = config.Token;
         }
     }
 }

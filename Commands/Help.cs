@@ -18,7 +18,7 @@ namespace Sombra_Bot.Commands
             builder.WithFooter("All commands should start with `.s`");
             builder.WithColor(Color.Purple);
 
-            await Context.Channel.SendMessageAsync("Here are my commands:", false, builder);
+            await Context.Channel.SendMessageAsync("Here are my commands:", embed: builder);
         }
     }
 }
