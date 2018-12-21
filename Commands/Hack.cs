@@ -12,20 +12,21 @@ namespace Sombra_Bot.Commands
         [RequireUserPermission(GuildPermission.BanMembers)]
         public async Task Hac(int level, IUser user, string reason = null)
         {
-                switch (level)
-                {
-                    case 1:
+            switch (level)
+            {
+                case 1:
                     await Context.Guild.AddBanAsync(user);
-                    //no kick?
+                    //no kick method?
                     await Context.Guild.RemoveBanAsync(user);
                     await Context.Channel.SendMessageAsync(Getmessage());
                     break;
-                    case 2:
-                        await Context.Guild.AddBanAsync(user, reason:reason);
-                        //await 
-                        await Context.Channel.SendMessageAsync(Getmessage());
-                        break;
-                }
+                case 2:
+                    await Context.Guild.AddBanAsync(user, reason: reason);
+                    await Context.Channel.TriggerTypingAsync();
+                    await Task.Delay(800);
+                    await Context.Channel.SendMessageAsync(Getmessage());
+                    break;
+            }
         }
         private string Getmessage()
         {
@@ -33,7 +34,7 @@ namespace Sombra_Bot.Commands
             switch (rng.Next(1, 2))
             {
                 case 1:
-                    return ("Initiating the hack.");
+                    return("Initiating the hack.");
                 case 2:
                     return("Iniciando el hackeo.");
                 default:

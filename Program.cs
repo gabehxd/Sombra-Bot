@@ -41,8 +41,8 @@ namespace Sombra_Bot
 
         private async Task Client_Ready()
         {
-            Console.WriteLine("Started!");
             await client.SetGameAsync("<3", "https://github.com/SunTheCourier", StreamType.NotStreaming);
+            Console.WriteLine("Started!");
         }
 
         private async Task MessageReceived(SocketMessage arg)
@@ -61,19 +61,24 @@ namespace Sombra_Bot
                 if (Shoulditbelikethat(Message) && rng.Next(0, 4) == 0)
                 {
                     await Message.Channel.TriggerTypingAsync();
-                    await Task.Delay(1000);
+                    await Task.Delay(800);
                     await Message.Channel.SendMessageAsync("Because it :b: like that.");
-                    return;
                 }
+                return;
             }
 
             IResult Result = await Commands.ExecuteAsync(Context, ArgPos);
             if (!Result.IsSuccess)
             {
-                Console.WriteLine($"{DateTime.Now} at Commands] Something went wrong with executing a command. Text: {Context.Message.Content} | Error: {Result.ErrorReason}");
-                return;
-            }
+                EmbedBuilder builder = new EmbedBuilder();
+                builder.WithTitle("Error");
+                builder.AddField(Result.ErrorReason, "View the help menu for commands");
+                builder.WithColor(Color.Red);
+                builder.WithTimestamp(DateTimeOffset.Now);
+                await Message.Channel.SendMessageAsync("", embed: builder);
 
+                //Console.WriteLine($"{DateTime.Now} at Commands] Something went wrong with executing a command. Text: {Context.Message.Content} | Error: {Result.ErrorReason}");
+            }
         }
 
         private static void LoadConfig()

@@ -29,7 +29,7 @@ namespace Configsys
             {
                 string[] lines = File.ReadAllLines(CONFIG_PATH.FullName);
 
-                foreach (var line in lines)
+                foreach (string line in lines)
                 {
                     string[] parts = line.Replace("\t", "").Split('=');
 
@@ -38,7 +38,7 @@ namespace Configsys
                         try
                         {
                             parts[1] = parts[1].TrimStart(' ');
-                            switch (parts[0].TrimEnd(' ').ToLower())
+                            switch (parts[0].TrimEnd(' '))
                             {
                                 case "token":
                                     Token = parts[1];
