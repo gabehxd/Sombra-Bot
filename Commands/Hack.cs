@@ -15,9 +15,9 @@ namespace Sombra_Bot.Commands
             switch (level)
             {
                 case 1:
-                    await Context.Guild.AddBanAsync(user);
                     //no kick method?
                     await Context.Guild.AddBanAsync(user, reason: reason);
+                    await Context.Guild.RemoveBanAsync(user);
                     await Context.Channel.TriggerTypingAsync();
                     await Task.Delay(500);
                     await Context.Channel.SendMessageAsync(Getmessage());
@@ -42,15 +42,15 @@ namespace Sombra_Bot.Commands
             switch (rng.Next(1, 4))
             {
                 case 1:
-                    return("Initiating the hack.");
+                    return "Initiating the hack.";
                 case 2:
-                    return("Iniciando el hackeo.");
+                    return "Iniciando el hackeo.";
                 case 3:
-                    return("Don't mind me.");
+                    return "Don't mind me.";
                 case 4:
-                    return("Let's get started.");
+                    return "Let's get started.";
             }
-            return("");
+            return null;
         }
     }
 }
