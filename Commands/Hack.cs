@@ -13,39 +13,31 @@ namespace Sombra_Bot.Commands
         [RequireUserPermission(GuildPermission.BanMembers)]
         public async Task Hac(int level, IUser user, string reason = null)
         {
-            try
+            switch (level)
             {
-                switch (level)
-                {
-                    case 1:
-                        //no kick method?
-                        await Context.Guild.AddBanAsync(user, reason: reason);
-                        await Context.Guild.RemoveBanAsync(user);
-                        await Context.Channel.TriggerTypingAsync();
-                        await Task.Delay(500);
-                        await Context.Channel.SendMessageAsync(Getmessage());
-                        await Context.Channel.TriggerTypingAsync();
-                        await Task.Delay(500);
-                        await Context.Channel.SendMessageAsync($"{user} Hacked!");
-                        break;
-                    case 2:
-                        await Context.Guild.AddBanAsync(user, reason: reason);
-                        await Context.Channel.TriggerTypingAsync();
-                        await Task.Delay(500);
-                        await Context.Channel.SendMessageAsync(Getmessage());
-                        await Context.Channel.TriggerTypingAsync();
-                        await Task.Delay(500);
-                        await Context.Channel.SendMessageAsync($"{user} Hacked!");
-                        break;
-                    default:
-                        await Error.Send("Inputted hack level does not exist", Context.Channel);
-                        break;
-                }
-            }
-            catch (Exception e)
-            {
-                await Error.Send(e.ToString(), Context.Channel, "Please Report this to Sun");
-                return;
+                case 1:
+                    //no kick method?
+                    await Context.Guild.AddBanAsync(user, reason: reason);
+                    await Context.Guild.RemoveBanAsync(user);
+                    await Context.Channel.TriggerTypingAsync();
+                    await Task.Delay(500);
+                    await Context.Channel.SendMessageAsync(Getmessage());
+                    await Context.Channel.TriggerTypingAsync();
+                    await Task.Delay(500);
+                    await Context.Channel.SendMessageAsync($"{user} Hacked!");
+                    break;
+                case 2:
+                    await Context.Guild.AddBanAsync(user, reason: reason);
+                    await Context.Channel.TriggerTypingAsync();
+                    await Task.Delay(500);
+                    await Context.Channel.SendMessageAsync(Getmessage());
+                    await Context.Channel.TriggerTypingAsync();
+                    await Task.Delay(500);
+                    await Context.Channel.SendMessageAsync($"{user} Hacked!");
+                    break;
+                default:
+                    await Error.Send("Inputted hack level does not exist", Context.Channel);
+                    break;
             }
         }
         private string Getmessage()
