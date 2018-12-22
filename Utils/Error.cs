@@ -5,16 +5,16 @@ using Discord.WebSocket;
 
 namespace Sombra_Bot.Utils
 {
-    public class ErrorEmbedBuild
+    public class Error
     {
-        public static async Task SendError(string Reason, SocketUserMessage sendloc)
+        public static async Task Send(string Reason, SocketUserMessage SendLocation, string Action = "View the s.help for help")
         {
             EmbedBuilder builder = new EmbedBuilder();
             builder.WithTitle("Error");
-            builder.AddField(Reason, "View the s.help for help");
+            builder.AddField(Reason, Action);
             builder.WithColor(Color.Red);
             builder.WithTimestamp(DateTimeOffset.Now);
-            await sendloc.Channel.SendMessageAsync("", embed: builder);
+            await SendLocation.Channel.SendMessageAsync("", embed: builder);
         }
     }
 }

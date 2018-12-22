@@ -214,7 +214,7 @@
     <Compile Include="Commands\Hack.cs" />
     <Compile Include="Commands\Help.cs" />
     <Compile Include="Config.cs" />
-    <Compile Include="Utils\ErrorEmbedBuild.cs" />
+    <Compile Include="Utils\Error.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
