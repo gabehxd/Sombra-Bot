@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using Octokit;
 using Sombra_Bot.Utils;
+using System;
 
 namespace Sombra_Bot.Commands
 {
@@ -23,7 +24,7 @@ namespace Sombra_Bot.Commands
             }
             catch
             {
-                await Error.Send(Context.Channel, Value: "Failed to get all releases for reporisorty");
+                await Error.Send(Context.Channel, Value: "Failed to get release(s) for reporisorty");
                 return;
             }
 
@@ -33,80 +34,87 @@ namespace Sombra_Bot.Commands
                 return;
             }
 
-            Octokit.Release latest = releases[0];
-            if (latest.Assets.Count == 1)
+            try
             {
-                await Context.Channel.TriggerTypingAsync();
-                await Task.Delay(500);
-                await Context.Channel.SendMessageAsync("Grabbing release...");
-                await Context.Channel.TriggerTypingAsync();
-
-                if (latest.Assets[0].Size > 8000000)
-                {
-                    await Context.Channel.SendMessageAsync($"Here ya go!: {latest.Assets[0].BrowserDownloadUrl}");
-                    return;
-                }
-
-                FileInfo temp = new FileInfo(Path.Combine(Path.GetTempPath(), "Sombra-Bot", repo.ToLower(), latest.Assets[0].Name));
-                DirectoryInfo temppath = new DirectoryInfo(Path.Combine(Path.GetTempPath(), "Sombra-Bot", repo.ToLower()));
-                temppath.Create();
-
-                if (temp.Exists)
-                {
-                    if (temp.Length == latest.Assets[0].Size)
-                    {
-                        await Context.Channel.SendFileAsync(temp.FullName, "Here ya go!:");
-                        return;
-                    }
-                }
-
-                temp.Delete();
-                HttpClient dlclient = new HttpClient();
-                using (Stream asset = await dlclient.GetStreamAsync(latest.Assets[0].BrowserDownloadUrl))
-                using (FileStream dest = temp.Create())
-                {
-                    asset.CopyTo(dest);
-                }
-                await Context.Channel.SendFileAsync(temp.FullName, "Here ya go!:");
-            }
-            else
-            {
-                await Context.Channel.TriggerTypingAsync();
-                await Task.Delay(500);
-                await Context.Channel.SendMessageAsync("Grabbing releases...");
-                HttpClient dlclient = new HttpClient();
-                DirectoryInfo temppath = new DirectoryInfo(Path.Combine(Path.GetTempPath(), "Sombra-Bot", repo.ToLower()));
-                temppath.Create();
-                foreach (ReleaseAsset asset in latest.Assets)
+                Octokit.Release latest = releases[0];
+                if (latest.Assets.Count == 1)
                 {
                     await Context.Channel.TriggerTypingAsync();
-                    if (asset.Size <= 8000000)
-                    {
-                        FileInfo temp = new FileInfo(Path.Combine(Path.GetTempPath(), "Sombra-Bot", repo.ToLower(), asset.Name));
-                        if (temp.Exists)
-                        {
-                            if (temp.Length == asset.Size)
-                            {
-                                await Context.Channel.SendFileAsync(temp.FullName);
-                                continue;
-                            }
-                        }
+                    await Task.Delay(500);
+                    await Context.Channel.SendMessageAsync("Grabbing release...");
+                    await Context.Channel.TriggerTypingAsync();
 
-                        using (Stream item = await dlclient.GetStreamAsync(asset.BrowserDownloadUrl))
-                        using (FileStream dest = temp.Create())
-                        {
-                            item.CopyTo(dest);
-                        }
-                        await Context.Channel.SendFileAsync(temp.FullName);
-                    }
-                    else
+                    if (latest.Assets[0].Size > 8000000)
                     {
-                        await Context.Channel.SendMessageAsync(asset.BrowserDownloadUrl);
+                        await Context.Channel.SendMessageAsync($"Here ya go!: {latest.Assets[0].BrowserDownloadUrl}");
+                        return;
                     }
+
+                    FileInfo temp = new FileInfo(Path.Combine(Path.GetTempPath(), "Sombra-Bot", repo.ToLower(), latest.Assets[0].Name));
+                    DirectoryInfo temppath = new DirectoryInfo(Path.Combine(Path.GetTempPath(), "Sombra-Bot", repo.ToLower()));
+                    temppath.Create();
+
+                    if (temp.Exists)
+                    {
+                        if (temp.Length == latest.Assets[0].Size)
+                        {
+                            await Context.Channel.SendFileAsync(temp.FullName, "Here ya go!:");
+                            return;
+                        }
+                    }
+
+                    temp.Delete();
+                    HttpClient dlclient = new HttpClient();
+                    using (Stream asset = await dlclient.GetStreamAsync(latest.Assets[0].BrowserDownloadUrl))
+                    using (FileStream dest = temp.Create())
+                    {
+                        asset.CopyTo(dest);
+                    }
+                    await Context.Channel.SendFileAsync(temp.FullName, "Here ya go!:");
                 }
-                await Context.Channel.TriggerTypingAsync();
-                await Task.Delay(500);
-                await Context.Channel.SendMessageAsync("Done!");
+                else
+                {
+                    await Context.Channel.TriggerTypingAsync();
+                    await Task.Delay(500);
+                    await Context.Channel.SendMessageAsync("Grabbing releases...");
+                    HttpClient dlclient = new HttpClient();
+                    DirectoryInfo temppath = new DirectoryInfo(Path.Combine(Path.GetTempPath(), "Sombra-Bot", repo.ToLower()));
+                    temppath.Create();
+                    foreach (ReleaseAsset asset in latest.Assets)
+                    {
+                        await Context.Channel.TriggerTypingAsync();
+                        if (asset.Size <= 8000000)
+                        {
+                            FileInfo temp = new FileInfo(Path.Combine(Path.GetTempPath(), "Sombra-Bot", repo.ToLower(), asset.Name));
+                            if (temp.Exists)
+                            {
+                                if (temp.Length == asset.Size)
+                                {
+                                    await Context.Channel.SendFileAsync(temp.FullName);
+                                    continue;
+                                }
+                            }
+
+                            using (Stream item = await dlclient.GetStreamAsync(asset.BrowserDownloadUrl))
+                            using (FileStream dest = temp.Create())
+                            {
+                                item.CopyTo(dest);
+                            }
+                            await Context.Channel.SendFileAsync(temp.FullName);
+                        }
+                        else
+                        {
+                            await Context.Channel.SendMessageAsync(asset.BrowserDownloadUrl);
+                        }
+                    }
+                    await Context.Channel.TriggerTypingAsync();
+                    await Task.Delay(500);
+                    await Context.Channel.SendMessageAsync("Done!");
+                }
+            }
+            catch (Exception e)
+            {
+                await Error.Send(Context.Channel, Value: e.Message);
             }
         }
     }
