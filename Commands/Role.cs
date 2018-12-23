@@ -9,31 +9,41 @@ namespace Sombra_Bot.Commands
 {
     public class Role : ModuleBase<SocketCommandContext>
     {
-        [Command("GiveRole"), Summary("Gives this specified role to the specified user.")]
+        [Command("AddRole"), Summary("Gives this specified role to the specified user.")]
         [RequireUserPermission(ChannelPermission.ManagePermissions)]
-        public async Task GetRelease(IGuildUser user, string role)
+        public async Task GiveRole(SocketGuildUser user, SocketRole role)
         {
-            SocketRole addrole;
+            SocketGuildUser userguild = Context.User as SocketGuildUser;
+
+            if (userguild.Roles.Last().CompareTo(role) >= 0)
+            {
+                try
+                {
+                    await user.AddRoleAsync(role);
+                }
+                catch
+                {
+                    await Error.Send(Context.Channel, Value: "Role could not be added.");
+                    return;
+                }
+                await Context.Channel.SendMessageAsync("Done!");
+            }
+        }
+
+        [Command("RemoveRole"), Summary("Gives this specified role to the specified user.")]
+        [RequireUserPermission(ChannelPermission.ManagePermissions)]
+        public async Task RemoveRole(SocketGuildUser user, SocketRole role)
+        {
             try
             {
-                addrole = Context.Guild.Roles.FirstOrDefault(x => x.Name == role);
+                await user.RemoveRoleAsync(role);
             }
             catch
             {
-                await Error.Send("Role not found.", Context.Channel, "¯\\_(ツ)_/¯");
-                return;
-            }
-            try
-            {
-                await user.AddRoleAsync(addrole);
-            }
-            catch
-            {
-                await Error.Send("Role could not be added.", Context.Channel, "¯\\_(ツ)_/¯");
+                await Error.Send(Context.Channel, Value: "Role could not be removed.");
                 return;
             }
             await Context.Channel.SendMessageAsync("Done!");
-            
         }
     }
 }

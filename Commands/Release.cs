@@ -23,13 +23,13 @@ namespace Sombra_Bot.Commands
             }
             catch
             {
-                await Error.Send("An error has occurred.", Context.Channel, "Invalid repository.");
+                await Error.Send(Context.Channel, Value: "Invalid repository.");
                 return;
             }
 
             if (releases.Count == 0)
             {
-                await Error.Send("An error has occurred.", Context.Channel, "No releases made.");
+                await Error.Send(Context.Channel, Value: "No releases made.");
                 return;
             }
 

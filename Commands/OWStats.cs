@@ -23,10 +23,10 @@ namespace Sombra_Bot.Commands
                 }
                 catch
                 {
-                    await Error.Send("User does not exist.", Context.Channel);
+                    await Error.Send(Context.Channel, Value: "User does not exist.");
                     return;
                 }
-                if (player.IsProfilePrivate) await Error.Send("Player profile is private", Context.Channel, "Change your profile to public");
+                if (player.IsProfilePrivate) await Error.Send(Context.Channel, "Player profile is private", "Change your profile to public");
 
                 EmbedBuilder builder = new EmbedBuilder();
                 builder.WithTitle($"{player.Username}'s Stats");
