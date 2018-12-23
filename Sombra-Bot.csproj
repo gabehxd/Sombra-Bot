@@ -226,6 +226,7 @@
     <Compile Include="Commands\Release.cs" />
     <Compile Include="Commands\Hack.cs" />
     <Compile Include="Commands\Help.cs" />
+    <Compile Include="Commands\Role.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="Utils\Error.cs" />
     <Compile Include="Program.cs" />

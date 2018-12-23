@@ -11,7 +11,6 @@ namespace Sombra_Bot.Commands
     public class OWStats : ModuleBase<SocketCommandContext>
     {
         [Command("OWStats"), Summary("Gets your Overwatch stats!")]
-
         public async Task GetstatsOW(string User)
         {
             await Context.Channel.TriggerTypingAsync();

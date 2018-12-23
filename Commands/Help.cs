@@ -8,12 +8,12 @@ namespace Sombra_Bot.Commands
     public class Help : ModuleBase<SocketCommandContext>
     {
         [Command("Help"), Summary("Get help.")]
-
         public async Task Helpmsg()
         {
             await Context.Channel.TriggerTypingAsync();
             EmbedBuilder builder = new EmbedBuilder();
             builder.WithTitle("Help Menu");
+            builder.AddField("GiveRole", "Gives a role to the specified user.\nargs: <user> <role>");
             builder.AddField("OWStats", "Gets Overwatch stats\nargs: <Battle.net tag>");
             builder.AddField("GetRelease", "Gets a release from the specificed Github repository\nargs: <repository owner> <repository name>");
             builder.AddField("Invite", "Gets an Invite for Sombra Bot and Sombra Bot's discord");
