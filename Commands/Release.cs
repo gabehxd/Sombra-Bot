@@ -24,7 +24,7 @@ namespace Sombra_Bot.Commands
             }
             catch
             {
-                await Error.Send(Context.Channel, Value: "Failed to get release(s) for reporisorty");
+                await Error.Send(Context.Channel, Value: "Failed to get release(s) for repository");
                 return;
             }
 
