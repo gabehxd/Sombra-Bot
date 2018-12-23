@@ -33,12 +33,11 @@ namespace Sombra_Bot.Commands
                 builder.WithTitle($"{player.Username}'s Stats");
                 builder.WithUrl(player.ProfileUrl);
                 builder.WithColor(Color.Orange);
-                builder.WithTimestamp(DateTimeOffset.Now);
+                builder.WithCurrentTimestamp();
                 builder.WithThumbnailUrl(player.ProfilePortraitUrl);
                 builder.AddField("Player Level (Not Inlcuding Prestige(s))", player.PlayerLevel);
                 if (player.CompetitiveRank == 0) builder.AddField("Competetive Rank", "Not Placed");
                 else builder.AddField("Competetive Rank", $"SR: {player.CompetitiveRank}: {GetRankName(player.CompetitiveRank)}");
-                //`: {GetRankName(player.CompetitiveRank)}`
                 //builder.AddInlineField("Achievements", $"{player.Achievements.Count}/{player.Achievements.Capacity}"); bugged
                 string endorvalue = "";
                 foreach (KeyValuePair<Endorsement, decimal> s in player.Endorsements)
@@ -56,7 +55,6 @@ namespace Sombra_Bot.Commands
 
         private string GetRankName(int SR)
         {
-
             switch (SR)
             {
                 case int n when n >= 1 && n <= 1499:

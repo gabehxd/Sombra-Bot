@@ -13,7 +13,7 @@ namespace Sombra_Bot.Utils
             builder.WithTitle("Error");
             builder.AddField(Reason, Action);
             builder.WithColor(Color.Red);
-            builder.WithTimestamp(DateTimeOffset.Now);
+            builder.WithCurrentTimestamp();
             await SendLocation.SendMessageAsync("", embed: builder);
         }
     }
