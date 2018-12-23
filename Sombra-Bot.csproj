@@ -220,6 +220,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\OWStats.cs" />
     <Compile Include="Commands\Release.cs" />
     <Compile Include="Commands\Hack.cs" />
     <Compile Include="Commands\Help.cs" />
