@@ -23,7 +23,7 @@ namespace Sombra_Bot.Commands
             }
             catch
             {
-                await Error.Send(Context.Channel, Value: "Invalid repository.");
+                await Error.Send(Context.Channel, Value: "Failed to get all releases for reporisorty");
                 return;
             }
 

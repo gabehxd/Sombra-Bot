@@ -11,8 +11,19 @@ namespace Sombra_Bot.Commands
         [Command("Hack"), Summary("Bans or kicks a user.")]
         [RequireUserPermission(GuildPermission.KickMembers)]
         [RequireUserPermission(GuildPermission.BanMembers)]
-        public async Task Hac(int level, IUser user, string reason = null)
+        public async Task Remove(int level, IUser user, string reason = null)
         {
+            if (Context.User == user && level == 1)
+            {
+                await Context.Channel.SendMessageAsync("You can't kick yourself lmfao.");
+                return;
+
+            if (Context.User == user && level == 2)
+            {
+                await Context.Channel.SendMessageAsync("You can't ban yourself lmfao.");
+                return;
+            }
+
             switch (level)
             {
                 case 1:
