@@ -37,7 +37,7 @@ namespace Sombra_Bot.Commands
                 builder.WithThumbnailUrl(player.ProfilePortraitUrl);
                 builder.AddField("Player Level (Not Inlcuding Prestige(s))", player.PlayerLevel);
                 if (player.CompetitiveRank == 0) builder.AddField("Competetive Rank", "Not Placed");
-                else builder.AddField("Competetive Rank", $"SR: {player.CompetitiveRank}: {GetRankName(player.CompetitiveRank)}");
+                else builder.AddField($"Competetive Rank: {GetRankName(player.CompetitiveRank)}", $"SR: {player.CompetitiveRank}");
                 //builder.AddInlineField("Achievements", $"{player.Achievements.Count}/{player.Achievements.Capacity}"); bugged
                 string endorvalue = "";
                 foreach (KeyValuePair<Endorsement, decimal> s in player.Endorsements)
