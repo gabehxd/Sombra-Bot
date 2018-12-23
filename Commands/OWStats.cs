@@ -37,7 +37,9 @@ namespace Sombra_Bot.Commands
                 if (player.CompetitiveRank == 0) builder.AddField("Competetive Rank", "Not Placed");
                 else builder.AddField($"Competetive Rank: {GetRankName(player.CompetitiveRank)}", $"SR: {player.CompetitiveRank}");
                 //builder.AddInlineField("Achievements", $"{player.Achievements.Count}/{player.Achievements.Capacity}"); bugged
-                builder.AddField($"Endorsment Level: {player.EndorsementLevel}", $"{player.Endorsements.Keys.ToArray()[0]}: {player.Endorsements.Values.ToArray()[0].ToString().Replace("0.", " ")}%, {player.Endorsements.Keys.ToArray()[1]}: {player.Endorsements.Values.ToArray()[1].ToString().Replace("0.", " ")}%, {player.Endorsements.Keys.ToArray()[2]}: {player.Endorsements.Values.ToArray()[2].ToString().Replace("0.", " ")}%");
+                Endorsement[] keys = player.Endorsements.Keys.ToArray();
+                decimal[] value = player.Endorsements.Values.ToArray();
+                builder.AddField($"Endorsment Level: {player.EndorsementLevel}", $"{keys[0]}: {value[0].ToString().Replace("0.", " ")}%, {keys[1]}: {value[1].ToString().Replace("0.", " ")}%, {keys[2]}: {value[2].ToString().Replace("0.", " ")}%");
                 builder.AddField("Platform", player.Platform.ToString().ToUpper());
 
                 await Context.Channel.SendMessageAsync("", embed: builder);
