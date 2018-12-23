@@ -14,7 +14,7 @@ namespace Sombra_Bot.Commands
             EmbedBuilder builder = new EmbedBuilder();
             builder.WithTitle("Help Menu");
             builder.AddField("AddRole", "Adds a role to the specified user.\nargs: <user> <role>");
-            builder.AddField("RemovesRole", "Removes a role to the specified user.\nargs: <user> <role>");
+            builder.AddField("RemoveRole", "Removes a role to the specified user.\nargs: <user> <role>");
             builder.AddField("OWStats", "Gets Overwatch stats\nargs: <Battle.net tag>");
             builder.AddField("GetRelease", "Gets a release from the specificed Github repository\nargs: <repository owner> <repository name>");
             builder.AddField("Invite", "Gets an Invite for Sombra Bot and Sombra Bot's discord");
