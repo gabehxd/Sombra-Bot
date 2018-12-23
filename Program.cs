@@ -54,8 +54,12 @@ namespace Sombra_Bot
             if (Context.Message == null || Context.Message.Content == "") return;
             if (Context.User.IsBot) return;
             int ArgPos = 0;
-
+#if !DEBUG
             if (!Message.HasStringPrefix("s.", ref ArgPos))
+#endif
+#if DEBUG
+            if (!Message.HasStringPrefix("d.", ref ArgPos))
+#endif
             {
                 Random rng = new Random();
                 if (rng.Next(0, 4) == 0 && Shoulditbelikethat(Message))

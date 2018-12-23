@@ -1,10 +1,9 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
 using OverwatchAPI;
 using Sombra_Bot.Utils;
-using System.Collections.Generic;
+using System.Linq;
 
 namespace Sombra_Bot.Commands
 {
@@ -38,14 +37,7 @@ namespace Sombra_Bot.Commands
                 if (player.CompetitiveRank == 0) builder.AddField("Competetive Rank", "Not Placed");
                 else builder.AddField($"Competetive Rank: {GetRankName(player.CompetitiveRank)}", $"SR: {player.CompetitiveRank}");
                 //builder.AddInlineField("Achievements", $"{player.Achievements.Count}/{player.Achievements.Capacity}"); bugged
-                string endorvalue = "";
-                foreach (KeyValuePair<Endorsement, decimal> s in player.Endorsements)
-                {
-                    //maybe multiply by 100?
-                    string endor = $"{s.Key}: {s.Value.ToString().Replace("0.", " ")}%, ";
-                    endorvalue += endor;
-                }
-                builder.AddField($"Endorsment Level: {player.EndorsementLevel}", endorvalue);
+                builder.AddField($"Endorsment Level: {player.EndorsementLevel}", $"{player.Endorsements.Keys.ToArray()[0]}: {player.Endorsements.Values.ToArray()[0].ToString().Replace("0.", " ")}%, {player.Endorsements.Keys.ToArray()[1]}: {player.Endorsements.Values.ToArray()[1].ToString().Replace("0.", " ")}%, {player.Endorsements.Keys.ToArray()[2]}: {player.Endorsements.Values.ToArray()[2].ToString().Replace("0.", " ")}%");
                 builder.AddField("Platform", player.Platform.ToString().ToUpper());
 
                 await Context.Channel.SendMessageAsync("", embed: builder);
