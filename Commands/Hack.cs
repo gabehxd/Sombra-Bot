@@ -17,6 +17,7 @@ namespace Sombra_Bot.Commands
             {
                 await Context.Channel.SendMessageAsync("You can't kick yourself lmfao.");
                 return;
+            }
 
             if (Context.User == user && level == 2)
             {
