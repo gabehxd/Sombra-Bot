@@ -39,9 +39,11 @@ namespace Sombra_Bot.Commands
                 await Context.Channel.TriggerTypingAsync();
                 await Task.Delay(500);
                 await Context.Channel.SendMessageAsync("Grabbing release...");
+                await Context.Channel.TriggerTypingAsync();
+
                 if (latest.Assets[0].Size > 8000000)
                 {
-                    await Error.Send("Requested release is too big!", Context.Channel, "¯\\_(ツ)_/¯");
+                    await Context.Channel.SendMessageAsync($"Here ya go!: {latest.Assets[0].BrowserDownloadUrl}");
                     return;
                 }
 
@@ -53,8 +55,7 @@ namespace Sombra_Bot.Commands
                 {
                     if (temp.Length == latest.Assets[0].Size)
                     {
-                        await Context.Message.Channel.TriggerTypingAsync();
-                        await Context.Channel.SendFileAsync(temp.FullName, "Here ya go!");
+                        await Context.Channel.SendFileAsync(temp.FullName, "Here ya go!:");
                         return;
                     }
                 }
@@ -66,8 +67,7 @@ namespace Sombra_Bot.Commands
                 {
                     asset.CopyTo(dest);
                 }
-                await Context.Message.Channel.TriggerTypingAsync();
-                await Context.Channel.SendFileAsync(temp.FullName, "Here ya go!");
+                await Context.Channel.SendFileAsync(temp.FullName, "Here ya go!:");
             }
             else
             {
@@ -77,9 +77,9 @@ namespace Sombra_Bot.Commands
                 HttpClient dlclient = new HttpClient();
                 DirectoryInfo temppath = new DirectoryInfo(Path.Combine(Path.GetTempPath(), "Sombra-Bot", repo.ToLower()));
                 temppath.Create();
-                int i = 0;
                 foreach (ReleaseAsset asset in latest.Assets)
                 {
+                    await Context.Channel.TriggerTypingAsync();
                     if (asset.Size <= 8000000)
                     {
                         FileInfo temp = new FileInfo(Path.Combine(Path.GetTempPath(), "Sombra-Bot", repo.ToLower(), asset.Name));
@@ -87,9 +87,7 @@ namespace Sombra_Bot.Commands
                         {
                             if (temp.Length == asset.Size)
                             {
-                                await Context.Message.Channel.TriggerTypingAsync();
                                 await Context.Channel.SendFileAsync(temp.FullName);
-                                i++;
                                 continue;
                             }
                         }
@@ -99,21 +97,16 @@ namespace Sombra_Bot.Commands
                         {
                             item.CopyTo(dest);
                         }
-                        await Context.Message.Channel.TriggerTypingAsync();
                         await Context.Channel.SendFileAsync(temp.FullName);
-                        i++;
+                    }
+                    else
+                    {
+                        await Context.Channel.SendMessageAsync(asset.BrowserDownloadUrl);
                     }
                 }
-                await Context.Channel.SendMessageAsync("Done!");
                 await Context.Channel.TriggerTypingAsync();
                 await Task.Delay(500);
-                await Context.Channel.SendMessageAsync($"Retrived {i}/{latest.Assets.Count} assets.");
-                if (i < latest.Assets.Count)
-                {
-                    await Context.Message.Channel.TriggerTypingAsync();
-                    await Task.Delay(500);
-                    await Context.Message.Channel.SendMessageAsync("Some assets could not be retrived due to upload size limits.");
-                }
+                await Context.Channel.SendMessageAsync("Done!");
             }
         }
     }

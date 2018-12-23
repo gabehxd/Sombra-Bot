@@ -17,6 +17,8 @@ namespace Sombra_Bot.Commands
             {
                 await Error.Send("Failed to Delete Temp Folder", Context.Channel, "¯\\_(ツ)_/¯");
             }
+            await Context.Channel.TriggerTypingAsync();
+            await Task.Delay(500);
             await Context.Channel.SendMessageAsync("Done!");
         }
     }
