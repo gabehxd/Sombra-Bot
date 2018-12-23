@@ -220,6 +220,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\ClearTemp.cs" />
     <Compile Include="Commands\Invite.cs" />
     <Compile Include="Commands\OWStats.cs" />
     <Compile Include="Commands\Release.cs" />
