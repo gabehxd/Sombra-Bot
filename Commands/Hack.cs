@@ -36,7 +36,7 @@ namespace Sombra_Bot.Commands
                     await Context.Channel.SendMessageAsync($"{user} Hacked!");
                     break;
                 default:
-                    await Error.Send("Inputted hack level does not exist", Context.Channel);
+                    await Error.Send(Context.Channel, Value: "Inputted hack level does not exist");
                     break;
             }
         }
