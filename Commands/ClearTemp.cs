@@ -7,6 +7,7 @@ namespace Sombra_Bot.Commands
     public class ClearTemp : ModuleBase<SocketCommandContext>
     {
         [Command("ClearTemp"), Summary("Clears the Temp Directory for Sombra Bot")]
+        [RequireOwner]
         public async Task Clear()
         {
             try
@@ -16,6 +17,7 @@ namespace Sombra_Bot.Commands
             catch
             {
                 await Error.Send("Failed to Delete Temp Folder", Context.Channel, "¯\\_(ツ)_/¯");
+                return;
             }
             await Context.Channel.TriggerTypingAsync();
             await Task.Delay(500);
