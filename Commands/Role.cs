@@ -15,7 +15,7 @@ namespace Sombra_Bot.Commands
         {
             SocketGuildUser userguild = Context.User as SocketGuildUser;
 
-            if (userguild.Roles.Last().CompareTo(role) >= 0)
+            if (userguild.Roles.Last().CompareTo(role) == 1 || Context.Guild.Owner == Context.User)
             {
                 try
                 {
@@ -27,6 +27,13 @@ namespace Sombra_Bot.Commands
                     return;
                 }
                 await Context.Channel.SendMessageAsync("Done!");
+                //uncomment for debuging
+                await Context.Channel.SendMessageAsync($"{userguild.Roles.Last().CompareTo(role).ToString()}");
+            }
+            else
+            {
+                await Error.Send(Context.Channel, Value: "You do not have enough permission to give that role.");
+                return;
             }
         }
 
@@ -34,16 +41,25 @@ namespace Sombra_Bot.Commands
         [RequireUserPermission(ChannelPermission.ManagePermissions)]
         public async Task RemoveRole(SocketGuildUser user, SocketRole role)
         {
-            try
+            SocketGuildUser userguild = Context.User as SocketGuildUser;
+            if (userguild.Roles.Last().CompareTo(role) == 1 || Context.Guild.Owner == Context.User)
             {
-                await user.RemoveRoleAsync(role);
+                try
+                {
+                    await user.RemoveRoleAsync(role);
+                }
+                catch
+                {
+                    await Error.Send(Context.Channel, Value: "Role could not be removed.");
+                    return;
+                }
+                await Context.Channel.SendMessageAsync("Done!");
             }
-            catch
+            else
             {
-                await Error.Send(Context.Channel, Value: "Role could not be removed.");
+                await Error.Send(Context.Channel, Value: "You do not have enough permission to give that role.");
                 return;
             }
-            await Context.Channel.SendMessageAsync("Done!");
         }
     }
 }
