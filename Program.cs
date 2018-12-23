@@ -56,8 +56,7 @@ namespace Sombra_Bot
             int ArgPos = 0;
 #if !DEBUG
             if (!Message.HasStringPrefix("s.", ref ArgPos))
-#endif
-#if DEBUG
+#else
             if (!Message.HasStringPrefix("d.", ref ArgPos))
 #endif
             {

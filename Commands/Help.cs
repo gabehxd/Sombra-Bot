@@ -19,7 +19,11 @@ namespace Sombra_Bot.Commands
             builder.AddField("GetRelease", "Gets a release from the specificed Github repository\nargs: <repository owner> <repository name>");
             builder.AddField("Invite", "Gets an Invite for Sombra Bot and Sombra Bot's discord");
             builder.AddField("Hack", "Kicks or Bans a user\nargs: <level of hack, 1: kick, 2: ban> <user> <reason>");
+#if !DEBUG
             builder.WithFooter("All commands should start with `s.`");
+#else
+            builder.WithFooter("All commands should start with `d.`");
+#endif
             builder.WithCurrentTimestamp();
             builder.WithColor(Color.Purple);
             await Task.Delay(500);

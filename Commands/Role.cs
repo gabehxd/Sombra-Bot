@@ -15,20 +15,29 @@ namespace Sombra_Bot.Commands
         {
             SocketGuildUser userguild = Context.User as SocketGuildUser;
 
+
             if (userguild.Roles.Last().CompareTo(role) == 1 || Context.Guild.Owner == Context.User)
             {
-                try
+                if (!role.Members.Contains(user))
                 {
-                    await user.AddRoleAsync(role);
+                    try
+                    {
+                        await user.AddRoleAsync(role);
+                    }
+                    catch
+                    {
+                        await Error.Send(Context.Channel, Value: "Role could not be added.");
+                        return;
+                    }
+                    await Context.Channel.SendMessageAsync("Done!");
+                    //uncomment for debuging
+                    //await Context.Channel.SendMessageAsync($"{userguild.Roles.Last().CompareTo(role).ToString()}");
                 }
-                catch
+                else
                 {
-                    await Error.Send(Context.Channel, Value: "Role could not be added.");
+                    await Error.Send(Context.Channel, Value: $"<@{user.Id}> already has that role");
                     return;
                 }
-                await Context.Channel.SendMessageAsync("Done!");
-                //uncomment for debuging
-                await Context.Channel.SendMessageAsync($"{userguild.Roles.Last().CompareTo(role).ToString()}");
             }
             else
             {
