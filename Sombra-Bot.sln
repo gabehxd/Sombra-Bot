@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28407.52
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sombra-Bot", "Sombra-Bot.csproj", "{19684066-35EE-44CD-B7F9-B30552D2214A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sombra-Bot", "Sombra-Bot.csproj", "{62E7DC31-8D91-4A99-B131-6C4A94E3D346}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{19684066-35EE-44CD-B7F9-B30552D2214A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{19684066-35EE-44CD-B7F9-B30552D2214A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{19684066-35EE-44CD-B7F9-B30552D2214A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{19684066-35EE-44CD-B7F9-B30552D2214A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62E7DC31-8D91-4A99-B131-6C4A94E3D346}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62E7DC31-8D91-4A99-B131-6C4A94E3D346}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62E7DC31-8D91-4A99-B131-6C4A94E3D346}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62E7DC31-8D91-4A99-B131-6C4A94E3D346}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {E66324E9-9C4E-4BD2-B1A1-45ED768BD1E2}
+		SolutionGuid = {D6E338ED-4645-47DB-9FD4-41C9F973AC07}
 	EndGlobalSection
 EndGlobal
