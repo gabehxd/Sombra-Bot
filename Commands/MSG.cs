@@ -7,14 +7,14 @@ namespace Sombra_Bot.Commands
     {
         [Command("say"), Summary("Says the message sent.")]
         [RequireOwner]
-        public async Task Say(string text)
+        public async Task Say(params string[] text)
         {
             try
             {
                 await Context.Message.DeleteAsync();
             }
             catch { }
-            await Context.Channel.SendMessageAsync(text);
+            await Context.Channel.SendMessageAsync(string.Join(" ", text));
         }
     }
 }
