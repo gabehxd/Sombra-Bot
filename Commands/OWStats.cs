@@ -31,7 +31,6 @@ namespace Sombra_Bot.Commands
                 builder.WithTitle($"{player.Username}'s Stats");
                 builder.WithUrl(player.ProfileUrl);
                 builder.WithColor(Color.Orange);
-                builder.WithCurrentTimestamp();
                 builder.WithThumbnailUrl(player.ProfilePortraitUrl);
                 builder.AddField("Player Level (Not Inlcuding Prestige(s))", player.PlayerLevel);
                 if (player.CompetitiveRank == 0) builder.AddField("Competetive Rank", "Not Placed");
@@ -41,6 +40,7 @@ namespace Sombra_Bot.Commands
                 decimal[] value = player.Endorsements.Values.ToArray();
                 builder.AddField($"Endorsment Level: {player.EndorsementLevel}", $"{keys[0]}: {value[0].ToString().Replace("0.", " ")}%, {keys[1]}: {value[1].ToString().Replace("0.", " ")}%, {keys[2]}: {value[2].ToString().Replace("0.", " ")}%");
                 builder.AddField("Platform", player.Platform.ToString().ToUpper());
+                builder.WithCurrentTimestamp();
 
                 await Context.Channel.SendMessageAsync("", embed: builder);
             }
