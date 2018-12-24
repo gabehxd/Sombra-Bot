@@ -9,7 +9,11 @@ namespace Sombra_Bot.Commands
         [RequireOwner]
         public async Task Say(string text)
         {
-            await Context.Message.DeleteAsync();
+            try
+            {
+                await Context.Message.DeleteAsync();
+            }
+            catch { }
             await Context.Channel.SendMessageAsync(text);
         }
     }
