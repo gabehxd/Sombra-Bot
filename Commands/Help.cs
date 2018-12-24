@@ -17,8 +17,8 @@ namespace Sombra_Bot.Commands
             builder.AddField("RemoveRole", "Removes a role to the specified user.\nargs: <user> <role>");
             builder.AddField("OWStats", "Gets Overwatch stats\nargs: <Battle.net tag>");
             builder.AddField("GetRelease", "Gets a release from the specificed Github repository\nargs: <repository owner> <repository name>");
-            builder.AddField("Invite", "Gets an Invite for Sombra Bot and Sombra Bot's discord");
-            builder.AddField("Hack", "Kicks or Bans a user\nargs: <level of hack, 1: kick, 2: ban> <user> <reason>");
+            builder.AddField("Invite", "Gets an invite for Sombra Bot and Sombra Bot's discord");
+            builder.AddField("Hack", "Kicks or bans a user\nargs: <level of hack, 1: kick, 2: ban> <user> <reason>");
 #if !DEBUG
             builder.WithFooter("All commands should start with `s.`");
 #else

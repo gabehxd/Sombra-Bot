@@ -102,6 +102,7 @@
   <ItemGroup>
     <Compile Include="Commands\ClearTemp.cs" />
     <Compile Include="Commands\Invite.cs" />
+    <Compile Include="Commands\MSG.cs" />
     <Compile Include="Commands\OWStats.cs" />
     <Compile Include="Commands\Release.cs" />
     <Compile Include="Commands\Hack.cs" />
