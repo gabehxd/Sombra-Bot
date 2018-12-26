@@ -7,6 +7,7 @@ using System.IO;
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using Sombra_Bot.Utils;
 
 namespace Sombra_Bot.Commands
 {
@@ -15,16 +16,31 @@ namespace Sombra_Bot.Commands
     {
         //requries the user to have /spl/ in the working directory
         //implement a stop command
-        [Command("playsplat"), Summary("Plays music.")]
+
+        private IAudioClient shared;
+        [Command("PlayMusic"), Summary("Plays music.")]
         [RequireOwner]
         public async Task PlayMusic(IVoiceChannel channel = null)
         {
             var voiceuser = Context.User as IVoiceState;
             channel = voiceuser.VoiceChannel ?? (Context.Message.Author as IGuildUser)?.VoiceChannel;
             if (Context.Channel == null) { await Context.Channel.SendMessageAsync("User must be in a voice channel, or a voice channel must be passed as an argument."); return; }
+            shared = await channel.ConnectAsync() as IAudioClient;
+            await SendAsync();
+        }
 
-            IAudioClient audioclient = await channel.ConnectAsync();
-            await SendAsync(audioclient as IAudioClient);
+        [Command("Stopmusic"), Summary("Stop music.")]
+        [RequireOwner]
+        public async Task StopMusic()
+        {
+            try
+            {
+                await shared.StopAsync();
+            }
+            catch (Exception e)
+            {
+                await Error.Send(Context.Channel, Value: e.Message);
+            }
         }
 
         private Process CreateStream(string path)
@@ -38,8 +54,9 @@ namespace Sombra_Bot.Commands
             };
             return Process.Start(ffmpeg);
         }
-        private async Task SendAsync(IAudioClient client)
+        private async Task SendAsync()
         {
+            //placeholder function
             DirectoryInfo spl = new DirectoryInfo("spl");
             List<FileInfo> files = spl.GetFiles().ToList();
             Random rng = new Random();
@@ -48,11 +65,10 @@ namespace Sombra_Bot.Commands
             {
                 var ffmpeg = CreateStream(path.FullName);
                 var output = ffmpeg.StandardOutput.BaseStream;
-                var discord = client.CreatePCMStream(AudioApplication.Music);
+                var discord = shared.CreatePCMStream(AudioApplication.Music);
                 await output.CopyToAsync(discord);
                 await discord.FlushAsync();
             }
         }
-        
     }
 }
