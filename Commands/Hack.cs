@@ -9,9 +9,10 @@ namespace Sombra_Bot.Commands
     public class Hack : ModuleBase<SocketCommandContext>
     {
         [Command("Hack"), Summary("Bans or kicks a user.")]
+        //Is there a way to check if a user has one perm or the other? In the main function possibly?
         [RequireUserPermission(GuildPermission.KickMembers)]
         [RequireUserPermission(GuildPermission.BanMembers)]
-        public async Task Remove(int level, IUser user, string reason = null)
+        public async Task ManageUser(int level, IUser user, string reason = null)
         {
             if (Context.User == user && level == 1)
             {

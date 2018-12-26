@@ -13,6 +13,8 @@ namespace Sombra_Bot.Commands
 
     public class Splatoon : ModuleBase<SocketCommandContext>
     {
+        //requries the user to have /spl/ in the working directory
+        //implement a stop command
         [Command("playsplat"), Summary("Plays music.")]
         [RequireOwner]
         public async Task PlayMusic(IVoiceChannel channel = null)
