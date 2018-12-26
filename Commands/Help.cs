@@ -23,7 +23,7 @@ namespace Sombra_Bot.Commands
 #if !DEBUG
             builder.WithFooter("All commands should start with `s.`");
 #else
-            builder.WithFooter("All commands should start with `d.`");
+            builder.WithFooter("Debug build");
 #endif
             builder.WithCurrentTimestamp();
             builder.WithColor(Color.Purple);
