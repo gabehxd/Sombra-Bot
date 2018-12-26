@@ -9,7 +9,11 @@ namespace Sombra_Bot.Commands
         [RequireOwner]
         public async Task SetPresence(params string[] input)
         {
-            await Context.Client.SetGameAsync(string.Join(" ", input));
+#if !DEBUG
+            await Context.Client.SetGameAsync($"{string.Join(" ", input)} | s.help");
+#else
+            await Context.Client.SetGameAsync($"{string.Join(" ", input)} | Debug Build");
+#endif
             await Context.Channel.SendMessageAsync("Done!");
         }
 
@@ -17,7 +21,11 @@ namespace Sombra_Bot.Commands
         [RequireOwner]
         public async Task ResetPresence()
         {
-            await Context.Client.SetGameAsync("Hacking the planet");
+#if !DEBUG
+            await Context.Client.SetGameAsync("Hacking the planet | s.help");
+#else
+            await Context.Client.SetGameAsync("Hacking the planet | Debug Build");
+#endif
             await Context.Channel.SendMessageAsync("Done!");
         }
     }

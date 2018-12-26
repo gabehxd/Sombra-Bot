@@ -42,7 +42,11 @@ namespace Sombra_Bot
 
         private async Task Client_Ready()
         {
-            await client.SetGameAsync("Hacking the planet");
+#if !DEBUG
+            await client.SetGameAsync("Hacking the planet | s.help");
+#else
+            await client.SetGameAsync("Hacking the planet | Debug Build");
+#endif
             Console.WriteLine("Started!");
         }
 
