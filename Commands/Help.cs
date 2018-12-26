@@ -10,6 +10,7 @@ namespace Sombra_Bot.Commands
         [Command("Help"), Summary("Get help.")]
         public async Task Helpmsg()
         {
+            //Can the help message be automated?
             await Context.Channel.TriggerTypingAsync();
             EmbedBuilder builder = new EmbedBuilder();
             builder.WithTitle("Help Menu");
