@@ -13,10 +13,10 @@ namespace Sombra_Bot.Commands
             await Context.Channel.TriggerTypingAsync();
             EmbedBuilder builder = new EmbedBuilder();
             builder.WithTitle("Help Menu");
-            builder.AddField("AddRole", "Adds a role to the specified user.\nargs: <user> <role>");
-            builder.AddField("RemoveRole", "Removes a role to the specified user.\nargs: <user> <role>");
             builder.AddField("OWStats", "Gets Overwatch stats\nargs: <Username>");
             builder.AddField("GetRelease", "Gets a release from the specificed Github repository\nargs: <repository owner> <repository name>");
+            builder.AddField("AddRole", "Adds a role to the specified user.\nargs: <user> <role>");
+            builder.AddField("RemoveRole", "Removes a role to the specified user.\nargs: <user> <role>");
             builder.AddField("Hack", "Kicks or bans a user\nargs: <level of hack, 1: kick, 2: ban> <user> <reason>");
             builder.AddField("Hacc", "Haccs a user >:3\nargs: <user>");
             builder.AddField("Invite", "Gets an invite for Sombra Bot and Sombra Bot's discord");
