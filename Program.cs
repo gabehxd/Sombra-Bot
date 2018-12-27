@@ -88,7 +88,7 @@ namespace Sombra_Bot
             IResult Result = await Commands.ExecuteAsync(Context, ArgPos);
             if (!Result.IsSuccess)
             {
-                await Error.Send(Message.Channel, Value: Result.ErrorReason);
+                await Error.Send(Message.Channel, Key: Result.ErrorReason);
 
                 //Console.WriteLine($"{DateTime.Now} at Commands] Something went wrong with executing a command. Text: {Context.Message.Content} | Error: {Result.ErrorReason}");
             }
