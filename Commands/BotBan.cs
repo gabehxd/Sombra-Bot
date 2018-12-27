@@ -9,7 +9,7 @@ namespace Sombra_Bot.Commands
 {
     public class BotBan : ModuleBase<SocketCommandContext>
     {
-        public static readonly FileInfo banned = new FileInfo("BannedUsers.list");
+        public static readonly FileInfo banned = new FileInfo(Path.Combine("save", "BannedUsers.list"));
 
         [Command("AddBotBan", RunMode = RunMode.Async), Summary("Ban a user from this bot.")]
         [RequireOwner]

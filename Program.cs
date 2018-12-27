@@ -13,12 +13,14 @@ namespace Sombra_Bot
 {
     class Program
     {
+        public static readonly DirectoryInfo save = new DirectoryInfo("save");
         private static string token;
         private DiscordSocketClient client;
         private CommandService Commands;
 
         static void Main()
         {
+            save.Create();
             LoadConfig();
             Program program = new Program();
             program.MainAsync().GetAwaiter().GetResult();
