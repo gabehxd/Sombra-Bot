@@ -10,6 +10,7 @@ namespace Sombra_Bot.Commands
         [RequireOwner]
         public async Task Clear()
         {
+            await Context.Channel.TriggerTypingAsync();
             try
             {
                 Release.roottemppath.Delete(true);
@@ -19,8 +20,6 @@ namespace Sombra_Bot.Commands
                 await Error.Send(Context.Channel, Value: "Failed to delete temp folder.");
                 return;
             }
-            await Context.Channel.TriggerTypingAsync();
-            await Task.Delay(500);
             await Context.Channel.SendMessageAsync("Done!");
         }
     }

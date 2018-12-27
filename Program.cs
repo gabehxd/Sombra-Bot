@@ -6,6 +6,8 @@ using Discord.WebSocket;
 using Configsys;
 using System.Reflection;
 using Sombra_Bot.Utils;
+using System.IO;
+using Sombra_Bot.Commands;
 
 namespace Sombra_Bot
 {
@@ -55,8 +57,12 @@ namespace Sombra_Bot
             SocketUserMessage Message = arg as SocketUserMessage;
             SocketCommandContext Context = new SocketCommandContext(client, Message);
 
-            if (Context.Message == null || Context.Message.Content == "") return;
-            if (Context.User.IsBot) return;
+            if (Context.Message == null || Context.Message.Content == "" || Context.User.IsBot) return;
+            if (GetBannedUsers(Context.User.Id))
+            {
+                await Error.Send(Context.Channel, Value: $"The use of Sombra Bot is currently restricted for <@{Context.User.Id}> by <@130825292292816897> ");
+                return;
+            }
             int ArgPos = 0;
 #if !DEBUG
             if (!Message.HasStringPrefix("s.", ref ArgPos))
@@ -68,7 +74,7 @@ namespace Sombra_Bot
                 if (rng.Next(0, 4) == 0 && Shoulditbelikethat(Message))
                 {
                     await Message.Channel.TriggerTypingAsync();
-                    await Task.Delay(800);
+                    await Task.Delay(500);
                     await Message.Channel.SendMessageAsync("Because it :b: like that.");
                 }
                 return;
@@ -83,7 +89,7 @@ namespace Sombra_Bot
             }
         }
 
-        private static bool Shoulditbelikethat(SocketUserMessage message)
+        private bool ShouldItBeLikeThat(SocketUserMessage message)
         {
             string[] messagearray = message.Content.Split(' ');
             foreach (string why in messagearray)
@@ -93,6 +99,18 @@ namespace Sombra_Bot
                     case "why":
                     case "y":
                         return true;
+                }
+            }
+            return false;
+        }
+
+        private bool IsUserBanned(ulong id)
+        {
+            foreach (string user in File.ReadAllLines(BotBan.banned.FullName))
+            {
+                if (user == id.ToString())
+                {
+                    return true;
                 }
             }
             return false;

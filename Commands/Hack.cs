@@ -14,6 +14,8 @@ namespace Sombra_Bot.Commands
         [RequireUserPermission(GuildPermission.BanMembers)]
         public async Task ManageUser(int level, IUser user, string reason = null)
         {
+            await Context.Channel.TriggerTypingAsync();
+
             if (Context.User == user && level == 1)
             {
                 await Context.Channel.SendMessageAsync("You can't kick yourself lmfao.");
