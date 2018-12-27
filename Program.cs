@@ -58,7 +58,7 @@ namespace Sombra_Bot
             SocketCommandContext Context = new SocketCommandContext(client, Message);
 
             if (Context.Message == null || Context.Message.Content == "" || Context.User.IsBot) return;
-            if (GetBannedUsers(Context.User.Id))
+            if (IsUserBanned(Context.User.Id))
             {
                 await Error.Send(Context.Channel, Value: $"The use of Sombra Bot is currently restricted for <@{Context.User.Id}> by <@130825292292816897> ");
                 return;
@@ -71,7 +71,7 @@ namespace Sombra_Bot
 #endif
             {
                 Random rng = new Random();
-                if (rng.Next(0, 4) == 0 && Shoulditbelikethat(Message))
+                if (rng.Next(0, 4) == 0 && ShouldItBeLikeThat(Message.Content))
                 {
                     await Message.Channel.TriggerTypingAsync();
                     await Task.Delay(500);
@@ -89,9 +89,9 @@ namespace Sombra_Bot
             }
         }
 
-        private bool ShouldItBeLikeThat(SocketUserMessage message)
+        private bool ShouldItBeLikeThat(string content)
         {
-            string[] messagearray = message.Content.Split(' ');
+            string[] messagearray = content.Split(' ');
             foreach (string why in messagearray)
             {
                 switch (why)
