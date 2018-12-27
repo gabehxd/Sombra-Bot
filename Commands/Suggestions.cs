@@ -7,7 +7,7 @@ namespace Sombra_Bot.Commands
 {
     public class Suggestions : ModuleBase<SocketCommandContext>
     {
-        private static readonly FileInfo suggests = new FileInfo(Path.Combine("save", "Suggestions.txt"));
+        private static readonly FileInfo suggests = new FileInfo(Path.Combine("save", "Suggestions.list"));
 
         [Command("Suggest"), Summary("Suggest a feature")]
         public async Task SaveSuggestion(params string[] suggestion)
@@ -15,7 +15,7 @@ namespace Sombra_Bot.Commands
             string joined = string.Join(" ", suggestion);
             if (string.IsNullOrWhiteSpace(joined))
             {
-                await Error.Send(Context.Channel, Value: "The input text has too few parameters.");
+                await Error.Send(Context.Channel, Key: "The input text has too few parameters.");
                 return;
             }
 

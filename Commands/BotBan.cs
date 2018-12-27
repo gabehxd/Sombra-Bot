@@ -9,16 +9,16 @@ namespace Sombra_Bot.Commands
 {
     public class BotBan : ModuleBase<SocketCommandContext>
     {
-        public static readonly FileInfo banned = new FileInfo(Path.Combine("save", "BannedUsers.list"));
+        public static FileInfo Banned => new FileInfo(Path.Combine("save", "BannedUsers.list"));
 
-        [Command("AddBotBan", RunMode = RunMode.Async), Summary("Ban a user from this bot.")]
+        [Command("AddBotBan"), Summary("Ban a user from this bot.")]
         [RequireOwner]
         public async Task AddBan(ulong ID)
         {
             await Context.Channel.TriggerTypingAsync();
-            if (banned.Exists)
+            if (Banned.Exists)
             {
-                foreach (string user in File.ReadAllLines(banned.FullName))
+                foreach (string user in File.ReadAllLines(Banned.FullName))
                 {
                     if (ulong.Parse(user) == ID)
                     {
@@ -27,18 +27,18 @@ namespace Sombra_Bot.Commands
                     }
                 }
             }
-            File.AppendAllText(banned.FullName, $"{ID.ToString()}\n");
-            await Context.Channel.SendMessageAsync("User added to ban list <:delte:527696678476709918>.");
+            File.AppendAllText(Banned.FullName, $"{ID.ToString()}\n");
+            await Context.Channel.SendMessageAsync("User added to ban list.");
         }
 
-        [Command("RemoveBotBan", RunMode = RunMode.Async), Summary("Removes banned user from this bot.")]
+        [Command("RemoveBotBan"), Summary("Removes banned user from this bot.")]
         [RequireOwner]
         public async Task RemoveBan(ulong ID)
         {
             await Context.Channel.TriggerTypingAsync();
-            if (banned.Exists)
+            if (Banned.Exists)
             {
-                List<string> bannedusers = File.ReadAllLines(banned.FullName).ToList();
+                List<string> bannedusers = File.ReadAllLines(Banned.FullName).ToList();
                 if (bannedusers.Count != 0)
                 {
                     bool Isfound = false;
@@ -53,7 +53,7 @@ namespace Sombra_Bot.Commands
                     }
                     if (Isfound)
                     {
-                        File.WriteAllLines(banned.FullName, bannedusers.ToArray());
+                        File.WriteAllLines(Banned.FullName, bannedusers.ToArray());
                         await Context.Channel.SendMessageAsync("User removed from ban list!");
                     }
                     else await Error.Send(Context.Channel, Value: "No user with that ID is banned.");

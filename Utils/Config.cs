@@ -49,6 +49,15 @@ namespace Configsys
                     }
                 }
             }
+            else
+            {
+                string[] config = new string[]
+                {
+                    "token=xxxx"
+                };
+                File.WriteAllLines(CONFIG_PATH.FullName, config);
+                Token = config[0];
+            }
         }
     }
 }
