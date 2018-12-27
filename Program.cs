@@ -60,10 +60,13 @@ namespace Sombra_Bot
             SocketCommandContext Context = new SocketCommandContext(client, Message);
 
             if (Context.Message == null || Context.Message.Content == "" || Context.User.IsBot) return;
-            if (IsUserBanned(Context.User.Id))
+            if (BotBan.banned.Exists)
             {
-                await Error.Send(Context.Channel, Value: $"The use of Sombra Bot is currently restricted for <@{Context.User.Id}> by <@130825292292816897> ");
-                return;
+                if (IsUserBanned(Context.User.Id))
+                {
+                    await Error.Send(Context.Channel, Value: $"The use of Sombra Bot is currently restricted for <@{Context.User.Id}> by <@130825292292816897> ");
+                    return;
+                }
             }
             int ArgPos = 0;
 #if !DEBUG
