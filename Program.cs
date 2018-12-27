@@ -60,7 +60,7 @@ namespace Sombra_Bot
             SocketCommandContext Context = new SocketCommandContext(client, Message);
 
             if (Context.Message == null || Context.Message.Content == "" || Context.User.IsBot) return;
-            if (BotBan.banned.Exists)
+            if (BotBan.Banned.Exists)
             {
                 if (IsUserBanned(Context.User.Id))
                 {
@@ -111,7 +111,7 @@ namespace Sombra_Bot
 
         private bool IsUserBanned(ulong id)
         {
-            foreach (string user in File.ReadAllLines(BotBan.banned.FullName))
+            foreach (string user in File.ReadAllLines(BotBan.Banned.FullName))
             {
                 if (user == id.ToString())
                 {
