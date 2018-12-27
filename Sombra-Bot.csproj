@@ -13,10 +13,4 @@
     <PackageReference Include="Overwatch.Net" Version="4.2.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Update="config.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-
 </Project>

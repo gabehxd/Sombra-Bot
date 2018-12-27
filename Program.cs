@@ -29,12 +29,12 @@ namespace Sombra_Bot
         private async Task MainAsync()
         {
             client = new DiscordSocketClient(new DiscordSocketConfig());
-
             Commands = new CommandService(new CommandServiceConfig
             {
                 CaseSensitiveCommands = false,
                 DefaultRunMode = RunMode.Async,
             });
+
             client.MessageReceived += MessageReceived;
             client.Ready += Client_Ready;
             await Commands.AddModulesAsync(Assembly.GetEntryAssembly());
@@ -124,6 +124,13 @@ namespace Sombra_Bot
         {
             Config config = new Config();
             token = config.Token;
+
+            if (token == "xxxx")
+            {
+                Console.WriteLine("Config has not been found, it has been created configure it with you bot's token.");
+                Console.ReadLine();
+                Environment.Exit(0);
+            }
         }
     }
 }
