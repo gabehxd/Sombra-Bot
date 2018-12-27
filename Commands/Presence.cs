@@ -5,7 +5,7 @@ namespace Sombra_Bot.Commands
 {
     public class Presence : ModuleBase<SocketCommandContext>
     {
-        [Command("setpresence"), Summary("Sets the game presence")]
+        [Command("SetPresence"), Summary("Sets the game presence")]
         [RequireOwner]
         public async Task SetPresence(params string[] input)
         {
@@ -17,7 +17,15 @@ namespace Sombra_Bot.Commands
             await Context.Channel.SendMessageAsync("Done!");
         }
 
-        [Command("resetpresence"), Summary("Resets the game presence")]
+        [Command("SetStream"), Summary("Sets the game presence")]
+        [RequireOwner]
+        public async Task SetStream(string input, string url)
+        {
+            await Context.Client.SetGameAsync(input, url, Discord.StreamType.Twitch);
+            await Context.Channel.SendMessageAsync("Done!");
+        }
+
+        [Command("ResetPresence"), Summary("Resets the game presence")]
         [RequireOwner]
         public async Task ResetPresence()
         {
