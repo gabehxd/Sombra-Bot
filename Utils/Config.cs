@@ -19,7 +19,7 @@ namespace Configsys
 {
     public class Config
     {
-        private static readonly FileInfo CONFIG_PATH = new FileInfo("config.txt");
+        private readonly FileInfo CONFIG_PATH = new FileInfo("config.txt");
 
         public string Token { get; set; } = null;
 
