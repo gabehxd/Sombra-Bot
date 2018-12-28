@@ -17,6 +17,9 @@ namespace Sombra_Bot
         private static string token;
         private DiscordSocketClient client;
         private CommandService Commands;
+        public static string presence;
+        public static string stream;
+        public static bool IsStream;
 
         static void Main()
         {
@@ -46,12 +49,45 @@ namespace Sombra_Bot
 
         private async Task Client_Ready()
         {
-#if !DEBUG
-            await client.SetGameAsync("Hacking the planet | s.help");
-#else
-            await client.SetGameAsync("Hacking the planet | Debug Build");
-#endif
             Console.WriteLine("Started!");
+            while (true)
+            {
+                if (presence == null && !IsStream)
+                {
+#if !DEBUG
+                    await client.SetGameAsync("hacking the planet | s.help");
+#else
+                    await client.SetGameAsync("hacking the planet | Debug Build");
+#endif
+                    await Task.Delay(8000);
+                    if (client.Guilds.Count > 0)
+                    {
+#if !DEBUG
+                        await client.SetGameAsync($"on {client.Guilds.Count} servers | s.help");
+#else
+                        await client.SetGameAsync($"on {client.Guilds.Count} servers | Debug Build");
+#endif
+                    }
+                }
+                else if (presence != null && !IsStream)
+                {
+#if !DEBUG
+                    await client.SetGameAsync($"{presence} | s.help");
+#else
+                    await client.SetGameAsync($"{presence} | Debug Build");
+#endif
+                }
+                else if (presence != null && IsStream)
+                {
+#if !DEBUG
+                    await client.SetGameAsync($"{presence} | s.help", stream, StreamType.Twitch);
+#else
+                    await client.SetGameAsync($"{presence} | Debug Build", stream, StreamType.Twitch);
+#endif
+
+                }
+                await Task.Delay(8000);
+            }
         }
 
         private async Task MessageReceived(SocketMessage arg)
