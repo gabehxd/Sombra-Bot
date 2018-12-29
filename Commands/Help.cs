@@ -28,6 +28,14 @@ namespace Sombra_Bot.Commands
             string msg = "";
             EmbedBuilder builder = new EmbedBuilder();
             builder.WithTitle("Help Menu");
+#if !DEBUG
+            builder.WithFooter("All commands should start with `s.`");
+#else
+            builder.WithFooter("Debug build");
+#endif
+            builder.WithCurrentTimestamp();
+            builder.WithColor(Color.Purple);
+
             if (command == null)
             {
                 msg = "Here are my commands:";
@@ -51,19 +59,17 @@ namespace Sombra_Bot.Commands
                     }
                 }
 
-                if (!Isfound)
+                if (Isfound)
+                {
+                    await Context.Channel.SendMessageAsync(msg, embed: builder);
+                    return;
+                }
+                else
                 {
                     await Error.Send(Context.Channel, Key: "That command does not exist");
                     return;
                 }
             }
-#if !DEBUG
-            builder.WithFooter("All commands should start with `s.`");
-#else
-            builder.WithFooter("Debug build");
-#endif
-            builder.WithCurrentTimestamp();
-            builder.WithColor(Color.Purple);
             await Context.Channel.SendMessageAsync("The help menu has been sent to your DMs!");
             await Context.User.SendMessageAsync(msg, embed: builder);
         }
