@@ -15,7 +15,6 @@ namespace Sombra_Bot.Commands
         [RequireOwner]
         public async Task AddBan(ulong ID)
         {
-            await Context.Channel.TriggerTypingAsync();
             if (Banned.Exists)
             {
                 foreach (string user in File.ReadAllLines(Banned.FullName))
@@ -35,7 +34,6 @@ namespace Sombra_Bot.Commands
         [RequireOwner]
         public async Task RemoveBan(ulong ID)
         {
-            await Context.Channel.TriggerTypingAsync();
             if (Banned.Exists)
             {
                 List<string> bannedusers = File.ReadAllLines(Banned.FullName).ToList();

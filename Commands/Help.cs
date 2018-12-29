@@ -17,7 +17,7 @@ namespace Sombra_Bot.Commands
                 { "Hacc", "Haccs a user >:3.\nargs: <user>"},
                 { "GetRelease", "Gets a release from the specificed Github repository\nargs: <repository owner> <repository name>" },
                 { "OWStats", "Gets Overwatch stats\nargs: <Username>" },
-                { "Suggest",  "Suggest a feature for <@130825292292816897> to add, do not spam this command or you will be banned from using this bot :).\nargs: <suggestion>" },
+                { "Suggest",  "Suggest a feature for <@130825292292816897> to add. Do not spam this command or you will be banned from using this bot :).\nargs: <suggestion>" },
                 { "Invite", "Gets an invite for Sombra Bot and Sombra Bot's discord" }
             };
 
@@ -25,10 +25,17 @@ namespace Sombra_Bot.Commands
         public async Task Helpmsg(string command = null)
         {
             //Can the help message be automated?
-            await Context.Channel.TriggerTypingAsync();
             string msg = "";
             EmbedBuilder builder = new EmbedBuilder();
             builder.WithTitle("Help Menu");
+#if !DEBUG
+            builder.WithFooter("All commands should start with `s.`");
+#else
+            builder.WithFooter("Debug build");
+#endif
+            builder.WithCurrentTimestamp();
+            builder.WithColor(Color.Purple);
+
             if (command == null)
             {
                 msg = "Here are my commands:";
@@ -52,21 +59,19 @@ namespace Sombra_Bot.Commands
                     }
                 }
 
-                if (!Isfound)
+                if (Isfound)
+                {
+                    await Context.Channel.SendMessageAsync(msg, embed: builder);
+                    return;
+                }
+                else
                 {
                     await Error.Send(Context.Channel, Key: "That command does not exist");
                     return;
                 }
             }
-#if !DEBUG
-            builder.WithFooter("All commands should start with `s.`");
-#else
-            builder.WithFooter("Debug build");
-#endif
-            builder.WithCurrentTimestamp();
-            builder.WithColor(Color.Purple);
-            await Task.Delay(500);
-            await Context.Channel.SendMessageAsync(msg, embed: builder);
+            await Context.Channel.SendMessageAsync("The help menu has been sent to your DMs!");
+            await Context.User.SendMessageAsync(msg, embed: builder);
         }
     }
 }

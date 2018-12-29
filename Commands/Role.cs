@@ -13,8 +13,6 @@ namespace Sombra_Bot.Commands
         [RequireUserPermission(ChannelPermission.ManagePermissions)]
         public async Task GiveRole(SocketGuildUser user, SocketRole role)
         {
-            await Context.Channel.TriggerTypingAsync();
-
             SocketGuildUser userguild = Context.User as SocketGuildUser;
             if (userguild.Roles.Last().CompareTo(role) == 1 || Context.Guild.Owner == Context.User)
             {
@@ -50,8 +48,6 @@ namespace Sombra_Bot.Commands
         [RequireUserPermission(ChannelPermission.ManagePermissions)]
         public async Task RemoveRole(SocketGuildUser user, SocketRole role)
         {
-            await Context.Channel.TriggerTypingAsync();
-
             SocketGuildUser userguild = Context.User as SocketGuildUser;
             if (userguild.Roles.Last().CompareTo(role) == 1 || Context.Guild.Owner == Context.User)
             {

@@ -14,8 +14,6 @@ namespace Sombra_Bot.Commands
         [RequireUserPermission(GuildPermission.BanMembers)]
         public async Task ManageUser(int level, IUser user, string reason = null)
         {
-            await Context.Channel.TriggerTypingAsync();
-
             if (Context.User == user && level == 1)
             {
                 await Context.Channel.SendMessageAsync("You can't kick yourself lmfao.");
@@ -34,20 +32,14 @@ namespace Sombra_Bot.Commands
                     //no kick method?
                     await Context.Guild.AddBanAsync(user, reason: reason);
                     await Context.Guild.RemoveBanAsync(user);
-                    await Context.Channel.TriggerTypingAsync();
-                    await Task.Delay(500);
                     await Context.Channel.SendMessageAsync(Getmessage());
                     await Context.Channel.TriggerTypingAsync();
-                    await Task.Delay(500);
                     await Context.Channel.SendMessageAsync($"{user} Hacked!");
                     break;
                 case 2:
                     await Context.Guild.AddBanAsync(user, reason: reason);
-                    await Context.Channel.TriggerTypingAsync();
-                    await Task.Delay(500);
                     await Context.Channel.SendMessageAsync(Getmessage());
                     await Context.Channel.TriggerTypingAsync();
-                    await Task.Delay(500);
                     await Context.Channel.SendMessageAsync($"{user} Hacked!");
                     break;
                 default:
