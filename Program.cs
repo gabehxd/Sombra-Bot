@@ -8,6 +8,7 @@ using System.Reflection;
 using Sombra_Bot.Utils;
 using System.IO;
 using Sombra_Bot.Commands;
+using System.Linq;
 
 namespace Sombra_Bot
 {
@@ -75,13 +76,7 @@ namespace Sombra_Bot
             if (!Message.HasStringPrefix("d.", ref ArgPos))
 #endif
             {
-                Random rng = new Random();
-                if (rng.Next(0, 4) == 0 && ShouldItBeLikeThat(Message.Content))
-                {
-                    await Message.Channel.TriggerTypingAsync();
-                    await Task.Delay(500);
-                    await Message.Channel.SendMessageAsync("Because it :b: like that.");
-                }
+                await ShouldItBeLikeThat(Message);
                 return;
             }
 
@@ -93,19 +88,25 @@ namespace Sombra_Bot
             }
         }
 
-        private bool ShouldItBeLikeThat(string content)
+        private async Task ShouldItBeLikeThat(SocketUserMessage context)
         {
-            string[] messagearray = content.Split(' ');
-            foreach (string why in messagearray)
+            string[] messagearray = context.Content.ToLower().Split(' ');
+            Random rng = new Random();
+            if (messagearray.Contains("y") || messagearray.Contains("why") && rng.Next(0, 4) == 0)
             {
-                switch (why)
-                {
-                    case "why":
-                    case "y":
-                        return true;
-                }
+                await context.Channel.TriggerTypingAsync();
+                await Task.Delay(500);
+                await context.Channel.SendMessageAsync("Because it :b: like that.");
+                return;
             }
-            return false;
+            else if (context.Content.ToLower().Contains("is gay"))
+            {
+                await context.Channel.TriggerTypingAsync();
+                await Task.Delay(500);
+                await context.Channel.SendMessageAsync("It shall be known!");
+                return;
+            }
+            else return;
         }
 
         private bool IsUserBanned(ulong id)
