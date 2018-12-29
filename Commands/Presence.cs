@@ -10,8 +10,6 @@ namespace Sombra_Bot.Commands
         [RequireOwner]
         public async Task SetPresence(params string[] input)
         {
-            await Context.Channel.TriggerTypingAsync();
-
             string joined = string.Join(" ", input);
             if (string.IsNullOrWhiteSpace(joined))
             {
@@ -29,8 +27,6 @@ namespace Sombra_Bot.Commands
         [RequireOwner]
         public async Task SetStream(string input, string url)
         {
-            await Context.Channel.TriggerTypingAsync();
-
             Program.presence = input;
             Program.stream = url;
             Program.IsStream = true;
@@ -41,8 +37,6 @@ namespace Sombra_Bot.Commands
         [RequireOwner]
         public async Task ResetPresence()
         {
-            await Context.Channel.TriggerTypingAsync();
-
             Program.presence = null;
             Program.stream = null;
             Program.IsStream = false;

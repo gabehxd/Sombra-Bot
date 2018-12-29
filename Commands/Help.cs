@@ -25,7 +25,6 @@ namespace Sombra_Bot.Commands
         public async Task Helpmsg(string command = null)
         {
             //Can the help message be automated?
-            await Context.Channel.TriggerTypingAsync();
             string msg = "";
             EmbedBuilder builder = new EmbedBuilder();
             builder.WithTitle("Help Menu");
@@ -65,8 +64,8 @@ namespace Sombra_Bot.Commands
 #endif
             builder.WithCurrentTimestamp();
             builder.WithColor(Color.Purple);
-            await Task.Delay(500);
-            await Context.Channel.SendMessageAsync(msg, embed: builder);
+            await Context.Channel.SendMessageAsync("The help menu has been sent to your DMs!");
+            await Context.User.SendMessageAsync(msg, embed: builder);
         }
     }
 }

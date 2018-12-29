@@ -10,7 +10,6 @@ namespace Sombra_Bot.Commands
         [RequireOwner]
         public async Task Clear()
         {
-            await Context.Channel.TriggerTypingAsync();
             try
             {
                 Release.roottemppath.Delete(true);

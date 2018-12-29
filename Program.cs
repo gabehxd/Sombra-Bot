@@ -60,7 +60,7 @@ namespace Sombra_Bot
                     await client.SetGameAsync("hacking the planet | Debug Build");
 #endif
                     await Task.Delay(8000);
-                    if (client.Guilds.Count > 0)
+                    if (client.Guilds.Count > 1)
                     {
 #if !DEBUG
                         await client.SetGameAsync($"on {client.Guilds.Count} servers | s.help");
@@ -121,6 +121,7 @@ namespace Sombra_Bot
                 return;
             }
 
+            await Context.Channel.TriggerTypingAsync();
             IResult Result = await Commands.ExecuteAsync(Context, ArgPos);
             if (!Result.IsSuccess)
             {

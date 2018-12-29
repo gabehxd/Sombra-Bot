@@ -10,8 +10,6 @@ namespace Sombra_Bot.Commands
         [RequireOwner]
         public async Task ShutDown()
         {
-            await Context.Channel.TriggerTypingAsync();
-            await Task.Delay(500);
             await Context.Channel.SendMessageAsync("Bye bitch.");
             Environment.Exit(0);
         }
