@@ -12,5 +12,4 @@
     <PackageReference Include="Octokit" Version="0.32.0" />
     <PackageReference Include="Overwatch.Net" Version="4.2.0" />
   </ItemGroup>
-
 </Project>
