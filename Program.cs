@@ -9,6 +9,7 @@ using Sombra_Bot.Utils;
 using System.IO;
 using Sombra_Bot.Commands;
 using System.Linq;
+using Discord.Rest;
 
 namespace Sombra_Bot
 {
@@ -21,6 +22,7 @@ namespace Sombra_Bot
         public static string presence;
         public static string stream;
         public static bool IsStream;
+        public RestApplication AppInfo;
 
 
         static void Main()
@@ -51,7 +53,9 @@ namespace Sombra_Bot
 
         private async Task Client_Ready()
         {
+            AppInfo = await client.GetApplicationInfoAsync();
             Console.WriteLine("Started!");
+
             while (true)
             {
                 if (presence == null && !IsStream)
@@ -114,7 +118,8 @@ namespace Sombra_Bot
             {
                 if (IsUserBanned(Context.User.Id))
                 {
-                    await Error.Send(Context.Channel, Value: $"The use of Sombra Bot is currently restricted for <@{Context.User.Id}> by <@130825292292816897>");
+
+                    await Error.Send(Context.Channel, Value: $"The use of Sombra Bot is currently restricted for <@{Context.User.Id}> by <@{AppInfo.Owner.Id}>");
                     return;
                 }
             }
