@@ -10,7 +10,7 @@ namespace Sombra_Bot.Commands
     public class Role : ModuleBase<SocketCommandContext>
     {
         [Command("AddRole"), Summary("Gives this specified role to the specified user.")]
-        [RequireUserPermission(ChannelPermission.ManagePermissions)]
+        [RequireUserPermission(ChannelPermission.ManageRoles)]
         public async Task GiveRole(SocketGuildUser user, SocketRole role)
         {
             SocketGuildUser userguild = Context.User as SocketGuildUser;
@@ -45,7 +45,7 @@ namespace Sombra_Bot.Commands
         }
 
         [Command("RemoveRole"), Summary("Gives this specified role to the specified user.")]
-        [RequireUserPermission(ChannelPermission.ManagePermissions)]
+        [RequireUserPermission(ChannelPermission.ManageRoles)]
         public async Task RemoveRole(SocketGuildUser user, SocketRole role)
         {
             SocketGuildUser userguild = Context.User as SocketGuildUser;

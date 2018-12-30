@@ -22,6 +22,7 @@ namespace Sombra_Bot
         public static string stream;
         public static bool IsStream;
 
+
         static void Main()
         {
             save.Create();
@@ -81,7 +82,7 @@ namespace Sombra_Bot
                 else if (presence != null && IsStream)
                 {
 #if !DEBUG
-                    await client.SetGameAsync($"{presence} | s.help", stream, StreamType.Twitch);
+                    await client.SetGameAsync($"{presence} | s.help", stream, ActivityType.Streaming);
 #else
                     await client.SetGameAsync($"{presence} | Debug Build", stream, StreamType.Twitch);
 #endif

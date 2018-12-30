@@ -61,7 +61,7 @@ namespace Sombra_Bot.Commands
 
                 if (Isfound)
                 {
-                    await Context.Channel.SendMessageAsync(msg, embed: builder);
+                    await Context.Channel.SendMessageAsync(msg, embed: builder.Build());
                     return;
                 }
                 else
@@ -71,7 +71,7 @@ namespace Sombra_Bot.Commands
                 }
             }
             await Context.Channel.SendMessageAsync("The help menu has been sent to your DMs!");
-            await Context.User.SendMessageAsync(msg, embed: builder);
+            await Context.User.SendMessageAsync(msg, embed: builder.Build());
         }
     }
 }

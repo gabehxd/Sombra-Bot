@@ -55,7 +55,7 @@ namespace Sombra_Bot.Commands
                 builder.AddField("Platform", player.Platform.ToString().ToUpper());
                 builder.WithCurrentTimestamp();
 
-                await Context.Channel.SendMessageAsync("", embed: builder);
+                await Context.Channel.SendMessageAsync("", embed: builder.Build());
             }
         }
 
