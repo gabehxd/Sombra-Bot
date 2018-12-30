@@ -42,7 +42,7 @@ namespace Sombra_Bot
 
             client.MessageReceived += MessageReceived;
             client.Ready += Client_Ready;
-            await Commands.AddModulesAsync(Assembly.GetEntryAssembly());
+            await Commands.AddModulesAsync(Assembly.GetEntryAssembly(), null);
             await client.LoginAsync(TokenType.Bot, token);
             await client.StartAsync();
 
@@ -84,7 +84,7 @@ namespace Sombra_Bot
 #if !DEBUG
                     await client.SetGameAsync($"{presence} | s.help", stream, ActivityType.Streaming);
 #else
-                    await client.SetGameAsync($"{presence} | Debug Build", stream, StreamType.Twitch);
+                    await client.SetGameAsync($"{presence} | Debug Build", stream, ActivityType.Streaming);
 #endif
 
                 }
@@ -120,7 +120,7 @@ namespace Sombra_Bot
             }
 
             await Context.Channel.TriggerTypingAsync();
-            IResult Result = await Commands.ExecuteAsync(Context, ArgPos);
+            IResult Result = await Commands.ExecuteAsync(Context, ArgPos, null);
             if (!Result.IsSuccess)
             {
                 await Error.Send(Message.Channel, Key: Result.ErrorReason);
