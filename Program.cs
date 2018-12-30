@@ -97,15 +97,8 @@ namespace Sombra_Bot
             SocketCommandContext Context = new SocketCommandContext(client, Message);
 
             if (Context.Message == null || Context.Message.Content == "" || Context.User.IsBot) return;
-            if (BotBan.Banned.Exists)
-            {
-                if (IsUserBanned(Context.User.Id))
-                {
-                    await Error.Send(Context.Channel, Value: $"The use of Sombra Bot is currently restricted for <@{Context.User.Id}> by <@130825292292816897> ");
-                    return;
-                }
-            }
             int ArgPos = 0;
+
 #if !DEBUG
             if (!Message.HasStringPrefix("s.", ref ArgPos))
 #else
@@ -114,6 +107,15 @@ namespace Sombra_Bot
             {
                 await ShouldItBeLikeThat(Message);
                 return;
+            }
+
+            if (BotBan.Banned.Exists)
+            {
+                if (IsUserBanned(Context.User.Id))
+                {
+                    await Error.Send(Context.Channel, Value: $"The use of Sombra Bot is currently restricted for <@{Context.User.Id}> by <@130825292292816897>");
+                    return;
+                }
             }
 
             await Context.Channel.TriggerTypingAsync();
