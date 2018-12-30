@@ -30,17 +30,31 @@ namespace Sombra_Bot.Commands
             {
                 case 1:
                     //no kick method?
-                    await Context.Guild.AddBanAsync(user, reason: reason);
-                    await Context.Guild.RemoveBanAsync(user);
-                    await Context.Channel.SendMessageAsync(Getmessage());
-                    await Context.Channel.TriggerTypingAsync();
-                    await Context.Channel.SendMessageAsync($"{user} Hacked!");
+                    try
+                    {
+                        await Context.Guild.AddBanAsync(user, reason: reason);
+                        await Context.Guild.RemoveBanAsync(user);
+                        await Context.Channel.SendMessageAsync(Getmessage());
+                        await Context.Channel.TriggerTypingAsync();
+                        await Context.Channel.SendMessageAsync($"{user} Hacked!");
+                    }
+                    catch
+                    {
+                        await Error.Send(Context.Channel, Value: "User could not be kicked, insufficent permissions.");
+                    }
                     break;
                 case 2:
-                    await Context.Guild.AddBanAsync(user, reason: reason);
-                    await Context.Channel.SendMessageAsync(Getmessage());
-                    await Context.Channel.TriggerTypingAsync();
-                    await Context.Channel.SendMessageAsync($"{user} Hacked!");
+                    try
+                    {
+                        await Context.Guild.AddBanAsync(user, reason: reason);
+                        await Context.Channel.SendMessageAsync(Getmessage());
+                        await Context.Channel.TriggerTypingAsync();
+                        await Context.Channel.SendMessageAsync($"{user} Hacked!");
+                    }
+                    catch
+                    {
+                        await Error.Send(Context.Channel, Value: "User could not be banned, insufficent permissions.");
+                    }
                     break;
                 default:
                     await Error.Send(Context.Channel, Value: "Inputted hack level does not exist");
