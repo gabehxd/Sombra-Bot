@@ -4,12 +4,11 @@ using System.Collections.Generic;
 using Discord.Commands;
 using Sombra_Bot.Utils;
 
-
 namespace Sombra_Bot.Commands
 {
     public class Help : ModuleBase<SocketCommandContext>
     {
-        private readonly Dictionary<string, string> commands = new Dictionary<string, string>
+        private Dictionary<string, string> commands = new Dictionary<string, string>
             {
                 { "AddRole", "Adds a role to the specified user.\nargs: <user> <role>" },
                 { "RemoveRole", "Removes a role from the specified user.\nargs: <user> <role>" },
@@ -17,13 +16,13 @@ namespace Sombra_Bot.Commands
                 { "Hacc", "Haccs a user >:3.\nargs: <user>"},
                 { "GetRelease", "Gets a release from the specificed Github repository\nargs: <repository owner> <repository name>" },
                 { "OWStats", "Gets Overwatch stats\nargs: <Username>" },
-                { "Suggest",  "Suggest a feature for <@130825292292816897> to add. Do not spam this command or you will be banned from using this bot :).\nargs: <suggestion>" },
                 { "Invite", "Gets an invite for Sombra Bot and Sombra Bot's discord" }
             };
 
         [Command("Help"), Summary("Get help.")]
         public async Task Helpmsg(string command = null)
         {
+            if (Program.AppInfo.Owner.Id == 130825292292816897) commands.Add("Suggest", "Suggest a feature for <@130825292292816897> to add. Do not spam this command or you will be banned from using this bot :).\nargs: <suggestion>");
             //Can the help message be automated?
             string msg = "";
             EmbedBuilder builder = new EmbedBuilder();
