@@ -1,46 +1,24 @@
 ﻿using System.Threading.Tasks;
 using Discord.Commands;
-using Sombra_Bot.Utils;
 
 namespace Sombra_Bot.Commands
 {
     public class Presence : ModuleBase<SocketCommandContext>
     {
-        [Command("SetPresence"), Summary("Sets the game presence")]
+        [Command("setpresence"), Summary("Sets the game presence")]
         [RequireOwner]
         public async Task SetPresence(params string[] input)
         {
-            string joined = string.Join(" ", input);
-            if (string.IsNullOrWhiteSpace(joined))
-            {
-                await Error.Send(Context.Channel, Value: "The input text has too few parameters.");
-                return;
-            }
-
-            Program.presence = joined;
-            Program.stream = null;
-            Program.IsStream = false;
-            await Context.Channel.SendMessageAsync("Queued!");
+            await Context.Client.SetGameAsync(string.Join(" ", input));
+            await Context.Channel.SendMessageAsync("Done!");
         }
 
-        [Command("SetStream"), Summary("Sets the stream presence")]
-        [RequireOwner]
-        public async Task SetStream(string input, string url)
-        {
-            Program.presence = input;
-            Program.stream = url;
-            Program.IsStream = true;
-            await Context.Channel.SendMessageAsync("Queued!");
-        }
-
-        [Command("ResetPresence"), Summary("Resets the game presence")]
+        [Command("resetpresence"), Summary("Resets the game presence")]
         [RequireOwner]
         public async Task ResetPresence()
         {
-            Program.presence = null;
-            Program.stream = null;
-            Program.IsStream = false;
-            await Context.Channel.SendMessageAsync("Queued!");
+            await Context.Client.SetGameAsync("Hacking the planet");
+            await Context.Channel.SendMessageAsync("Done!");
         }
     }
 }

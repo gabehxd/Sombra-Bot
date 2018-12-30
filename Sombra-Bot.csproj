@@ -8,9 +8,24 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Discord.Net" Version="2.0.0" />
+    <PackageReference Include="Discord.Net" Version="1.0.2" />
     <PackageReference Include="Octokit" Version="0.32.0" />
     <PackageReference Include="Overwatch.Net" Version="4.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="config.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ffmpeg.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="libsodium.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="opus.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

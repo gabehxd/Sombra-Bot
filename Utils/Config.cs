@@ -19,7 +19,7 @@ namespace Configsys
 {
     public class Config
     {
-        private readonly FileInfo CONFIG_PATH = new FileInfo("config.txt");
+        private static readonly FileInfo CONFIG_PATH = new FileInfo("config.txt");
 
         public string Token { get; set; } = null;
 
@@ -48,15 +48,6 @@ namespace Configsys
                         catch { }
                     }
                 }
-            }
-            else
-            {
-                string[] config = new string[]
-                {
-                    "token=xxxx"
-                };
-                File.WriteAllLines(CONFIG_PATH.FullName, config);
-                Token = config[0];
             }
         }
     }

@@ -39,6 +39,8 @@ namespace Sombra_Bot.Commands
                 Octokit.Release latest = releases[0];
                 if (latest.Assets.Count == 1)
                 {
+                    await Context.Channel.TriggerTypingAsync();
+                    await Task.Delay(500);
                     await Context.Channel.SendMessageAsync("Grabbing release...");
                     await Context.Channel.TriggerTypingAsync();
 
@@ -72,6 +74,8 @@ namespace Sombra_Bot.Commands
                 }
                 else
                 {
+                    await Context.Channel.TriggerTypingAsync();
+                    await Task.Delay(500);
                     await Context.Channel.SendMessageAsync("Grabbing releases...");
                     HttpClient dlclient = new HttpClient();
                     DirectoryInfo temppath = new DirectoryInfo(Path.Combine(Path.GetTempPath(), "Sombra-Bot", repo.ToLower()));

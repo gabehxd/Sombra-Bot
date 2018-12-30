@@ -14,7 +14,7 @@ namespace Sombra_Bot.Utils
             builder.AddField(Key, Value);
             builder.WithColor(Color.Red);
             builder.WithCurrentTimestamp();
-            await SendLocation.SendMessageAsync("", embed: builder.Build());
+            await SendLocation.SendMessageAsync("", embed: builder);
         }
     }
 }

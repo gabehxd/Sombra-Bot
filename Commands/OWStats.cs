@@ -12,6 +12,7 @@ namespace Sombra_Bot.Commands
         [Command("OWStats"), Summary("Gets your Overwatch stats!")]
         public async Task GetstatsOW(string User)
         {
+            await Context.Channel.TriggerTypingAsync();
             using (var owClient = new OverwatchClient())
             {
                 Player player;
@@ -55,7 +56,7 @@ namespace Sombra_Bot.Commands
                 builder.AddField("Platform", player.Platform.ToString().ToUpper());
                 builder.WithCurrentTimestamp();
 
-                await Context.Channel.SendMessageAsync("", embed: builder.Build());
+                await Context.Channel.SendMessageAsync("", embed: builder);
             }
         }
 

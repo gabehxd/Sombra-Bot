@@ -30,31 +30,23 @@ namespace Sombra_Bot.Commands
             {
                 case 1:
                     //no kick method?
-                    try
-                    {
-                        await Context.Guild.AddBanAsync(user, reason: reason);
-                        await Context.Guild.RemoveBanAsync(user);
-                        await Context.Channel.SendMessageAsync(Getmessage());
-                        await Context.Channel.TriggerTypingAsync();
-                        await Context.Channel.SendMessageAsync($"{user} Hacked!");
-                    }
-                    catch
-                    {
-                        await Error.Send(Context.Channel, Value: "User could not be kicked, insufficent permissions.");
-                    }
+                    await Context.Guild.AddBanAsync(user, reason: reason);
+                    await Context.Guild.RemoveBanAsync(user);
+                    await Context.Channel.TriggerTypingAsync();
+                    await Task.Delay(500);
+                    await Context.Channel.SendMessageAsync(Getmessage());
+                    await Context.Channel.TriggerTypingAsync();
+                    await Task.Delay(500);
+                    await Context.Channel.SendMessageAsync($"{user} Hacked!");
                     break;
                 case 2:
-                    try
-                    {
-                        await Context.Guild.AddBanAsync(user, reason: reason);
-                        await Context.Channel.SendMessageAsync(Getmessage());
-                        await Context.Channel.TriggerTypingAsync();
-                        await Context.Channel.SendMessageAsync($"{user} Hacked!");
-                    }
-                    catch
-                    {
-                        await Error.Send(Context.Channel, Value: "User could not be banned, insufficent permissions.");
-                    }
+                    await Context.Guild.AddBanAsync(user, reason: reason);
+                    await Context.Channel.TriggerTypingAsync();
+                    await Task.Delay(500);
+                    await Context.Channel.SendMessageAsync(Getmessage());
+                    await Context.Channel.TriggerTypingAsync();
+                    await Task.Delay(500);
+                    await Context.Channel.SendMessageAsync($"{user} Hacked!");
                     break;
                 default:
                     await Error.Send(Context.Channel, Value: "Inputted hack level does not exist");
