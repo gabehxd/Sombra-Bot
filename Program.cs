@@ -22,7 +22,7 @@ namespace Sombra_Bot
         public static string presence;
         public static string stream;
         public static bool IsStream;
-        public RestApplication AppInfo;
+        public static RestApplication AppInfo;
 
 
         static void Main()
