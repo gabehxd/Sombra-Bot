@@ -26,7 +26,6 @@ namespace Sombra_Bot.Commands
             switch (level)
             {
                 case 1:
-                    //no kick method?
                     if (user.GuildPermissions.KickMembers)
                     {
                         try
