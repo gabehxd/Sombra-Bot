@@ -11,23 +11,17 @@ namespace Sombra_Bot.Commands
         [Command("Hack"), Summary("Bans or kicks a user.")]
         public async Task ManageUser(int level, IGuildUser user, string reason = null)
         {
-            if (Context.User == user && level == 1)
-            {
-                await Context.Channel.SendMessageAsync("You can't kick yourself lmfao.");
-                return;
-            }
-
-            if (Context.User == user && level == 2)
-            {
-                await Context.Channel.SendMessageAsync("You can't ban yourself lmfao.");
-                return;
-            }
-
             switch (level)
             {
                 case 1:
                     if (user.GuildPermissions.KickMembers)
                     {
+                        if (Context.User == user)
+                        {
+                            await Context.Channel.SendMessageAsync("You can't kick yourself lmfao.");
+                            return;
+                        }
+
                         try
                         {
                             await user.KickAsync(reason);
@@ -46,6 +40,12 @@ namespace Sombra_Bot.Commands
                 case 2:
                     if (user.GuildPermissions.BanMembers)
                     {
+                        if (Context.User == user)
+                        {
+                            await Context.Channel.SendMessageAsync("You can't ban yourself lmfao.");
+                            return;
+                        }
+
                         try
                         {
                             await Context.Guild.AddBanAsync(user, reason: reason);
