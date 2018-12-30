@@ -138,7 +138,7 @@ namespace Sombra_Bot
                 await context.Channel.SendMessageAsync("Because it :b: like that.");
                 return;
             }
-            else if (context.Content.ToLower().Contains("is gay"))
+            else if (context.Content.ToLower().Contains("is gay") && rng.Next(0, 4) == 0)
             {
                 await context.Channel.TriggerTypingAsync();
                 await Task.Delay(500);
@@ -152,10 +152,7 @@ namespace Sombra_Bot
         {
             foreach (string user in File.ReadAllLines(BotBan.Banned.FullName))
             {
-                if (user == id.ToString())
-                {
-                    return true;
-                }
+                if (user == id.ToString()) return true;
             }
             return false;
         }
