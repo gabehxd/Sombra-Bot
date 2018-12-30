@@ -31,8 +31,7 @@ namespace Sombra_Bot.Commands
                     {
                         try
                         {
-                            await Context.Guild.AddBanAsync(user, reason: reason);
-                            await Context.Guild.RemoveBanAsync(user);
+                            await user.KickAsync(reason);
                             await Context.Channel.SendMessageAsync(Getmessage());
                             await Context.Channel.TriggerTypingAsync();
                             await Context.Channel.SendMessageAsync($"{user} Hacked!");
