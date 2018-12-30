@@ -10,12 +10,10 @@ namespace Sombra_Bot.Commands
     public class Role : ModuleBase<SocketCommandContext>
     {
         [Command("AddRole"), Summary("Gives this specified role to the specified user.")]
-        [RequireUserPermission(ChannelPermission.ManagePermissions)]
+        [RequireUserPermission(ChannelPermission.ManageRoles)]
         public async Task GiveRole(SocketGuildUser user, SocketRole role)
         {
             SocketGuildUser userguild = Context.User as SocketGuildUser;
-
-
             if (userguild.Roles.Last().CompareTo(role) == 1 || Context.Guild.Owner == Context.User)
             {
                 if (!role.Members.Contains(user))
@@ -29,13 +27,13 @@ namespace Sombra_Bot.Commands
                         await Error.Send(Context.Channel, Value: "Role could not be added.");
                         return;
                     }
-                    await Context.Channel.SendMessageAsync("Done!");
+                    await Context.Channel.SendMessageAsync($"Done!, Gave role: {role} to <@{user.Id}>.");
                     //uncomment for debuging
                     //await Context.Channel.SendMessageAsync($"{userguild.Roles.Last().CompareTo(role).ToString()}");
                 }
                 else
                 {
-                    await Error.Send(Context.Channel, Value: $"<@{user.Id}> already has that role");
+                    await Error.Send(Context.Channel, Value: $"<@{user.Id}> already has that role.");
                     return;
                 }
             }
@@ -47,7 +45,7 @@ namespace Sombra_Bot.Commands
         }
 
         [Command("RemoveRole"), Summary("Gives this specified role to the specified user.")]
-        [RequireUserPermission(ChannelPermission.ManagePermissions)]
+        [RequireUserPermission(ChannelPermission.ManageRoles)]
         public async Task RemoveRole(SocketGuildUser user, SocketRole role)
         {
             SocketGuildUser userguild = Context.User as SocketGuildUser;
@@ -62,7 +60,7 @@ namespace Sombra_Bot.Commands
                     await Error.Send(Context.Channel, Value: "Role could not be removed.");
                     return;
                 }
-                await Context.Channel.SendMessageAsync("Done!");
+                await Context.Channel.SendMessageAsync($"Done!, Removed role: {role} to <@{user.Id}>.");
             }
             else
             {
