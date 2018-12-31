@@ -101,7 +101,8 @@ namespace Sombra_Bot
             SocketUserMessage Message = arg as SocketUserMessage;
             SocketCommandContext Context = new SocketCommandContext(client, Message);
 
-            if (Context.Message == null || Context.Message.Content == "" || Context.User.IsBot) return;
+            //If guild is null then we are in DMs and we should not do anything w/ DMs
+            if (string.IsNullOrEmpty(Context.Message.Content) || Context.User.IsBot || Context.Guild == null) return;
             int ArgPos = 0;
 
 #if !DEBUG
@@ -170,7 +171,7 @@ namespace Sombra_Bot
 
             if (token == "xxxx")
             {
-                Console.WriteLine("Config has not been found, it has been created configure it with you bot's token.");
+                Console.WriteLine("Config has not been found, the file has been created, configure it with you bot's token.");
                 Console.ReadLine();
                 Environment.Exit(0);
             }

@@ -25,7 +25,7 @@ namespace Configsys
 
         public Config()
         {
-            if (File.Exists(CONFIG_PATH.FullName))
+            if (CONFIG_PATH.Exists)
             {
                 string[] lines = File.ReadAllLines(CONFIG_PATH.FullName);
 
@@ -56,7 +56,7 @@ namespace Configsys
                     "token=xxxx"
                 };
                 File.WriteAllLines(CONFIG_PATH.FullName, config);
-                Token = config[0];
+                Token = "xxxx";
             }
         }
     }
