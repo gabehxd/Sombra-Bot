@@ -111,7 +111,7 @@ namespace Sombra_Bot
             if (!Message.HasStringPrefix("d.", ref ArgPos))
 #endif
             {
-                await ShouldItBeLikeThat(Message);
+                if (IsMemesDisabled(Context.Guild.Id)) await ShouldItBeLikeThat(Message);
                 return;
             }
 
@@ -154,11 +154,20 @@ namespace Sombra_Bot
             }
         }
 
+        private bool IsMemesDisabled(ulong id)
+        {
+            foreach (string server in File.ReadAllLines(DisableSpeak.DisabledMServers.FullName))
+            {
+                if (ulong.Parse(server) == id) return true;
+            }
+            return false;
+        }
+
         private bool IsUserBanned(ulong id)
         {
             foreach (string user in File.ReadAllLines(BotBan.Banned.FullName))
             {
-                if (user == id.ToString()) return true;
+                if (ulong.Parse(user) == id) return true;
             }
             return false;
         }
