@@ -6,7 +6,7 @@ namespace Sombra_Bot.Commands
 {
     public class ClearTemp : ModuleBase<SocketCommandContext>
     {
-        [Command("ClearTemp"), Summary("Clears the Temp Directory for Sombra Bot")]
+        [Command("ClearTemp"), Summary("Clears the Temp Directory for Sombra Bot.")]
         [RequireOwner]
         public async Task Clear()
         {
