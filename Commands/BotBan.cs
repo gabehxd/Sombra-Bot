@@ -58,10 +58,7 @@ namespace Sombra_Bot.Commands
                 }
                 else await Error.Send(Context.Channel, Value: "No users are banned.");
             }
-            else
-            {
-                await Error.Send(Context.Channel, Value: "No users are banned.");
-            }
+            else await Error.Send(Context.Channel, Value: "No users are banned.");
         }
     }
 }
