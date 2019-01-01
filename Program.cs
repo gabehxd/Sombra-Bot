@@ -65,7 +65,7 @@ namespace Sombra_Bot
 #else
                     await client.SetGameAsync("hacking the planet | Debug Build");
 #endif
-                    await Task.Delay(8000);
+                    await Task.Delay(10000);
                     if (client.Guilds.Count > 1)
                     {
 #if !DEBUG
@@ -92,7 +92,7 @@ namespace Sombra_Bot
 #endif
 
                 }
-                await Task.Delay(8000);
+                await Task.Delay(10000);
             }
         }
 

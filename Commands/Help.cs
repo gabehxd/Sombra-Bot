@@ -23,7 +23,7 @@ namespace Sombra_Bot.Commands
         public async Task Helpmsg(string command = null)
         {
             //Only enable this command in the help menu when the owner is Sun/a Dev.
-            if (Program.AppInfo.Owner.Id == 130825292292816897) commands.Add("Suggest", "Suggest a feature for <@130825292292816897> to add. Do not spam this command or you will be banned from using this bot :).\nargs: <suggestion>");
+            if (Program.AppInfo.Owner.Id == 130825292292816897) commands.Add("Suggest", $"Suggest a feature for <@{Program.AppInfo.Owner.Id}> to add. Do not spam this command or you will be banned from using this bot :).\nargs: <suggestion>");
             //Can the help message be automated?
             string msg = "";
             EmbedBuilder builder = new EmbedBuilder();
