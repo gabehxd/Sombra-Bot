@@ -11,8 +11,7 @@ namespace Sombra_Bot.Commands
         [Command("Hack"), Summary("Bans or kicks a user.")]
         public async Task ManageUser(int level, IGuildUser user, params string[] reason)
         {
-            string fullreason;
-            fullreason = string.Join(" ", reason);
+            string fullreason = string.Join(" ", reason);
             IGuildUser cmduser = Context.User as IGuildUser;
 
             switch (level)

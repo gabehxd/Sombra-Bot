@@ -138,7 +138,7 @@ namespace Sombra_Bot
         {
             string[] messagearray = context.Content.ToLower().Split(' ');
             Random rng = new Random();
-            if (messagearray.Contains("y") || messagearray.Contains("why") && rng.Next(0, 5) == 0)
+            if (messagearray.Contains("y") || messagearray.Contains("why") && rng.Next(0, 6) == 0)
             {
                 await context.Channel.TriggerTypingAsync();
                 await Task.Delay(500);
@@ -152,7 +152,6 @@ namespace Sombra_Bot
                 await context.Channel.SendMessageAsync("It shall be known!");
                 return;
             }
-            else return;
         }
 
         private bool IsUserBanned(ulong id)
