@@ -9,22 +9,26 @@ namespace Sombra_Bot.Commands
     public class Hack : ModuleBase<SocketCommandContext>
     {
         [Command("Hack"), Summary("Bans or kicks a user.")]
-        public async Task ManageUser(int level, IGuildUser user, string reason = null)
+        public async Task ManageUser(int level, IGuildUser user, params string[] reason)
         {
+            string fullreason;
+            fullreason = string.Join(" ", reason);
+            IGuildUser cmduser = Context.User as IGuildUser;
+
             switch (level)
             {
                 case 1:
-                    if (user.GuildPermissions.KickMembers)
+                    if (cmduser.GuildPermissions.KickMembers)
                     {
                         if (Context.User == user)
                         {
-                            await Context.Channel.SendMessageAsync("You can't kick yourself lmfao.");
+                            await Error.Send(Context.Channel, Value: "You cannot kick youself.");
                             return;
                         }
 
                         try
                         {
-                            await user.KickAsync(reason);
+                            await user.KickAsync(fullreason);
                             await Context.Channel.SendMessageAsync(Getmessage());
                             await Context.Channel.TriggerTypingAsync();
                             await Context.Channel.SendMessageAsync($"{user} Hacked!");
@@ -35,20 +39,20 @@ namespace Sombra_Bot.Commands
                         }
                     }
                     else await Error.Send(Context.Channel, Value: "User requires guild permission KickMembers");
-
                     break;
+
                 case 2:
-                    if (user.GuildPermissions.BanMembers)
+                    if (cmduser.GuildPermissions.BanMembers)
                     {
                         if (Context.User == user)
                         {
-                            await Context.Channel.SendMessageAsync("You can't ban yourself lmfao.");
+                            await Error.Send(Context.Channel, Value: "You cannot ban youself.");
                             return;
                         }
 
                         try
                         {
-                            await Context.Guild.AddBanAsync(user, reason: reason);
+                            await Context.Guild.AddBanAsync(user, reason: fullreason);
                             await Context.Channel.SendMessageAsync(Getmessage());
                             await Context.Channel.TriggerTypingAsync();
                             await Context.Channel.SendMessageAsync($"{user} Hacked!");
@@ -60,6 +64,7 @@ namespace Sombra_Bot.Commands
                     }
                     else await Error.Send(Context.Channel, Value: "User requires guild permission BanMembers");
                     break;
+
                 default:
                     await Error.Send(Context.Channel, Key: "Inputted hack level does not exist");
                     break;
