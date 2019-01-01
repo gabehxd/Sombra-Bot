@@ -111,18 +111,15 @@ namespace Sombra_Bot
             if (!Message.HasStringPrefix("d.", ref ArgPos))
 #endif
             {
-                if (IsMemesDisabled(Context.Guild.Id)) await ShouldItBeLikeThat(Message);
+                if (!AreMemesDisabled(Context.Guild.Id)) await ShouldItBeLikeThat(Message);
                 return;
             }
 
-            if (BotBan.Banned.Exists)
+            if (IsUserBanned(Context.User.Id))
             {
-                if (IsUserBanned(Context.User.Id))
-                {
 
-                    await Error.Send(Context.Channel, Value: $"The use of Sombra Bot is currently restricted for <@{Context.User.Id}> by <@{AppInfo.Owner.Id}>");
-                    return;
-                }
+                await Error.Send(Context.Channel, Value: $"The use of Sombra Bot is currently restricted for <@{Context.User.Id}> by <@{AppInfo.Owner.Id}>");
+                return;
             }
 
             await Context.Channel.TriggerTypingAsync();
@@ -154,20 +151,26 @@ namespace Sombra_Bot
             }
         }
 
-        private bool IsMemesDisabled(ulong id)
+        private bool AreMemesDisabled(ulong id)
         {
-            foreach (string server in File.ReadAllLines(DisableSpeak.DisabledMServers.FullName))
+            if (DisableSpeak.DisabledMServers.Exists)
             {
-                if (ulong.Parse(server) == id) return true;
+                foreach (string server in File.ReadAllLines(DisableSpeak.DisabledMServers.FullName))
+                {
+                    if (ulong.Parse(server) == id) return true;
+                }
             }
             return false;
         }
 
         private bool IsUserBanned(ulong id)
         {
-            foreach (string user in File.ReadAllLines(BotBan.Banned.FullName))
+            if (BotBan.Banned.Exists)
             {
-                if (ulong.Parse(user) == id) return true;
+                foreach (string user in File.ReadAllLines(BotBan.Banned.FullName))
+                {
+                    if (ulong.Parse(user) == id) return true;
+                }
             }
             return false;
         }

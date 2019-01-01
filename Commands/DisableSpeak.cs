@@ -1,9 +1,7 @@
 ﻿using Discord.Commands;
 using Sombra_Bot.Utils;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using Discord;
 using System.Threading.Tasks;
 using System.Linq;
@@ -12,7 +10,7 @@ namespace Sombra_Bot.Commands
 {
     public class DisableSpeak : ModuleBase<SocketCommandContext>
     {
-        public static FileInfo DisabledMServers => new FileInfo(Path.Combine("save", "BannedUsers.list"));
+        public static FileInfo DisabledMServers => new FileInfo(Path.Combine("save", "DisabledServers-Memes.list"));
 
         [Command("DisableMemes"), Summary("Disables Sombra bot's random memes.")]
         [RequireUserPermission(GuildPermission.ManageGuild)]
