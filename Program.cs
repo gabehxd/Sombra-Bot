@@ -138,14 +138,14 @@ namespace Sombra_Bot
         {
             string[] messagearray = context.Content.ToLower().Split(' ');
             Random rng = new Random();
-            if (messagearray.Contains("y") || messagearray.Contains("why") && rng.Next(0, 6) == 0)
+            if (rng.Next(0, 6) == 0 && messagearray.Contains("y") || messagearray.Contains("why") )
             {
                 await context.Channel.TriggerTypingAsync();
                 await Task.Delay(500);
                 await context.Channel.SendMessageAsync("Because it :b: like that.");
                 return;
             }
-            else if (context.Content.ToLower().Contains("is gay") || context.Content.ToLower().Contains("are gay") && rng.Next(0, 3) == 0)
+            else if (rng.Next(0, 3) == 0 && context.Content.ToLower().Contains("is gay") || context.Content.ToLower().Contains("are gay"))
             {
                 await context.Channel.TriggerTypingAsync();
                 await Task.Delay(500);
