@@ -135,7 +135,7 @@ namespace Sombra_Bot
         {
             string[] messagearray = context.Content.ToLower().Split(' ');
             Random rng = new Random();
-            if (rng.Next(0, 5) == 0 && (messagearray.Contains("y") || messagearray.Contains("why")))
+            if (rng.Next(0, 6) == 0 && (messagearray.Contains("y") || messagearray.Contains("why")))
             {
                 await context.Channel.TriggerTypingAsync();
                 await Task.Delay(500);
