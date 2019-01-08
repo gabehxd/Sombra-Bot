@@ -27,9 +27,11 @@ namespace Sombra_Bot.Commands
                         await Error.Send(Context.Channel, Value: "Role could not be added.");
                         return;
                     }
-                    await Context.Channel.SendMessageAsync($"Done!, Gave role: {role} to <@{user.Id}>.");
-                    //uncomment for debuging
-                    //await Context.Channel.SendMessageAsync($"{userguild.Roles.Last().CompareTo(role).ToString()}");
+                    await Context.Channel.SendMessageAsync($"Done, gave role: {role} to <@{user.Id}>.");
+                    /*
+                    uncomment for debuging
+                    await Context.Channel.SendMessageAsync($"{userguild.Roles.Last().CompareTo(role).ToString()}");
+                    */
                 }
                 else
                 {
@@ -60,7 +62,7 @@ namespace Sombra_Bot.Commands
                     await Error.Send(Context.Channel, Value: "Role could not be removed.");
                     return;
                 }
-                await Context.Channel.SendMessageAsync($"Done!, Removed role: {role} to <@{user.Id}>.");
+                await Context.Channel.SendMessageAsync($"Done, removed role: {role} to <@{user.Id}>.");
             }
             else
             {

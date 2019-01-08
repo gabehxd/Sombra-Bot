@@ -52,7 +52,7 @@ namespace Sombra_Bot.Commands
                     if (Isfound)
                     {
                         File.WriteAllLines(Banned.FullName, bannedusers.ToArray());
-                        await Context.Channel.SendMessageAsync("User removed from ban list!");
+                        await Context.Channel.SendMessageAsync("User removed from ban list.");
                         return;
                     }
                     else await Error.Send(Context.Channel, Value: "No user with that ID is banned.");
