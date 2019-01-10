@@ -7,7 +7,7 @@ namespace Sombra_Bot.Commands
 {
     public class Suggestions : ModuleBase<SocketCommandContext>
     {
-        public static readonly FileInfo suggests = new FileInfo(Path.Combine("save", "Suggestions.list"));
+        private static readonly FileInfo suggests = new FileInfo(Path.Combine("save", "Suggestions.list"));
 
         [Command("Suggest"), Summary("Suggest a feature")]
         public async Task SaveSuggestion(params string[] suggestion)
