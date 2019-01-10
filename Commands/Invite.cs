@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
 using Discord.Commands;
-using Discord;
 
 namespace Sombra_Bot.Commands
 {
@@ -9,7 +8,8 @@ namespace Sombra_Bot.Commands
         [Command("Invite"), Summary("Get an invite.")]
         public async Task GetInvite()
         {
-            await Context.Channel.SendMessageAsync("Invite me using this link: https://discordapp.com/oauth2/authorize?client_id=516009170353258496&scope=bot&permissions=8\nMy Discord Server: https://discord.gg/jQ8HuWE");
+            await Context.Channel.SendMessageAsync("Invite link: <https://discordapp.com/oauth2/authorize?client_id=516009170353258496&scope=bot&permissions=8>\nDiscord server: https://discord.gg/jQ8HuWE\nSource code: https://github.com/SunTheCourier/Sombra-Bot");
+
         }
     }
 }
