@@ -11,14 +11,14 @@ namespace Sombra_Bot.Commands
         private Dictionary<string, string> commands = new Dictionary<string, string>
             {
                 {"Help", "DMs you this message." },
-                { "AddRole", "Adds a role to the specified user.\nargs: <user> <role>." },
-                { "RemoveRole", "Removes a role from the specified user.\nargs: <user> <role>." },
+                { "AddRole", "Adds a role to the specified user, requires manage roles permission.\nargs: <user> <role>." },
+                { "RemoveRole", "Removes a role from the specified user, requires manage roles permission.\nargs: <user> <role>." },
                 { "Hack", "Kicks or bans a user.\nargs: <level of hack, 1: kick, 2: ban> <user> <reason>." },
                 { "Hacc", "Haccs a user >:3.\nargs: <user>"},
                 { "GetRelease", "Gets a release from the specificed Github repository.\nargs: <repository owner> <repository name>." },
                 { "OWStats", "Gets Overwatch stats.\nargs: <Username>." },
-                { "DisableMemes", "Disables random memes from being sent into the server. Requires the manage sevrer permission"},
-                { "EnableMemes", "Re-enables random memes" },
+                { "DisableMemes", "Disables random memes from being sent into the server, requires the manage sevrer permission."},
+                { "EnableMemes", "Re-enables random memes, requires the manage sevrer permission." },
                 { "Invite", "Gets an invite for Sombra Bot and Sombra Bot's discord" }
             };
 
