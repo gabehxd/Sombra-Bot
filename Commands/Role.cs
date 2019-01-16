@@ -62,7 +62,7 @@ namespace Sombra_Bot.Commands
                     await Error.Send(Context.Channel, Value: "Role could not be removed.");
                     return;
                 }
-                await Context.Channel.SendMessageAsync($"Done, removed role: {role} to <@{user.Id}>.");
+                await Context.Channel.SendMessageAsync($"Done, removed role: {role} from <@{user.Id}>.");
             }
             else
             {

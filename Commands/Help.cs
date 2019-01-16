@@ -10,12 +10,15 @@ namespace Sombra_Bot.Commands
     {
         private Dictionary<string, string> commands = new Dictionary<string, string>
             {
-                { "AddRole", "Adds a role to the specified user.\nargs: <user> <role>" },
-                { "RemoveRole", "Removes a role from the specified user.\nargs: <user> <role>" },
-                { "Hack", "Kicks or bans a user.\nargs: <level of hack, 1: kick, 2: ban> <user> <reason>" },
+                {"Help", "DMs you this message." },
+                { "AddRole", "Adds a role to the specified user.\nargs: <user> <role>." },
+                { "RemoveRole", "Removes a role from the specified user.\nargs: <user> <role>." },
+                { "Hack", "Kicks or bans a user.\nargs: <level of hack, 1: kick, 2: ban> <user> <reason>." },
                 { "Hacc", "Haccs a user >:3.\nargs: <user>"},
-                { "GetRelease", "Gets a release from the specificed Github repository\nargs: <repository owner> <repository name>" },
-                { "OWStats", "Gets Overwatch stats\nargs: <Username>" },
+                { "GetRelease", "Gets a release from the specificed Github repository.\nargs: <repository owner> <repository name>." },
+                { "OWStats", "Gets Overwatch stats.\nargs: <Username>." },
+                { "DisableMemes", "Disables random memes from being sent into the server. Requires the manage sevrer permission"},
+                { "EnableMemes", "Re-enables random memes" },
                 { "Invite", "Gets an invite for Sombra Bot and Sombra Bot's discord" }
             };
 
@@ -50,7 +53,7 @@ namespace Sombra_Bot.Commands
                 bool Isfound = false;
                 foreach (KeyValuePair<string, string> keyValues in commands)
                 {
-                    if(keyValues.Key.ToLower() == command.ToLower())
+                    if (keyValues.Key.ToLower() == command.ToLower())
                     {
                         Isfound = true;
                         builder.AddField(keyValues.Key, keyValues.Value);
