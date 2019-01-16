@@ -17,8 +17,8 @@ namespace Sombra_Bot.Commands
                 { "Hacc", "Haccs a user >:3.\nargs: <user>"},
                 { "GetRelease", "Gets a release from the specificed Github repository.\nargs: <repository owner> <repository name>." },
                 { "OWStats", "Gets Overwatch stats.\nargs: <Username>." },
-                { "DisableMemes", "Disables random memes from being sent into the server, requires the manage sevrer permission."},
                 { "EnableMemes", "Re-enables random memes, requires the manage sevrer permission." },
+                { "DisableMemes", "Disables random memes from being sent into the server, requires the manage sevrer permission."},
                 { "Invite", "Gets an invite for Sombra Bot and Sombra Bot's discord" }
             };
 
