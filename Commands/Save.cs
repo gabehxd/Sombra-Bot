@@ -45,7 +45,7 @@ namespace Sombra_Bot.Commands
         [RequireOwner]
         public async Task LoadSave()
         {
-            if (Context.Message.Attachments.Count != 0) await Error.Send(Context.Channel, Value: "There is either no files attached or too many attached.");
+            if (Context.Message.Attachments.Count != 1) await Error.Send(Context.Channel, Value: "There is either no files attached or too many attached.");
             Discord.Attachment attachment = Context.Message.Attachments.ElementAt(0);
             FileInfo file = new FileInfo(Path.Combine(Path.GetTempPath(), attachment.Filename));
             WebClient client = new WebClient();
@@ -56,22 +56,23 @@ namespace Sombra_Bot.Commands
 
             //file count
             int fcount = int.Parse(lines[0]);
-            int seeker = 1;
+            int seeker = 0;
             for (int i = 0; i < fcount; i++)
             {
+                seeker++;
                 string name = lines[seeker];
-                int readcount = int.Parse(lines[seeker++]);
+                seeker++;
+                int readcount = int.Parse(lines[seeker]);
                 List<string> content = new List<string>();
                 for (int n = 0; n < readcount; n++)
                 {
-                    content.Add(lines[seeker++]);
+                    seeker++;
+                    content.Add(lines[seeker]);
                 }
 
                 FileInfo saveobj = new FileInfo(Path.Combine(Program.save.FullName, name));
                 if (saveobj.Exists) saveobj.Delete();
                 File.WriteAllLines(saveobj.FullName, content);
-                //move to the next like so we do not re-read content
-                seeker++;
             }
             await Context.Channel.SendMessageAsync("Loaded!");
         }
