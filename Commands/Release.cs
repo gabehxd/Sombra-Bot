@@ -11,8 +11,6 @@ namespace Sombra_Bot.Commands
 {
     public class Release : ModuleBase<SocketCommandContext>
     {
-        public static DirectoryInfo roottemppath = new DirectoryInfo(Path.Combine(Path.GetTempPath(), "Sombra-Bot"));
-
         [Command("GetRelease"), Summary("Downloads the latest release of a Github repository.")]
         public async Task GetRelease(string user, string repo)
         {

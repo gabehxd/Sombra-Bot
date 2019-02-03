@@ -12,7 +12,7 @@ namespace Sombra_Bot.Commands
         {
             try
             {
-                Release.roottemppath.Delete(true);
+                Program.roottemppath.Delete(true);
             }
             catch
             {

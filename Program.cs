@@ -15,6 +15,7 @@ namespace Sombra_Bot
 {
     class Program
     {
+        public static DirectoryInfo roottemppath = new DirectoryInfo(Path.Combine(Path.GetTempPath(), "Sombra-Bot"));
         public static readonly DirectoryInfo save = new DirectoryInfo("save");
         private static string token;
         private DiscordSocketClient client;
@@ -27,6 +28,7 @@ namespace Sombra_Bot
 
         static void Main()
         {
+            roottemppath.Create();
             save.Create();
             LoadConfig();
             Program program = new Program();
