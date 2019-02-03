@@ -9,7 +9,7 @@ namespace Sombra_Bot.Commands
 {
     public class BotBan : ModuleBase<SocketCommandContext>
     {
-        public static FileInfo Banned => new FileInfo(Path.Combine("save", "BannedUsers.list"));
+        public static FileInfo Banned => new FileInfo(Path.Combine(Program.save.FullName, "BannedUsers.obj"));
 
         [Command("AddBotBan"), Summary("Ban a user from this bot.")]
         [RequireOwner]

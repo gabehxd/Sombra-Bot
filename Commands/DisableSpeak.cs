@@ -10,7 +10,7 @@ namespace Sombra_Bot.Commands
 {
     public class DisableSpeak : ModuleBase<SocketCommandContext>
     {
-        public static FileInfo DisabledMServers => new FileInfo(Path.Combine("save", "DisabledServers-Memes.list"));
+        public static FileInfo DisabledMServers => new FileInfo(Path.Combine(Program.save.FullName, "DisabledServers-Memes.obj"));
 
         [Command("DisableMemes"), Summary("Disables Sombra bot's random memes.")]
         [RequireUserPermission(GuildPermission.ManageGuild)]
