@@ -66,7 +66,7 @@ namespace Sombra_Bot.Commands
                 {
                     content.Add(lines[seeker++]);
                 }
-                
+
                 FileInfo saveobj = new FileInfo(Path.Combine(Program.save.FullName, name));
                 if (saveobj.Exists) saveobj.Delete();
                 File.WriteAllLines(saveobj.FullName, content);
