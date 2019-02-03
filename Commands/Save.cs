@@ -73,7 +73,7 @@ namespace Sombra_Bot.Commands
                 //move to the next like so we do not re-read content
                 seeker++;
             }
-
+            await Context.Channel.SendMessageAsync("Loaded!");
         }
     }
 }
