@@ -2,7 +2,6 @@
 using Sombra_Bot.Utils;
 using System.Collections.Generic;
 using System.IO;
-using Sombra_Bot;
 using System.Threading.Tasks;
 using System.Linq;
 using System.Net;

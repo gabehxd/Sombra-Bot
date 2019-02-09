@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Discord.Commands;
-using System.Text;
+﻿using Discord.Commands;
 using System.Threading.Tasks;
 using Discord;
 
@@ -12,7 +9,12 @@ namespace Sombra_Bot.Commands.Memes
         [Command("Hacc"), Summary("Bans or kicks a user.")]
         public async Task Hac(IUser user)
         {
-            await Context.Channel.SendMessageAsync($"<@{user.Id}> hacc'd >:3");
+            EmbedBuilder msg = new EmbedBuilder();
+            msg.WithColor(Color.Purple);
+            msg.WithCurrentTimestamp();
+            msg.WithFooter($"Hacc'd by {Context.User.Username}");
+            msg.AddField("Wam", $"{user.Mention} hacc'd >:3");
+            await Context.Channel.SendMessageAsync(embed: msg.Build());
         }
     }
 }

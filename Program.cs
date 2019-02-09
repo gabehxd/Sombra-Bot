@@ -119,7 +119,7 @@ namespace Sombra_Bot
 
             if (IsUserBanned(Context.User.Id))
             {
-                await Error.Send(Context.Channel, Value: $"The use of Sombra Bot is currently restricted for <@{Context.User.Id}> by <@{AppInfo.Owner.Id}>");
+                await Error.Send(Context.Channel, Value: $"The use of Sombra Bot is currently restricted for {Context.User.Mention} by {AppInfo.Owner.Mention}");
                 return;
             }
 

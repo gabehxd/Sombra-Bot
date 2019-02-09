@@ -1,5 +1,4 @@
 ﻿using Discord;
-using System;
 using System.Threading.Tasks;
 using Discord.WebSocket;
 
@@ -14,7 +13,7 @@ namespace Sombra_Bot.Utils
             builder.AddField(Key, Value);
             builder.WithColor(Color.Red);
             builder.WithCurrentTimestamp();
-            await SendLocation.SendMessageAsync("", embed: builder.Build());
+            await SendLocation.SendMessageAsync(embed: builder.Build());
         }
     }
 }

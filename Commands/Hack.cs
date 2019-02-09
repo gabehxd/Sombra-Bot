@@ -29,15 +29,14 @@ namespace Sombra_Bot.Commands
                         {
                             await user.KickAsync(fullreason);
                             await Context.Channel.SendMessageAsync(Getmessage());
-                            await Context.Channel.TriggerTypingAsync();
-                            await Context.Channel.SendMessageAsync($"{user} Hacked!");
+                            await Context.Channel.SendMessageAsync($"{user.Mention} hacked (kicked)!");
                         }
                         catch
                         {
-                            await Error.Send(Context.Channel, Value: "User could not be kicked, insufficent permissions.");
+                            await Error.Send(Context.Channel, Value: "User could not be kicked, I do not have enough permissions.");
                         }
                     }
-                    else await Error.Send(Context.Channel, Value: "User requires guild permission KickMembers");
+                    else await Error.Send(Context.Channel, Value: "User has insufficent permissions.");
                     break;
 
                 case 2:
@@ -53,19 +52,18 @@ namespace Sombra_Bot.Commands
                         {
                             await Context.Guild.AddBanAsync(user, reason: fullreason);
                             await Context.Channel.SendMessageAsync(Getmessage());
-                            await Context.Channel.TriggerTypingAsync();
-                            await Context.Channel.SendMessageAsync($"{user} Hacked!");
+                            await Context.Channel.SendMessageAsync($"{user.Mention} hacked! (banned)");
                         }
                         catch
                         {
-                            await Error.Send(Context.Channel, Value: "User could not be banned, insufficent permissions.");
+                            await Error.Send(Context.Channel, Value: "User could not be banned, I do not have enough permissions.");
                         }
                     }
-                    else await Error.Send(Context.Channel, Value: "User requires guild permission BanMembers");
+                    else await Error.Send(Context.Channel, Value: "User has insufficent permissions.");
                     break;
 
                 default:
-                    await Error.Send(Context.Channel, Key: "Inputted hack level does not exist");
+                    await Error.Send(Context.Channel, Key: "Inputted level does not exist");
                     break;
             }
         }
