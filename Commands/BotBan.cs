@@ -47,6 +47,7 @@ namespace Sombra_Bot.Commands
                         {
                             bannedusers.RemoveAt(i);
                             Isfound = true;
+                            break;
                         }
                     }
                     if (Isfound)

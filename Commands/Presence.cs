@@ -25,9 +25,16 @@ namespace Sombra_Bot.Commands
 
         [Command("SetStream"), Summary("Sets the stream presence")]
         [RequireOwner]
-        public async Task SetStream(string input, string url)
+        public async Task SetStream(string url, params string[] input)
         {
-            Program.presence = input;
+            string joined = string.Join(" ", input);
+            if (string.IsNullOrWhiteSpace(joined))
+            {
+                await Error.Send(Context.Channel, Value: "The input text has too few parameters.");
+                return;
+            }
+
+            Program.presence = joined;
             Program.stream = url;
             Program.IsStream = true;
             await Context.Channel.SendMessageAsync("Queued!");

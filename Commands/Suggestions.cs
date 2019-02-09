@@ -12,7 +12,7 @@ namespace Sombra_Bot.Commands
         [Command("Suggest"), Summary("Suggest a feature")]
         public async Task SaveSuggestion(params string[] suggestion)
         {
-            //command should only be enabled when bot is activated by Sun/Dev.
+            //command should only be enabled when bot is activated by Sun.
             if (Program.AppInfo.Owner.Id == 130825292292816897)
             {
                 string joined = string.Join(" ", suggestion);

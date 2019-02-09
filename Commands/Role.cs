@@ -13,8 +13,6 @@ namespace Sombra_Bot.Commands
         [RequireUserPermission(ChannelPermission.ManageRoles), RequireBotPermission(ChannelPermission.ManageRoles)]
         public async Task GiveRole([RequireHierarchy]SocketGuildUser user, SocketRole role)
         {
-            SocketGuildUser userguild = Context.User as SocketGuildUser;
-
             if (!role.Members.Contains(user))
             {
 
@@ -37,8 +35,6 @@ namespace Sombra_Bot.Commands
         [RequireUserPermission(ChannelPermission.ManageRoles), RequireBotPermission(ChannelPermission.ManageRoles)]
         public async Task RemoveRole([RequireHierarchy]SocketGuildUser user, SocketRole role)
         {
-            SocketGuildUser userguild = Context.User as SocketGuildUser;
-
             if (role.Members.Contains(user))
             {
                 await user.RemoveRoleAsync(role);
