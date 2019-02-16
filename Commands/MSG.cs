@@ -5,7 +5,7 @@ namespace Sombra_Bot.Commands
 {
     public class Message : ModuleBase<SocketCommandContext>
     {
-        [Command("say"), Summary("Says the message sent.")]
+        [Command("Say"), Summary("Says the message sent.")]
         [RequireOwner]
         public async Task Say(params string[] input)
         {
