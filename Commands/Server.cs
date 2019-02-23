@@ -7,7 +7,7 @@ namespace Sombra_Bot.Commands
 {
     public class Server : ModuleBase<SocketCommandContext>
     {
-        [Command("ListServers"), Summary("List all server Sombra Bot is in.")]
+        [Command("ListServers"), Alias("Servers"), Summary("List all server Sombra Bot is in.")]
         [RequireOwner]
         public async Task Getservers()
         {
@@ -20,7 +20,17 @@ namespace Sombra_Bot.Commands
             {
                 s += $"{guild.Name}\n";
             }
-            builder.WithDescription(s);
+
+            switch (Context.Client.Guilds.Count)
+            {
+                case 1:
+                    builder.WithDescription("I am currently only in this server.");
+                    break;
+                default:
+                    builder.WithDescription($"```{Context.Client.Guilds.Count} total servers:\n{s}```");
+                    break;
+            }
+
             await Context.Channel.SendMessageAsync(embed: builder.Build());
         }
     }
