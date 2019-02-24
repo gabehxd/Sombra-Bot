@@ -92,7 +92,6 @@ namespace Sombra_Bot
 #else
                     await client.SetGameAsync($"{presence} | Debug Build", stream, ActivityType.Streaming);
 #endif
-
                 }
                 await Task.Delay(10000);
             }
