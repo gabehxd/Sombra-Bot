@@ -4,9 +4,9 @@ using System.Threading.Tasks;
 
 namespace Sombra_Bot.Commands
 {
-    public class Terminate : ModuleBase<SocketCommandContext>
+    public class Client : ModuleBase<SocketCommandContext>
     {
-        [Command("shutdown"), Summary("Shut downs the bot.")]
+        [Command("Shutdown"), Summary("Shut downs the bot.")]
         [RequireOwner]
         public async Task ShutDown()
         {
