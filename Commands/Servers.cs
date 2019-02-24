@@ -5,7 +5,7 @@ using Discord;
 
 namespace Sombra_Bot.Commands
 {
-    public class Server : ModuleBase<SocketCommandContext>
+    public class Servers : ModuleBase<SocketCommandContext>
     {
         [Command("ListServers"), Alias("Servers"), Summary("List all server Sombra Bot is in.")]
         [RequireOwner]
