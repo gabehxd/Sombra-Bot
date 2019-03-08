@@ -20,9 +20,11 @@ namespace Sombra_Bot.Commands
             {
                 releases = await client.Repository.Release.GetAll(user, repo);
             }
-            catch
+            catch (Exception e)
             {
-                await Error.Send(Context.Channel, Value: "Failed to get release(s) for repository");
+                //best way to check exception type?
+                if (e.Message.Contains("not found")) await Error.Send(Context.Channel, Value: "Repository does not exist.");
+                else await Error.Send(Context.Channel, Value: "Failed to get release(s) for repository.", e: e, et: Error.ExceptionType.Fatal);
                 return;
             }
 
@@ -108,7 +110,7 @@ namespace Sombra_Bot.Commands
             }
             catch (Exception e)
             {
-                await Error.Send(Context.Channel, Value: e.Message);
+                await Error.Send(Context.Channel, Value: "Command has failed and has been reported!", et: Error.ExceptionType.Fatal, e: e);
             }
         }
     }

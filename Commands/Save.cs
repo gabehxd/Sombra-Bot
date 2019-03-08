@@ -28,9 +28,12 @@ namespace Sombra_Bot.Commands
                 foreach (FileInfo file in saveobjs)
                 {
                     string[] lines = File.ReadAllLines(file.FullName);
-                    output.Add(file.Name);
-                    output.Add(lines.Length.ToString());
-                    output.AddRange(lines);
+                    if (lines.Length != 0)
+                    {
+                        output.Add(file.Name);
+                        output.Add(lines.Length.ToString());
+                        output.AddRange(lines);
+                    }
                 }
                 File.WriteAllLines(Config.FullName, output);
                 await Context.Channel.SendFileAsync(Config.FullName, "Current save file:");
@@ -43,10 +46,18 @@ namespace Sombra_Bot.Commands
 
         [Command("LoadSave"), Summary("Loads a combined save image.")]
         [RequireOwner]
-        public async Task LoadSave()
+        public async Task LoadSave(bool ShouldClear = false)
         {
             try
             {
+                if (ShouldClear)
+                {
+                    FileInfo[] saveobjs = Program.save.GetFiles("*.obj");
+                    foreach (FileInfo savefile in saveobjs)
+                    {
+                        savefile.Delete();
+                    }
+                }
                 if (Context.Message.Attachments.Count != 1) await Error.Send(Context.Channel, Value: "There is either no files attached or too many attached.");
                 Discord.Attachment attachment = Context.Message.Attachments.ElementAt(0);
                 FileInfo file = new FileInfo(Path.Combine(Program.roottemppath.FullName, attachment.Filename));
@@ -79,7 +90,7 @@ namespace Sombra_Bot.Commands
             }
             catch (Exception e)
             {
-                await Error.Send(Context.Channel, "Save could not be loaded", e.Message);
+                await Error.Send(Context.Channel, Value: "Save could not be loaded, debug info sent via DMs", e: e, et: Error.ExceptionType.Fatal);
             }
         }
     }
