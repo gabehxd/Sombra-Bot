@@ -20,10 +20,9 @@ namespace Sombra_Bot.Commands
             {
                 releases = await client.Repository.Release.GetAll(user, repo);
             }
-            catch (Exception e)
+            catch (ApiException e)
             {
-                //best way to check exception type?
-                if (e.Message.Contains("not found")) await Error.Send(Context.Channel, Value: "Repository does not exist.");
+                if (e.StatusCode == System.Net.HttpStatusCode.NotFound) await Error.Send(Context.Channel, Value: "Repository does not exist.");
                 else await Error.Send(Context.Channel, Value: "Failed to get release(s) for repository.", e: e, et: Error.ExceptionType.Fatal);
                 return;
             }
