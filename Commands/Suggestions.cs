@@ -12,7 +12,7 @@ namespace Sombra_Bot.Commands
     {
         public static FileInfo Suggests => new FileInfo(Path.Combine(Program.save.FullName, "Suggestions.obj"));
 
-        [Command("Suggest"), Summary("Suggest a feature.")]
+        [Command("Suggest"), Summary("Suggest a feature."), Alias("AddSuggestion")]
         public async Task SaveSuggestion(params string[] suggestion)
         {
             string joined = string.Join(" ", suggestion);

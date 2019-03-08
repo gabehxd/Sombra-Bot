@@ -9,7 +9,7 @@ namespace Sombra_Bot.Commands
     public class Dice : ModuleBase<SocketCommandContext>
     {
         [Command("Roll"), Summary("Rolls a dice")]
-        public async Task DiceRoll(int sides, int die)
+        public async Task DiceRoll(int die, int sides)
         {
             if (die <= 0 || sides <= 0)
             {
