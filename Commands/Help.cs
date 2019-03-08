@@ -8,9 +8,8 @@ namespace Sombra_Bot.Commands
 {
     public class Help : ModuleBase<SocketCommandContext>
     {
-#pragma warning disable IDE0044 // Add readonly modifier
-        private Dictionary<string, string> commands = new Dictionary<string, string>
-#pragma warning restore IDE0044 // Add readonly modifier
+
+        static private readonly Dictionary<string, string> commands = new Dictionary<string, string>
         {
             { "Help", "DMs you the help meny, arguments are optional.\n args: <command>." },
             { "ListRoles",  "Lists all roles in the current server." },
@@ -19,17 +18,18 @@ namespace Sombra_Bot.Commands
             { "Hack", "Kicks or bans a user, requires ban/kick permissions.\nargs: <level of hack, 1: kick, 2: ban> <user> <reason>." },
             { "Hacc", "Haccs a user >:3.\nargs: <user>"},
             { "GetRelease", "Gets a release from the specificed Github repository.\nargs: <repository owner> <repository name>." },
-            { "OWStats", "Gets Overwatch stats.\nargs: <Username>." },
+            { "Roll", "Rolls a max of 100 die with a max of 100 sides\nargs: <die> <sides>." },
+            { "Avatar", "Gets a user's Avatar.\nargs: <user>." },
+            { "OWStats", "Gets Overwatch stats.\nargs: <username>." },
             { "EnableMemes", "Re-enables random memes, requires the manage server permission. Enabled by default." },
-            { "DisableMemes", "Disables random memes from being sent into the server, requires the manage sevrer permission."},
-            { "Invite", "Gets an invite for Sombra Bot and Sombra Bot's discord server." }
+            { "DisableMemes", "Disables random memes from being sent into the server, requires the manage server permission."},
+            { "Invite", "Gets an invite for Sombra Bot and Sombra Bot's discord server." },
+            { "Suggest", $"Suggest a feature for {Program.AppInfo.Owner.Mention} to add. Do not spam this command or you will be banned from using this bot :).\nargs: <suggestion>" }
         };
 
         [Command("Help"), Summary("Get help.")]
         public async Task Helpmsg(string command = null)
         {
-            //Only enable this command in the help menu when the owner is Sun/a Dev.
-            if (Program.AppInfo.Owner.Id == 130825292292816897) commands.Add("Suggest", $"Suggest a feature for {Program.AppInfo.Owner.Mention} to add. Do not spam this command or you will be banned from using this bot :).\nargs: <suggestion>");
             //Can the help message be automated?
             string msg = "";
             EmbedBuilder builder = new EmbedBuilder();
