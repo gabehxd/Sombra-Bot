@@ -33,12 +33,12 @@ namespace Sombra_Bot.Utils
 
             //maybe we should use <=?
             if (guildUser.Hierarchy < targetUser.Hierarchy)
-                return PreconditionResult.FromError("You cannot target anyone else whose roles are higher than or the same as yours.");
+                return PreconditionResult.FromError("You cannot target anyone else whose roles are higher than yours.");
 
             var currentUser = await context.Guild.GetCurrentUserAsync().ConfigureAwait(false) as SocketGuildUser;
             //maybe we should use <=?
             if (currentUser?.Hierarchy < targetUser.Hierarchy)
-                return PreconditionResult.FromError("The bot's role is lower than or the same as the targeted user.");
+                return PreconditionResult.FromError("The bot's role is lower than the targeted user.");
 
             return PreconditionResult.FromSuccess();
         }

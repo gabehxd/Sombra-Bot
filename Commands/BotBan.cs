@@ -39,24 +39,17 @@ namespace Sombra_Bot.Commands
                 List<string> bannedusers = File.ReadAllLines(Banned.FullName).ToList();
                 if (bannedusers.Count != 0)
                 {
-                    bool Isfound = false;
-
                     for (int i = bannedusers.Count - 1; i >= 0; i--)
                     {
                         if (bannedusers[i] == ID.ToString())
                         {
                             bannedusers.RemoveAt(i);
-                            Isfound = true;
-                            break;
+                            File.WriteAllLines(Banned.FullName, bannedusers);
+                            await Context.Channel.SendMessageAsync("User removed from ban list.");
+                            return;
                         }
                     }
-                    if (Isfound)
-                    {
-                        File.WriteAllLines(Banned.FullName, bannedusers.ToArray());
-                        await Context.Channel.SendMessageAsync("User removed from ban list.");
-                        return;
-                    }
-                    else await Error.Send(Context.Channel, Value: "No user with that ID is banned.");
+                    await Error.Send(Context.Channel, Value: "No user with that ID is banned.");
                 }
             }
             await Error.Send(Context.Channel, Value: "No users are banned.");
