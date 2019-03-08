@@ -7,8 +7,9 @@ namespace Sombra_Bot.Commands
     public class User : ModuleBase<SocketCommandContext>
     {
         [Command("Avatar"), Alias("Ava", "pfp"), Summary("Grabs a User Avatar")]
-        public async Task GetAvatar(IUser user)
+        public async Task GetAvatar(IUser user = null)
         {
+            if (user == null) user = Context.User;
             EmbedBuilder builder = new EmbedBuilder();
             builder.WithColor(Color.Purple);
             builder.WithTitle($"{user.Username}'s Avatar");

@@ -56,19 +56,22 @@ namespace Sombra_Bot.Commands
         public async Task ListRoles()
         {
             EmbedBuilder builder = new EmbedBuilder();
-            string s = "";
-            foreach (SocketRole role in Context.Guild.Roles)
-            {
-                s += $"{role.Name}\n";
-            }
+            builder.WithTitle("Roles");
+            builder.WithColor(Color.Purple);
+            builder.WithCurrentTimestamp();
 
             switch (Context.Guild.Roles.Count)
             {
                 case 1:
-                    builder.WithAuthor("There is only one role: '@everone'");
+                    builder.WithDescription("There is only one role: @everone");
                     break;
                 default:
-                    builder.WithDescription($"```{Context.Guild.Roles.Count} total roles:\n{s}```");
+                    string s = "";
+                    foreach (SocketRole role in Context.Guild.Roles)
+                    {
+                        s += $"{role.Mention}\n";
+                    }
+                    builder.WithDescription($"{Context.Guild.Roles.Count} total roles:\n{s}");
                     break;
             }
 
