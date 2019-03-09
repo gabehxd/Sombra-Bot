@@ -11,7 +11,7 @@ namespace Sombra_Bot.Commands
 
         static private readonly Dictionary<string, string> commands = new Dictionary<string, string>
         {
-            { "Help", "DMs you the help meny, arguments are optional.\n args: <command>." },
+            { "Help", "DMs you the help menu, arguments are optional.\n args: <command>." },
             { "ListRoles",  "Lists all roles in the current server." },
             { "AddRole", "Adds a role to the specified user, requires manage roles permission.\nargs: <user> <role>." },
             { "RemoveRole", "Removes a role from the specified user, requires manage roles permission.\nargs: <user> <role>." },
