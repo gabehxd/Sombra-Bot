@@ -26,7 +26,7 @@ namespace Sombra_Bot.Commands
             await Context.Channel.SendMessageAsync("Thank you for your suggestion!");
         }
 
-        [Command("ListSuggestions"), Summary("List saved suggestions.")]
+        [Command("ListSuggestions"), Summary("List saved suggestions."), Alias("Suggestions")]
         [RequireOwner]
         public async Task ListSuggestions()
         {

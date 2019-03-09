@@ -23,7 +23,7 @@ namespace Sombra_Bot.Commands
             catch (ApiException e)
             {
                 if (e.StatusCode == System.Net.HttpStatusCode.NotFound) await Error.Send(Context.Channel, Value: "Repository does not exist.");
-                else await Error.Send(Context.Channel, Value: "Failed to get release(s) for repository.", e: e, et: Error.ExceptionType.Fatal);
+                else await Error.Send(Context.Channel, Value: "Command failed: error reported!", e: e, et: Error.ExceptionType.Fatal);
                 return;
             }
 
@@ -109,7 +109,7 @@ namespace Sombra_Bot.Commands
             }
             catch (Exception e)
             {
-                await Error.Send(Context.Channel, Value: "Command has failed and has been reported!", et: Error.ExceptionType.Fatal, e: e);
+                await Error.Send(Context.Channel, Value: "Command failed: error reported!", et: Error.ExceptionType.Fatal, e: e);
             }
         }
     }

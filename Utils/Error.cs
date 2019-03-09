@@ -23,6 +23,7 @@ namespace Sombra_Bot.Utils
                 errorbuilder.WithColor(Color.Red);
                 //should we send anything else?
                 errorbuilder.WithDescription($"```{e.Message}\n\n{e.StackTrace}```");
+                //Should we send this to App Owner or Repo Owner?
                 await Program.AppInfo.Owner.SendMessageAsync(embed: errorbuilder.Build());
             }
         }
