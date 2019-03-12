@@ -70,7 +70,7 @@ namespace Sombra_Bot.Commands
         private string Getmessage()
         {
             Random rng = new Random();
-            switch (rng.Next(1, 4))
+            switch (rng.Next(1, 5))
             {
                 case 1:
                     return "Initiating the hack.";
@@ -80,6 +80,11 @@ namespace Sombra_Bot.Commands
                     return "Don't mind me.";
                 case 4:
                     return "Let's get started.";
+                default:
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+                    Error.Send(Context.Channel, Value: "Command failed: error reported!", e: new Exception("Hack: Internal value is not 1-4"), et: Error.ExceptionType.Fatal);
+#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+                    break;
             }
             return null;
         }

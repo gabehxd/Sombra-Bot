@@ -11,17 +11,19 @@ namespace Sombra_Bot.Commands
 {
     public class Save : ModuleBase<SocketCommandContext>
     {
+        public static readonly DirectoryInfo save = new DirectoryInfo("save");
         private FileInfo Config => new FileInfo(Path.Combine(Program.roottemppath.FullName, "save.cfg"));
 
-        public Dictionary<ulong, string> Suggestions = new Dictionary<ulong, string>();
-        public List<string> BannedUsers = new List<string>();
-        public
+        //change to string list 
+        public static List<KeyValuePair<ulong, string>> Suggestions = new List<KeyValuePair<ulong, string>>();
+        public static List<string> BannedUsers = new List<string>();
+        public static List<string> DisabledMServers = new List<string>();
 
         [Command("GetSave"), Summary("Gets a combined copy of the save files.")]
         [RequireOwner]
         public async Task GetSave()
         {
-            FileInfo[] saveobjs = Program.save.GetFiles("*.obj");
+            FileInfo[] saveobjs = save.GetFiles("*.obj");
             if (saveobjs.Length != 0)
             {
                 if (Config.Exists) Config.Delete();
@@ -56,7 +58,7 @@ namespace Sombra_Bot.Commands
             {
                 if (ShouldClear)
                 {
-                    FileInfo[] saveobjs = Program.save.GetFiles("*.obj");
+                    FileInfo[] saveobjs = save.GetFiles("*.obj");
                     foreach (FileInfo savefile in saveobjs)
                     {
                         savefile.Delete();
@@ -86,7 +88,7 @@ namespace Sombra_Bot.Commands
                         content.Add(lines[seeker]);
                     }
 
-                    FileInfo saveobj = new FileInfo(Path.Combine(Program.save.FullName, name));
+                    FileInfo saveobj = new FileInfo(Path.Combine(save.FullName, name));
                     if (saveobj.Exists) saveobj.Delete();
                     File.WriteAllLines(saveobj.FullName, content);
                 }

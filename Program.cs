@@ -10,13 +10,13 @@ using System.IO;
 using Sombra_Bot.Commands;
 using System.Linq;
 using Discord.Rest;
+using System.Collections.Generic;
 
 namespace Sombra_Bot
 {
     class Program
     {
         public static DirectoryInfo roottemppath = new DirectoryInfo(Path.Combine(Path.GetTempPath(), "Sombra-Bot"));
-        public static readonly DirectoryInfo save = new DirectoryInfo("save");
         private static string token;
         private DiscordSocketClient client;
         private CommandService Commands;
@@ -28,11 +28,37 @@ namespace Sombra_Bot
 
         static void Main()
         {
+            AppDomain.CurrentDomain.ProcessExit += new EventHandler(OnProcessExit);
             roottemppath.Create();
-            save.Create();
+            Save.save.Create();
+            LoadSave();
             LoadConfig();
             Program program = new Program();
             program.MainAsync().GetAwaiter().GetResult();
+        }
+
+        private static void OnProcessExit(object sender, EventArgs e)
+        {
+            foreach (KeyValuePair<ulong, string> pair in Save.Suggestions)
+            {
+                File.AppendAllText(Path.Combine(Save.save.FullName, "Suggestions.obj"), $"{pair.Key}: {pair.Value}");
+            }
+            File.WriteAllLines(Path.Combine(Save.save.FullName, "BannedUsers.obj"), Save.BannedUsers);
+            File.WriteAllLines(Path.Combine(Save.save.FullName, "DisabledMServers.obj"), Save.DisabledMServers);
+        }
+
+        private static void LoadSave()
+        {
+            Save.BannedUsers = File.ReadAllLines(Path.Combine(Save.save.FullName, "Suggestions.obj")).ToList();
+            Save.DisabledMServers = File.ReadAllLines(Path.Combine(Save.save.FullName, "DisabledMServers.obj")).ToList();
+            //better impl?
+            List<KeyValuePair<ulong, string>> temp = new List<KeyValuePair<ulong, string>>();
+            foreach (string s in File.ReadAllLines(Path.Combine(Save.save.FullName, "Suggestions.obj")))
+            {
+                string[] pair = s.Split(": ");
+                temp.Add(new KeyValuePair<ulong, string>(ulong.Parse(pair[0]), pair[1]));
+            }
+            Save.Suggestions = temp;
         }
 
         private async Task MainAsync()
@@ -153,25 +179,15 @@ namespace Sombra_Bot
 
         private bool AreMemesDisabled(ulong id)
         {
-            if (DisableSpeak.DisabledMServers.Exists)
-            {
-                foreach (string server in File.ReadAllLines(DisableSpeak.DisabledMServers.FullName))
-                {
-                    if (ulong.Parse(server) == id) return true;
-                }
-            }
+            if (Save.DisabledMServers.Contains(id.ToString())) return true;
+
             return false;
         }
 
         private bool IsUserBanned(ulong id)
         {
-            if (BotBan.Banned.Exists)
-            {
-                foreach (string user in File.ReadAllLines(BotBan.Banned.FullName))
-                {
-                    if (ulong.Parse(user) == id) return true;
-                }
-            }
+            if (Save.BannedUsers.Contains(id.ToString())) return true;
+
             return false;
         }
 
