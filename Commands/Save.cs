@@ -13,6 +13,10 @@ namespace Sombra_Bot.Commands
     {
         private FileInfo Config => new FileInfo(Path.Combine(Program.roottemppath.FullName, "save.cfg"));
 
+        public Dictionary<ulong, string> Suggestions = new Dictionary<ulong, string>();
+        public List<string> BannedUsers = new List<string>();
+        public
+
         [Command("GetSave"), Summary("Gets a combined copy of the save files.")]
         [RequireOwner]
         public async Task GetSave()
