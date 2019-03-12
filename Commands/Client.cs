@@ -6,6 +6,18 @@ namespace Sombra_Bot.Commands
 {
     public class Client : ModuleBase<SocketCommandContext>
     {
+        [Command("Say"), Summary("Says the message sent.")]
+        [RequireOwner]
+        public async Task Say(params string[] input)
+        {
+            try
+            {
+                await Context.Message.DeleteAsync();
+            }
+            catch { }
+            await Context.Channel.SendMessageAsync(string.Join(" ", input));
+        }
+
         [Command("Shutdown"), Summary("Shut downs the bot.")]
         [RequireOwner]
         public async Task ShutDown()
