@@ -16,13 +16,17 @@ namespace Sombra_Bot.Commands
 
         //change to string list 
         public static List<KeyValuePair<ulong, string>> Suggestions = new List<KeyValuePair<ulong, string>>();
+        public static FileInfo SuggestionsFile = new FileInfo(Path.Combine(save.FullName, "Suggestions.obj"));
         public static List<string> BannedUsers = new List<string>();
+        public static FileInfo BannedUsersFile = new FileInfo(Path.Combine(save.FullName, "BannedUsers.obj"));
         public static List<string> DisabledMServers = new List<string>();
+        public static FileInfo DisabledMServersFile = new FileInfo(Path.Combine(save.FullName, "DisabledMServers.obj"));
 
         [Command("GetSave"), Summary("Gets a combined copy of the save files.")]
         [RequireOwner]
         public async Task GetSave()
         {
+            //TODO: rewrite w/ new save impl
             FileInfo[] saveobjs = save.GetFiles("*.obj");
             if (saveobjs.Length != 0)
             {
@@ -54,6 +58,7 @@ namespace Sombra_Bot.Commands
         [RequireOwner]
         public async Task LoadSave(bool ShouldClear = false)
         {
+            //TODO: rewrite w/ new save impl
             try
             {
                 if (ShouldClear)

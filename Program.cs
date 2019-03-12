@@ -39,26 +39,32 @@ namespace Sombra_Bot
 
         private static void OnProcessExit(object sender, EventArgs e)
         {
-            foreach (KeyValuePair<ulong, string> pair in Save.Suggestions)
+            if (Save.Suggestions.Count != 0)
             {
-                File.AppendAllText(Path.Combine(Save.save.FullName, "Suggestions.obj"), $"{pair.Key}: {pair.Value}");
+                foreach (KeyValuePair<ulong, string> pair in Save.Suggestions)
+                {
+                    File.AppendAllText(Path.Combine(Save.save.FullName, "Suggestions.obj"), $"{pair.Key}: {pair.Value}");
+                }
             }
-            File.WriteAllLines(Path.Combine(Save.save.FullName, "BannedUsers.obj"), Save.BannedUsers);
-            File.WriteAllLines(Path.Combine(Save.save.FullName, "DisabledMServers.obj"), Save.DisabledMServers);
+            if (Save.BannedUsers.Count != 0) File.WriteAllLines(Path.Combine(Save.save.FullName, "BannedUsers.obj"), Save.BannedUsers);
+            if (Save.DisabledMServers.Count != 0) File.WriteAllLines(Path.Combine(Save.save.FullName, "DisabledMServers.obj"), Save.DisabledMServers);
         }
 
         private static void LoadSave()
         {
-            Save.BannedUsers = File.ReadAllLines(Path.Combine(Save.save.FullName, "Suggestions.obj")).ToList();
-            Save.DisabledMServers = File.ReadAllLines(Path.Combine(Save.save.FullName, "DisabledMServers.obj")).ToList();
-            //better impl?
-            List<KeyValuePair<ulong, string>> temp = new List<KeyValuePair<ulong, string>>();
-            foreach (string s in File.ReadAllLines(Path.Combine(Save.save.FullName, "Suggestions.obj")))
+            if (Save.BannedUsersFile.Exists) Save.BannedUsers = File.ReadAllLines(Save.BannedUsersFile.FullName).ToList();
+            if (Save.DisabledMServersFile.Exists) Save.DisabledMServers = File.ReadAllLines(Save.DisabledMServersFile.FullName).ToList();
+            if (Save.SuggestionsFile.Exists)
             {
-                string[] pair = s.Split(": ");
-                temp.Add(new KeyValuePair<ulong, string>(ulong.Parse(pair[0]), pair[1]));
+                //better impl?
+                List<KeyValuePair<ulong, string>> temp = new List<KeyValuePair<ulong, string>>();
+                foreach (string s in File.ReadAllLines(Path.Combine(Save.save.FullName, "Suggestions.obj")))
+                {
+                    string[] pair = s.Split(": ");
+                    temp.Add(new KeyValuePair<ulong, string>(ulong.Parse(pair[0]), pair[1]));
+                }
+                Save.Suggestions = temp;
             }
-            Save.Suggestions = temp;
         }
 
         private async Task MainAsync()
