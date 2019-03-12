@@ -1,10 +1,8 @@
 ﻿using Discord.Commands;
 using Sombra_Bot.Utils;
-using System.IO;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Discord;
-using System.Linq;
 
 namespace Sombra_Bot.Commands
 {
