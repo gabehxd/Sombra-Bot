@@ -14,7 +14,8 @@ namespace Sombra_Bot.Commands
         public static readonly DirectoryInfo save = new DirectoryInfo("save");
         private FileInfo Config => new FileInfo(Path.Combine(Program.roottemppath.FullName, "save.cfg"));
 
-        //change to string list 
+        //should we have each save obj as a list<string> to handle them in LoadSave() Generically?
+        //some way to put all these lists in a list (kek)
         public static List<KeyValuePair<ulong, string>> Suggestions = new List<KeyValuePair<ulong, string>>();
         public static FileInfo SuggestionsFile = new FileInfo(Path.Combine(save.FullName, "Suggestions.obj"));
         public static List<string> BannedUsers = new List<string>();
@@ -27,7 +28,7 @@ namespace Sombra_Bot.Commands
         public async Task GetSave()
         {
             //TODO: rewrite w/ new save impl
-            FileInfo[] saveobjs = save.GetFiles("*.obj");
+            //FileInfo[] saveobjs = save.GetFiles("*.obj");
             if (saveobjs.Length != 0)
             {
                 if (Config.Exists) Config.Delete();
@@ -93,9 +94,11 @@ namespace Sombra_Bot.Commands
                         content.Add(lines[seeker]);
                     }
 
-                    FileInfo saveobj = new FileInfo(Path.Combine(save.FullName, name));
-                    if (saveobj.Exists) saveobj.Delete();
-                    File.WriteAllLines(saveobj.FullName, content);
+                    //FileInfo saveobj = new FileInfo(Path.Combine(save.FullName, name));
+                    //if (saveobj.Exists) saveobj.Delete();
+                    //ile.WriteAllLines(saveobj.FullName, content);
+
+                    //TODO: Handle each save data or somehow handle it generically
                 }
                 await Context.Channel.SendMessageAsync("Loaded!");
             }
