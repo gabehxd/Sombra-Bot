@@ -17,7 +17,7 @@ namespace Sombra_Bot.Commands
                 await Error.Send(Context.Channel, Key: "The input text has too few parameters.");
                 return;
             }
-            Save.Suggestions.Add(new KeyValuePair<ulong, string>(Context.User.Id, joined));
+            Save.Suggestions.Data.Add(new KeyValuePair<ulong, string>(Context.User.Id, joined));
             await Context.Channel.SendMessageAsync("Thank you for your suggestion!");
         }
 
@@ -25,11 +25,11 @@ namespace Sombra_Bot.Commands
         [RequireOwner]
         public async Task ListSuggestions()
         {
-            if (Save.Suggestions.Count != 0)
+            if (Save.Suggestions.Data.Count != 0)
             {
                 string mod = "";
                 int i = 1;
-                foreach (KeyValuePair<ulong, string> pair in Save.Suggestions)
+                foreach (KeyValuePair<ulong, string> pair in Save.Suggestions.Data)
                 {
                     mod += $"{i} - <@{pair.Key}>: {pair.Value}\n";
                     i++;
@@ -50,14 +50,14 @@ namespace Sombra_Bot.Commands
         [RequireOwner]
         public async Task RemoveSuggestion(int element)
         {
-            if (Save.Suggestions.Count != 0)
+            if (Save.Suggestions.Data.Count != 0)
             {
-                if (element > Save.Suggestions.Count || element <= 0)
+                if (element > Save.Suggestions.Data.Count || element <= 0)
                 {
                     await Error.Send(Context.Channel, Value: "Out of range of suggestions.");
                     return;
                 }
-                Save.Suggestions.RemoveAt(element - 1);
+                Save.Suggestions.Data.RemoveAt(element - 1);
                 await Context.Channel.SendMessageAsync("Suggestion removed!");
                 return;
             }

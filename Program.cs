@@ -39,32 +39,16 @@ namespace Sombra_Bot
 
         private static void OnProcessExit(object sender, EventArgs e)
         {
-            if (Save.Suggestions.Count != 0)
-            {
-                foreach (KeyValuePair<ulong, string> pair in Save.Suggestions)
-                {
-                    File.AppendAllText(Path.Combine(Save.save.FullName, "Suggestions.obj"), $"{pair.Key}: {pair.Value}");
-                }
-            }
-            if (Save.BannedUsers.Count != 0) File.WriteAllLines(Path.Combine(Save.save.FullName, "BannedUsers.obj"), Save.BannedUsers);
-            if (Save.DisabledMServers.Count != 0) File.WriteAllLines(Path.Combine(Save.save.FullName, "DisabledMServers.obj"), Save.DisabledMServers);
+            if (Save.Suggestions.Data.Count != 0) Save.Suggestions.WriteSaveFile();
+            if (Save.BannedUsers.Data.Count != 0) Save.BannedUsers.WriteSaveFile();
+            if (Save.DisabledMServers.Data.Count != 0) Save.DisabledMServers.WriteSaveFile();
         }
 
         private static void LoadSave()
         {
-            if (Save.BannedUsersFile.Exists) Save.BannedUsers = File.ReadAllLines(Save.BannedUsersFile.FullName).ToList();
-            if (Save.DisabledMServersFile.Exists) Save.DisabledMServers = File.ReadAllLines(Save.DisabledMServersFile.FullName).ToList();
-            if (Save.SuggestionsFile.Exists)
-            {
-                //better impl?
-                List<KeyValuePair<ulong, string>> temp = new List<KeyValuePair<ulong, string>>();
-                foreach (string s in File.ReadAllLines(Path.Combine(Save.save.FullName, "Suggestions.obj")))
-                {
-                    string[] pair = s.Split(": ");
-                    temp.Add(new KeyValuePair<ulong, string>(ulong.Parse(pair[0]), pair[1]));
-                }
-                Save.Suggestions = temp;
-            }
+            Save.BannedUsers.Read();
+            Save.DisabledMServers.Read();
+            Save.Suggestions.Read();
         }
 
         private async Task MainAsync()
@@ -185,14 +169,14 @@ namespace Sombra_Bot
 
         private bool AreMemesDisabled(ulong id)
         {
-            if (Save.DisabledMServers.Contains(id.ToString())) return true;
+            if (Save.DisabledMServers.Data.Contains(id)) return true;
 
             return false;
         }
 
         private bool IsUserBanned(ulong id)
         {
-            if (Save.BannedUsers.Contains(id.ToString())) return true;
+            if (Save.BannedUsers.Data.Contains(id)) return true;
 
             return false;
         }

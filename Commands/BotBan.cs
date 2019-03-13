@@ -13,15 +13,15 @@ namespace Sombra_Bot.Commands
         public async Task AddBan(ulong ID)
         {
             //better search function?
-            foreach (string user in Save.BannedUsers)
+            foreach (ulong user in Save.BannedUsers.Data)
             {
-                if (ulong.Parse(user) == ID)
+                if (user == ID)
                 {
                     await Error.Send(Context.Channel, Value: "User is already banned.");
                     return;
                 }
             }
-            Save.BannedUsers.Add(ID.ToString());
+            Save.BannedUsers.Data.Add(ID);
             await Context.Channel.SendMessageAsync("User added to ban list.");
         }
 
@@ -29,9 +29,9 @@ namespace Sombra_Bot.Commands
         [RequireOwner]
         public async Task RemoveBan(ulong ID)
         {
-            if (Save.BannedUsers.Count != 0)
+            if (Save.BannedUsers.Data.Count != 0)
             {
-                if (Save.BannedUsers.Remove(ID.ToString()))
+                if (Save.BannedUsers.Data.Remove(ID))
                 {
                     await Context.Channel.SendMessageAsync("User removed from ban list.");
                     return;

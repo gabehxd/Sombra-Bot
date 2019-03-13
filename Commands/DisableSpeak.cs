@@ -11,13 +11,13 @@ namespace Sombra_Bot.Commands
         [RequireUserPermission(GuildPermission.ManageGuild)]
         public async Task DisableChat()
         {
-            if (Save.DisabledMServers.Contains(Context.Guild.Id.ToString()))
+            if (Save.DisabledMServers.Data.Contains(Context.Guild.Id))
             {
                 await Context.Channel.SendMessageAsync("Memes for the server have been disabled.");
                 return;
             }
 
-            Save.DisabledMServers.Add(Context.Guild.Id.ToString());
+            Save.DisabledMServers.Data.Add(Context.Guild.Id);
             await Context.Channel.SendMessageAsync("Memes for the server have been disabled.");
         }
 
@@ -25,9 +25,9 @@ namespace Sombra_Bot.Commands
         [RequireUserPermission(GuildPermission.ManageGuild)]
         public async Task EnableChat()
         {
-            if (Save.DisabledMServers.Count != 0)
+            if (Save.DisabledMServers.Data.Count != 0)
             {
-                if (Save.DisabledMServers.Remove(Context.Guild.Id.ToString()))
+                if (Save.DisabledMServers.Data.Remove(Context.Guild.Id))
                 {
                     await Context.Channel.SendMessageAsync("Enabled random memes.");
                     return;

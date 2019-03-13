@@ -13,29 +13,20 @@ namespace Sombra_Bot.Commands
     public class Save : ModuleBase<SocketCommandContext>
     {
         public static readonly DirectoryInfo save = new DirectoryInfo("save");
-        private FileInfo Config => new FileInfo(Path.Combine(Program.roottemppath.FullName, "save.cfg"));
-        
-        public SaveFile BannedUsers = new UsersSaveFile(new FileInfo("..."));
+        private FileInfo TempSaveImage => Program.roottemppath.GetFile("save.cfg");
 
-
-        //should we have each save obj as a list<string> to handle them in LoadSave() Generically?
-        //some way to put all these lists in a list (kek)
-        public static List<KeyValuePair<ulong, string>> Suggestions = new List<KeyValuePair<ulong, string>>();
-        public static FileInfo SuggestionsFile = new FileInfo(Path.Combine(save.FullName, "Suggestions.obj"));
-        
-        public static List<string> DisabledMServers = new List<string>();
-        public static FileInfo DisabledMServersFile = new FileInfo(Path.Combine(save.FullName, "DisabledMServers.obj"));
+        public static UlongSaveFile BannedUsers = new UlongSaveFile(save.GetFile("BannedUsers.obj"));
+        public static UlongSaveFile DisabledMServers = new UlongSaveFile(save.GetFile("DisabledMServers.obj"));
+        public static UlongStringSaveFile Suggestions = new UlongStringSaveFile(save.GetFile("Suggestions.obj"));
 
         [Command("GetSave"), Summary("Gets a combined copy of the save files.")]
         [RequireOwner]
         public async Task GetSave()
         {
-            new UsersSaveFile(new FileInfo("C:\\gay.txt"));
             //TODO: rewrite w/ new save impl
-            //FileInfo[] saveobjs = save.GetFiles("*.obj");
             if (saveobjs.Length != 0)
             {
-                if (Config.Exists) Config.Delete();
+                if (TempSaveImage.Exists) TempSaveImage.Delete();
                 List<string> output = new List<string>
                 {
                     saveobjs.Length.ToString()
@@ -50,8 +41,8 @@ namespace Sombra_Bot.Commands
                         output.AddRange(lines);
                     }
                 }
-                File.WriteAllLines(Config.FullName, output);
-                await Context.Channel.SendFileAsync(Config.FullName, "Current save file:");
+                File.WriteAllLines(TempSaveImage.FullName, output);
+                await Context.Channel.SendFileAsync(TempSaveImage.FullName, "Current save file:");
             }
             else
             {
