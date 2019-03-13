@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Linq;
 using System.Net;
 using System;
+using Sombra_Bot.Commands;
 
 namespace Sombra_Bot.Commands
 {
@@ -13,13 +14,15 @@ namespace Sombra_Bot.Commands
     {
         public static readonly DirectoryInfo save = new DirectoryInfo("save");
         private FileInfo Config => new FileInfo(Path.Combine(Program.roottemppath.FullName, "save.cfg"));
+        
+        public SaveFile BannedUsers = new UsersSaveFile(new FileInfo("..."));
+
 
         //should we have each save obj as a list<string> to handle them in LoadSave() Generically?
         //some way to put all these lists in a list (kek)
         public static List<KeyValuePair<ulong, string>> Suggestions = new List<KeyValuePair<ulong, string>>();
         public static FileInfo SuggestionsFile = new FileInfo(Path.Combine(save.FullName, "Suggestions.obj"));
-        public static List<string> BannedUsers = new List<string>();
-        public static FileInfo BannedUsersFile = new FileInfo(Path.Combine(save.FullName, "BannedUsers.obj"));
+        
         public static List<string> DisabledMServers = new List<string>();
         public static FileInfo DisabledMServersFile = new FileInfo(Path.Combine(save.FullName, "DisabledMServers.obj"));
 
@@ -27,6 +30,7 @@ namespace Sombra_Bot.Commands
         [RequireOwner]
         public async Task GetSave()
         {
+            new UsersSaveFile(new FileInfo("C:\\gay.txt"));
             //TODO: rewrite w/ new save impl
             //FileInfo[] saveobjs = save.GetFiles("*.obj");
             if (saveobjs.Length != 0)
