@@ -2,11 +2,6 @@
 using Sombra_Bot.Utils;
 using System.Collections.Generic;
 using System.IO;
-using System.Threading.Tasks;
-using System.Linq;
-using System.Net;
-using System;
-using Sombra_Bot.Commands;
 
 namespace Sombra_Bot.Commands
 {
@@ -15,6 +10,7 @@ namespace Sombra_Bot.Commands
         public static readonly DirectoryInfo save = new DirectoryInfo("save");
         private FileInfo TempSaveImage => Program.roottemppath.GetFile("save.cfg");
 
+        //To be used at a later date
         public static Dictionary<string, ISaveFile> Saves;
         public static UlongSaveFile BannedUsers => Saves["BannedUsers"] as UlongSaveFile;
         public static UlongSaveFile DisabledMServers => Saves["DisabledMServers"] as UlongSaveFile;
