@@ -1,7 +1,5 @@
 using System.Collections.Generic;
 using System.IO;
-using Sombra_Bot.Commands;
-using Sombra_Bot.Utils;
 
 namespace Sombra_Bot.Utils
 {
