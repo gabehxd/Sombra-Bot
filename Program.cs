@@ -39,9 +39,9 @@ namespace Sombra_Bot
 
         private static void OnProcessExit(object sender, EventArgs e)
         {
-            if (Save.Suggestions.Data.Count != 0) Save.Suggestions.WriteSaveFile();
-            if (Save.BannedUsers.Data.Count != 0) Save.BannedUsers.WriteSaveFile();
-            if (Save.DisabledMServers.Data.Count != 0) Save.DisabledMServers.WriteSaveFile();
+            if (Save.Suggestions.Data.Count != 0) Save.Suggestions.Write();
+            if (Save.BannedUsers.Data.Count != 0) Save.BannedUsers.Write();
+            if (Save.DisabledMServers.Data.Count != 0) Save.DisabledMServers.Write();
         }
 
         private static void LoadSave()
