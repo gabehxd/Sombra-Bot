@@ -16,6 +16,7 @@ namespace Sombra_Bot
     class Program
     {
         public static DirectoryInfo roottemppath = new DirectoryInfo(Path.Combine(Path.GetTempPath(), "Sombra-Bot"));
+        public static readonly DirectoryInfo save = new DirectoryInfo("save");
         private static string token;
         private DiscordSocketClient client;
         private CommandService Commands;
@@ -27,26 +28,11 @@ namespace Sombra_Bot
 
         static void Main()
         {
-            AppDomain.CurrentDomain.ProcessExit += new EventHandler(OnProcessExit);
             roottemppath.Create();
-            Save.save.Create();
-            LoadSave();
+            save.Create();
             LoadConfig();
             Program program = new Program();
             program.MainAsync().GetAwaiter().GetResult();
-        }
-
-        private static void OnProcessExit(object sender, EventArgs e)
-        {
-            
-        }
-
-        private static void LoadSave()
-        {
-            foreach (FileInfo file in Save.save.EnumerateFiles())
-            {
-                Save.OpenSaveFile(file).Read();
-            }
         }
 
         private async Task MainAsync()
@@ -167,15 +153,25 @@ namespace Sombra_Bot
 
         private bool AreMemesDisabled(ulong id)
         {
-            if (Save.DisabledMServers.Data.Contains(id)) return true;
-
+            if (DisableSpeak.DisabledMServers.Exists)
+            {
+                foreach (string server in File.ReadAllLines(DisableSpeak.DisabledMServers.FullName))
+                {
+                    if (ulong.Parse(server) == id) return true;
+                }
+            }
             return false;
         }
 
         private bool IsUserBanned(ulong id)
         {
-            if (Save.BannedUsers.Data.Contains(id)) return true;
-
+            if (BotBan.Banned.Exists)
+            {
+                foreach (string user in File.ReadAllLines(BotBan.Banned.FullName))
+                {
+                    if (ulong.Parse(user) == id) return true;
+                }
+            }
             return false;
         }
 
