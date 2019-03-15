@@ -9,27 +9,45 @@ namespace Sombra_Bot.Commands
     public class Save : ModuleBase<SocketCommandContext>
     {
         public static readonly DirectoryInfo save = new DirectoryInfo("save");
-        private FileInfo TempSaveImage => Program.roottemppath.GetFile("save.cfg");
 
-        //To be used at a later date
-        public static Dictionary<string, ISaveFile> Saves;
+        public static Dictionary<string, ISaveFile> Saves = new Dictionary<string, ISaveFile>();
+        private static string[] PreDefinedSaves = { "BannedUsers.Ulong", "DisabledMServers.Ulong", "Suggestions.UlongString" };
         public static UlongSaveFile BannedUsers => Saves["BannedUsers"] as UlongSaveFile;
         public static UlongSaveFile DisabledMServers => Saves["DisabledMServers"] as UlongSaveFile;
         public static UlongStringSaveFile Suggestions => Saves["Suggestions"] as UlongStringSaveFile;
 
-        public static ISaveFile OpenSaveFile(FileInfo file)
+        private static ISaveFile OpenSaveFile(FileInfo file)
         {
             switch (file.Extension.ToLower())
             {
-                case "Ulong":
+                case ".ulong":
                     return new UlongSaveFile(file);
-                case "UlongString":
-                    return new UlongStringSaveFile(file);
+                case ".ulongstring":
+                    return new UlongSaveFile(file);
                 default:
-                    throw new Exception("File is not a save.");
+                    throw new Exception("File not a save!");
             }
         }
 
+        static Save()
+        {
+            foreach (string str in PreDefinedSaves)
+            {
+                FileInfo info = save.GetFile(str);
+                if (!info.Exists)
+                    info.Create().Close();
+            }
+
+            foreach (FileInfo file in save.EnumerateFiles())
+                Saves[Path.GetFileNameWithoutExtension(file.FullName)] = OpenSaveFile(file);
+
+            foreach (ISaveFile file in Saves.Values)
+                file.Read();
+        }
+
+
+        //STUBBED
+        //private FileInfo TempSaveImage => Program.roottemppath.GetFile("save.cfg");
         //STUBBED
         /* 
         [Command("GetSave"), Summary("Gets a combined copy of the save files.")]

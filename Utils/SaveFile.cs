@@ -15,8 +15,14 @@ namespace Sombra_Bot.Utils
 
         public override void Read()
         {
-            if (!File.Exists) File.Create();
+            if (!File.Exists)
+            {
+                FileStream fs = File.Create();
+                fs.Close();
+                //um ok
+            }
 
+            Data = new List<ulong>();
             using (StreamReader reader = new StreamReader(Open()))
             {
                 string s;
@@ -39,8 +45,14 @@ namespace Sombra_Bot.Utils
     {
         public override void Read()
         {
-            if (!File.Exists) File.Create();
+            if (!File.Exists)
+            {
+                FileStream fs = File.Create();
+                fs.Close();
+                //um ok
+            }
 
+            Data = new List<KeyValuePair<ulong, string>>();
             using (StreamReader reader = new StreamReader(Open()))
             {
                 string s;

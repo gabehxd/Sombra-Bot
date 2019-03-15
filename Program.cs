@@ -30,7 +30,6 @@ namespace Sombra_Bot
             AppDomain.CurrentDomain.ProcessExit += new EventHandler(OnProcessExit);
             roottemppath.Create();
             Save.save.Create();
-            LoadSave();
             LoadConfig();
             Program program = new Program();
             program.MainAsync().GetAwaiter().GetResult();
@@ -38,15 +37,10 @@ namespace Sombra_Bot
 
         private static void OnProcessExit(object sender, EventArgs e)
         {
-            
-        }
-
-        private static void LoadSave()
-        {
-            foreach (FileInfo file in Save.save.EnumerateFiles())
-            {
-                Save.OpenSaveFile(file).Read();
-            }
+           foreach (ISaveFile save in Save.Saves.Values)
+           {
+               save.Write();
+           }
         }
 
         private async Task MainAsync()

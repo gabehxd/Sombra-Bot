@@ -12,7 +12,7 @@ namespace Sombra_Bot.Utils
         protected FileInfo File;
         protected Stream Open()
         {
-            return File.OpenWrite();
+            return File.Open(FileMode.Open, FileAccess.ReadWrite);
         }
         public ISaveFile(FileInfo file)
         {
