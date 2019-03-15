@@ -2,6 +2,7 @@
 using Sombra_Bot.Utils;
 using System.Collections.Generic;
 using System.IO;
+using System;
 
 namespace Sombra_Bot.Commands
 {
@@ -15,6 +16,19 @@ namespace Sombra_Bot.Commands
         public static UlongSaveFile BannedUsers => Saves["BannedUsers"] as UlongSaveFile;
         public static UlongSaveFile DisabledMServers => Saves["DisabledMServers"] as UlongSaveFile;
         public static UlongStringSaveFile Suggestions => Saves["Suggestions"] as UlongStringSaveFile;
+
+        public static ISaveFile OpenSaveFile(FileInfo file)
+        {
+            switch (file.Extension.ToLower())
+            {
+                case "Ulong":
+                    return new UlongSaveFile(file);
+                case "UlongString":
+                    return new UlongStringSaveFile(file);
+                default:
+                    throw new Exception("File is not a save.");
+            }
+        }
 
         //STUBBED
         /* 

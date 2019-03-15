@@ -45,7 +45,7 @@ namespace Sombra_Bot
         {
             foreach (FileInfo file in Save.save.EnumerateFiles())
             {
-                //Save.Saves[file.Name] = new 
+                Save.OpenSaveFile(file).Read();
             }
         }
 
