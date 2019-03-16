@@ -9,13 +9,13 @@ using System;
 
 namespace Sombra_Bot.Commands
 {
-    public class Release : ModuleBase<SocketCommandContext>
+    public class GitHub : ModuleBase<SocketCommandContext>
     {
         [Command("GetRelease"), Summary("Downloads the latest release of a Github repository.")]
         public async Task GetRelease(string user, string repo)
         {
             GitHubClient client = new GitHubClient(new ProductHeaderValue("Github"));
-            IReadOnlyList<Octokit.Release> releases;
+            IReadOnlyList<Release> releases;
             try
             {
                 releases = await client.Repository.Release.GetAll(user, repo);
@@ -35,7 +35,7 @@ namespace Sombra_Bot.Commands
 
             try
             {
-                Octokit.Release latest = releases[0];
+                Release latest = releases[0];
                 if (latest.Assets.Count == 1)
                 {
                     await Context.Channel.SendMessageAsync("Grabbing release...");
