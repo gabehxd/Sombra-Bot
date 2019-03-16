@@ -6,10 +6,29 @@
             "command": "dotnet",
             "type": "process",
             "args": [
-                "build",
-                "${workspaceFolder}/Sombra-Bot.csproj"
+                "build"
             ],
-            "problemMatcher": "$msCompile"
-        }
+            "problemMatcher": "$msCompile",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        
+        {
+            "label": "Publish - Release",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "publish",
+                "-c",
+                "release"
+            ],
+            "problemMatcher": "$msCompile",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }    
     ]
 }

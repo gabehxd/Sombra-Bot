@@ -31,6 +31,7 @@ namespace Sombra_Bot.Commands
 
         static Save()
         {
+            save.Create();
             foreach (string str in PreDefinedSaves)
             {
                 FileInfo info = save.GetFile(str);

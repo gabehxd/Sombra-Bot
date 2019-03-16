@@ -30,7 +30,6 @@ namespace Sombra_Bot
         static void Main()
         {
             roottemppath.Create();
-            Save.save.Create();
             LoadConfig();
             Program program = new Program();
             program.MainAsync().GetAwaiter().GetResult();
