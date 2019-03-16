@@ -2,20 +2,29 @@
 using Sombra_Bot.Utils;
 using System;
 using System.Threading.Tasks;
-using Sombra_Bot.Utils;
 
 namespace Sombra_Bot.Commands
 {
     public class Client : ModuleBase<SocketCommandContext>
     {
+        [Command("Shutdown"), Summary("Shut downs the bot.")]
+        [RequireOwner]
+        public async Task ShutDown()
+        {
+            await Context.Channel.SendMessageAsync("Bye bitch.");
+            Environment.Exit(0);
+        }
+
         [Command("Say"), Summary("Says the message sent.")]
         [RequireOwner]
         public async Task Say(params string[] input)
         {
-
-            await Context.Channel.SendMessageAsync("Bye bitch.");
-            await Context.Client.LogoutAsync();
-            Environment.Exit(0);
+            try
+            {
+                await Context.Message.DeleteAsync();
+            }
+            catch { }
+            await Context.Channel.SendMessageAsync(string.Join(" ", input));
         }
 
         [Command("Invite"), Summary("Get an invite.")]
@@ -38,14 +47,6 @@ namespace Sombra_Bot.Commands
                 return;
             }
             await Context.Channel.SendMessageAsync("Done!");
-        }
-
-        [Command("Shutdown"), Summary("Shut downs the bot.")]
-        [RequireOwner]
-        public async Task ShutDown()
-        {
-            await Context.Channel.SendMessageAsync("Bye bitch.");
-            Environment.Exit(0);
         }
     }
 }
