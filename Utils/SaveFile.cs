@@ -25,6 +25,12 @@ namespace Sombra_Bot.Utils
 
         public override void Write()
         {
+            if (File.Length > 0)
+            {
+                File.Delete();
+                File.Create().Close();
+            }
+
             using (StreamWriter writer = new StreamWriter(Open()))
                 foreach (ulong value in Data)
                     writer.WriteLine($"{value}");
@@ -51,6 +57,12 @@ namespace Sombra_Bot.Utils
 
         public override void Write()
         {
+            if (File.Length > 0)
+            {
+                File.Delete();
+                File.Create().Close();
+            }
+            
             using (StreamWriter writer = new StreamWriter(Open()))
                 foreach (KeyValuePair<ulong, string> pair in Data)
                     writer.WriteLine($"{pair.Key}: {pair.Value}");
