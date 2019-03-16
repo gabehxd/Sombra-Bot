@@ -9,14 +9,15 @@ using Sombra_Bot.Utils;
 using System.IO;
 using Sombra_Bot.Commands;
 using System.Linq;
+using System.Threading;
 using Discord.Rest;
+using System.Timers;
 
 namespace Sombra_Bot
 {
     class Program
     {
         public static DirectoryInfo roottemppath = new DirectoryInfo(Path.Combine(Path.GetTempPath(), "Sombra-Bot"));
-        public static readonly DirectoryInfo save = new DirectoryInfo("save");
         private static string token;
         private DiscordSocketClient client;
         private CommandService Commands;
@@ -29,10 +30,15 @@ namespace Sombra_Bot
         static void Main()
         {
             roottemppath.Create();
-            save.Create();
+            Save.save.Create();
             LoadConfig();
             Program program = new Program();
             program.MainAsync().GetAwaiter().GetResult();
+            System.Timers.Timer aTimer = new System.Timers.Timer(900000);
+            aTimer.Elapsed += OnTimedEvent;
+            aTimer.AutoReset = true;
+            aTimer.Enabled = true;
+            Thread.Sleep(-1);
         }
 
         private async Task MainAsync()
@@ -46,11 +52,10 @@ namespace Sombra_Bot
 
             client.MessageReceived += MessageReceived;
             client.Ready += Client_Ready;
+            client.LoggedOut += Client_Logout;
             await Commands.AddModulesAsync(Assembly.GetEntryAssembly(), null);
             await client.LoginAsync(TokenType.Bot, token);
             await client.StartAsync();
-
-            await Task.Delay(-1);
         }
 
         private async Task Client_Ready()
@@ -151,30 +156,6 @@ namespace Sombra_Bot
             }
         }
 
-        private bool AreMemesDisabled(ulong id)
-        {
-            if (DisableSpeak.DisabledMServers.Exists)
-            {
-                foreach (string server in File.ReadAllLines(DisableSpeak.DisabledMServers.FullName))
-                {
-                    if (ulong.Parse(server) == id) return true;
-                }
-            }
-            return false;
-        }
-
-        private bool IsUserBanned(ulong id)
-        {
-            if (BotBan.Banned.Exists)
-            {
-                foreach (string user in File.ReadAllLines(BotBan.Banned.FullName))
-                {
-                    if (ulong.Parse(user) == id) return true;
-                }
-            }
-            return false;
-        }
-
         private static void LoadConfig()
         {
             Config config = new Config();
@@ -186,6 +167,30 @@ namespace Sombra_Bot
                 Console.ReadLine();
                 Environment.Exit(0);
             }
+        }
+
+        private bool AreMemesDisabled(ulong id)
+        {
+            if (Save.DisabledMServers.Data.Contains(id)) return true;
+
+            return false;
+        }
+
+        private bool IsUserBanned(ulong id)
+        {
+            if (Save.BannedUsers.Data.Contains(id)) return true;
+
+            return false;
+        }
+
+        private async Task Client_Logout()
+        {
+            Save.WriteAll();
+        }
+
+        private static void OnTimedEvent(Object source, ElapsedEventArgs e)
+        {
+            Save.WriteAll();
         }
     }
 }

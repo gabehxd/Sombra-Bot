@@ -7,6 +7,14 @@ namespace Sombra_Bot.Commands
 {
     public class Client : ModuleBase<SocketCommandContext>
     {
+        [Command("Shutdown"), Summary("Shut downs the bot.")]
+        [RequireOwner]
+        public async Task ShutDown()
+        {
+            await Context.Channel.SendMessageAsync("Bye bitch.");
+            Environment.Exit(0);
+        }
+
         [Command("Say"), Summary("Says the message sent.")]
         [RequireOwner]
         public async Task Say(params string[] input)
@@ -39,14 +47,6 @@ namespace Sombra_Bot.Commands
                 return;
             }
             await Context.Channel.SendMessageAsync("Done!");
-        }
-
-        [Command("Shutdown"), Summary("Shut downs the bot.")]
-        [RequireOwner]
-        public async Task ShutDown()
-        {
-            await Context.Channel.SendMessageAsync("Bye bitch.");
-            Environment.Exit(0);
         }
     }
 }

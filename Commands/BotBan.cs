@@ -1,32 +1,27 @@
-﻿using System.IO;
-using Discord.Commands;
+﻿using Discord.Commands;
 using System.Threading.Tasks;
-using System.Linq;
-using System.Collections.Generic;
 using Sombra_Bot.Utils;
 
 namespace Sombra_Bot.Commands
 {
     public class BotBan : ModuleBase<SocketCommandContext>
     {
-        public static FileInfo Banned => new FileInfo(Path.Combine(Program.save.FullName, "BannedUsers.obj"));
+        //public static FileInfo Banned => new FileInfo(Path.Combine(Save.save.FullName, "BannedUsers.obj"));
 
         [Command("AddBotBan"), Summary("Ban a user from this bot.")]
         [RequireOwner]
         public async Task AddBan(ulong ID)
         {
-            if (Banned.Exists)
+            //better search function?
+            foreach (ulong user in Save.BannedUsers.Data)
             {
-                foreach (string user in File.ReadAllLines(Banned.FullName))
+                if (user == ID)
                 {
-                    if (ulong.Parse(user) == ID)
-                    {
-                        await Error.Send(Context.Channel, Value: "User is already banned.");
-                        return;
-                    }
+                    await Error.Send(Context.Channel, Value: "User is already banned.");
+                    return;
                 }
             }
-            File.AppendAllText(Banned.FullName, $"{ID.ToString()}\n");
+            Save.BannedUsers.Data.Add(ID);
             await Context.Channel.SendMessageAsync("User added to ban list.");
         }
 
@@ -34,23 +29,14 @@ namespace Sombra_Bot.Commands
         [RequireOwner]
         public async Task RemoveBan(ulong ID)
         {
-            if (Banned.Exists)
+            if (Save.BannedUsers.Data.Count != 0)
             {
-                List<string> bannedusers = File.ReadAllLines(Banned.FullName).ToList();
-                if (bannedusers.Count != 0)
+                if (Save.BannedUsers.Data.Remove(ID))
                 {
-                    for (int i = bannedusers.Count - 1; i >= 0; i--)
-                    {
-                        if (bannedusers[i] == ID.ToString())
-                        {
-                            bannedusers.RemoveAt(i);
-                            File.WriteAllLines(Banned.FullName, bannedusers);
-                            await Context.Channel.SendMessageAsync("User removed from ban list.");
-                            return;
-                        }
-                    }
-                    await Error.Send(Context.Channel, Value: "No user with that ID is banned.");
+                    await Context.Channel.SendMessageAsync("User removed from ban list.");
+                    return;
                 }
+                await Error.Send(Context.Channel, Value: "No user with that ID is banned.");
             }
             await Error.Send(Context.Channel, Value: "No users are banned.");
         }
