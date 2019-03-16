@@ -12,6 +12,7 @@ namespace Sombra_Bot.Commands
         public async Task ShutDown()
         {
             await Context.Channel.SendMessageAsync("Bye bitch.");
+            await Context.Client.LogoutAsync();
             Environment.Exit(0);
         }
 

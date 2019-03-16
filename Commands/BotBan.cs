@@ -1,6 +1,7 @@
 ﻿using Discord.Commands;
 using System.Threading.Tasks;
 using Sombra_Bot.Utils;
+using Discord;
 
 namespace Sombra_Bot.Commands
 {
@@ -39,6 +40,28 @@ namespace Sombra_Bot.Commands
                 await Error.Send(Context.Channel, Value: "No user with that ID is banned.");
             }
             await Error.Send(Context.Channel, Value: "No users are banned.");
+        }
+
+        [Command("ListBotBans"), Summary("Removes banned user from this bot."), Alias("Bans")]
+        [RequireOwner]
+        public async Task ListBans()
+        {
+            if (Save.BannedUsers.Data.Count != 0)
+            {
+                EmbedBuilder builder = new EmbedBuilder();
+                string s = "";
+                foreach (ulong ID in Save.BannedUsers.Data)
+                {
+                    s += $"<@{ID}>\n";
+                }
+                builder.WithColor(Color.Purple);
+                builder.WithTitle("Banned Users");
+                builder.WithDescription(s);
+                builder.WithCurrentTimestamp();
+                await Context.Channel.SendMessageAsync(embed: builder.Build());
+                return;
+            }
+            await Error.Send(Context.Channel, Value: "No users have been banned.");
         }
     }
 }
