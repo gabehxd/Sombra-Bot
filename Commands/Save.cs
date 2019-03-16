@@ -23,7 +23,7 @@ namespace Sombra_Bot.Commands
                 case ".ulong":
                     return new UlongSaveFile(file);
                 case ".ulongstring":
-                    return new UlongSaveFile(file);
+                    return new UlongStringSaveFile(file);
                 default:
                     throw new Exception("File not a save!");
             }
