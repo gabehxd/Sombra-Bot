@@ -27,7 +27,7 @@ namespace Sombra_Bot.Utils
         {
             using (StreamWriter writer = new StreamWriter(Open()))
                 foreach (ulong value in Data)
-                    writer.WriteLine($"{value}\n");
+                    writer.WriteLine($"{value}");
         }
 
         public UlongSaveFile(FileInfo file) : base(file) { }
@@ -53,7 +53,7 @@ namespace Sombra_Bot.Utils
         {
             using (StreamWriter writer = new StreamWriter(Open()))
                 foreach (KeyValuePair<ulong, string> pair in Data)
-                    writer.WriteLine($"{pair.Key}: {pair.Value}\n");
+                    writer.WriteLine($"{pair.Key}: {pair.Value}");
         }
         public UlongStringSaveFile(FileInfo file) : base(file) { }
     }

@@ -1,6 +1,7 @@
 ﻿using Discord.Commands;
 using System;
 using System.Threading.Tasks;
+using Sombra_Bot.Utils;
 
 namespace Sombra_Bot.Commands
 {
@@ -11,6 +12,7 @@ namespace Sombra_Bot.Commands
         public async Task ShutDown()
         {
             await Context.Channel.SendMessageAsync("Bye bitch.");
+            await Context.Client.LogoutAsync();
             Environment.Exit(0);
         }
 

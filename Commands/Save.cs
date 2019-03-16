@@ -45,6 +45,11 @@ namespace Sombra_Bot.Commands
                 file.Read();
         }
 
+        public static void WriteAll()
+        {
+            foreach (ISaveFile save in Saves.Values)
+                save.Write();
+        }
 
         //STUBBED
         //private FileInfo TempSaveImage => Program.roottemppath.GetFile("save.cfg");

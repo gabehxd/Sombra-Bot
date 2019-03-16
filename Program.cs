@@ -9,7 +9,9 @@ using Sombra_Bot.Utils;
 using System.IO;
 using Sombra_Bot.Commands;
 using System.Linq;
+using System.Threading;
 using Discord.Rest;
+using System.Timers;
 
 namespace Sombra_Bot
 {
@@ -27,20 +29,16 @@ namespace Sombra_Bot
 
         static void Main()
         {
-            AppDomain.CurrentDomain.ProcessExit += new EventHandler(OnProcessExit);
             roottemppath.Create();
             Save.save.Create();
             LoadConfig();
             Program program = new Program();
             program.MainAsync().GetAwaiter().GetResult();
-        }
-
-        private static void OnProcessExit(object sender, EventArgs e)
-        {
-           foreach (ISaveFile save in Save.Saves.Values)
-           {
-               save.Write();
-           }
+            System.Timers.Timer aTimer = new System.Timers.Timer(900000);
+            aTimer.Elapsed += OnTimedEvent;
+            aTimer.AutoReset = true;
+            aTimer.Enabled = true;
+            Thread.Sleep(-1);
         }
 
         private async Task MainAsync()
@@ -54,11 +52,10 @@ namespace Sombra_Bot
 
             client.MessageReceived += MessageReceived;
             client.Ready += Client_Ready;
+            client.LoggedOut += Client_Logout;
             await Commands.AddModulesAsync(Assembly.GetEntryAssembly(), null);
             await client.LoginAsync(TokenType.Bot, token);
             await client.StartAsync();
-
-            await Task.Delay(-1);
         }
 
         private async Task Client_Ready()
@@ -159,6 +156,19 @@ namespace Sombra_Bot
             }
         }
 
+        private static void LoadConfig()
+        {
+            Config config = new Config();
+            token = config.Token;
+
+            if (token == "xxxx")
+            {
+                Console.WriteLine("Config has not been found, the file has been created, configure it with you bot's token.");
+                Console.ReadLine();
+                Environment.Exit(0);
+            }
+        }
+
         private bool AreMemesDisabled(ulong id)
         {
             if (Save.DisabledMServers.Data.Contains(id)) return true;
@@ -173,17 +183,14 @@ namespace Sombra_Bot
             return false;
         }
 
-        private static void LoadConfig()
+        private async Task Client_Logout()
         {
-            Config config = new Config();
-            token = config.Token;
+            Save.WriteAll();
+        }
 
-            if (token == "xxxx")
-            {
-                Console.WriteLine("Config has not been found, the file has been created, configure it with you bot's token.");
-                Console.ReadLine();
-                Environment.Exit(0);
-            }
+        private static void OnTimedEvent(Object source, ElapsedEventArgs e)
+        {
+            Save.WriteAll();
         }
     }
 }
