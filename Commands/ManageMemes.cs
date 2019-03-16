@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Sombra_Bot.Commands
 {
-    public class DisableSpeak : ModuleBase<SocketCommandContext>
+    public class ManageMemes : ModuleBase<SocketCommandContext>
     {
         [Command("DisableMemes"), Summary("Disables Sombra bot's random memes.")]
         [RequireUserPermission(GuildPermission.ManageGuild)]
