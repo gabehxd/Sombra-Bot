@@ -19,6 +19,7 @@ namespace Sombra_Bot.Commands
             { "Hacc", "Haccs a user >:3.\nargs: <user>"},
             { "GetRelease", "Gets a release from the specificed Github repository.\nargs: <repository owner> <repository name>." },
             { "Roll", "Rolls a max of 100 die with a max of 100 sides\nargs: <die> <sides>." },
+            { "Flip", "Flips a coin."},
             { "Avatar", "Gets a user's Avatar.\nargs: <user>." },
             { "OWStats", "Gets Overwatch stats.\nargs: <username>." },
             { "EnableMemes", "Re-enables random memes, requires the manage server permission. Enabled by default." },
