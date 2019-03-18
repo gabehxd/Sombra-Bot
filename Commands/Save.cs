@@ -3,6 +3,7 @@ using Sombra_Bot.Utils;
 using System.Collections.Generic;
 using System.IO;
 using System;
+using System.Threading.Tasks;
 
 namespace Sombra_Bot.Commands
 {
@@ -50,6 +51,14 @@ namespace Sombra_Bot.Commands
         {
             foreach (ISaveFile save in Saves.Values)
                 save.Write();
+        }
+
+        [Command("ForceSave"), Summary("Forces writing saves to files.")]
+        [RequireOwner]
+        public async Task ForceSave()
+        {
+            WriteAll();
+            await Context.Channel.SendMessageAsync("Saving Forced!");
         }
 
         //STUBBED

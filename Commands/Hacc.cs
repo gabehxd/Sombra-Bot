@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Discord;
 
-namespace Sombra_Bot.Commands.Memes
+namespace Sombra_Bot.Commands.Commands
 {
     public class Hacc : ModuleBase<SocketCommandContext>
     {
