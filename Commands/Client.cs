@@ -11,8 +11,9 @@ namespace Sombra_Bot.Commands
         [RequireOwner]
         public async Task ShutDown()
         {
-            await Context.Channel.SendMessageAsync("Bye bitch.");
+            await Context.Channel.SendMessageAsync("Logging out and shutting down.");
             await Context.Client.LogoutAsync();
+            await Task.Delay(12000);
             Environment.Exit(0);
         }
 
