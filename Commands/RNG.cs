@@ -33,7 +33,6 @@ namespace Sombra_Bot.Commands
             int sum = 0;
             for (int i = 0; i < die; i++)
             {
-                //if the sides is 4 i only get values >= 3
                 int num = rng.Next(1, sides + 1);
                 sum += num;
                 rc.Add(num);
@@ -48,7 +47,6 @@ namespace Sombra_Bot.Commands
         public async Task CoinFlip()
         {
             Random rng = new Random();
-            //same bug as above
             switch (rng.Next(0, 2))
             {
                 case 0:
