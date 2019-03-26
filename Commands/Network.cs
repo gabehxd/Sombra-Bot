@@ -20,7 +20,10 @@ namespace Sombra_Bot.Commands
                     EmbedBuilder builder = new EmbedBuilder();
                     builder.WithColor(Color.Green);
                     builder.WithCurrentTimestamp();
-                    builder.AddField(reply.Address.ToString(), $"{reply.RoundtripTime}ms");
+                    string s;
+                    if (reply.Address.ToString() != ip) s = $"{reply.Address.ToString()} ({ip})";
+                    else s = $"{reply.Address.ToString()}";
+                    builder.AddField(s, $"RTT: {reply.RoundtripTime}ms");
                     await Context.Channel.SendMessageAsync(embed: builder.Build());
                 }
             }
