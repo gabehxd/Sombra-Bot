@@ -22,6 +22,7 @@ namespace Sombra_Bot.Commands
             { "Flip", "Flips a coin."},
             { "Avatar", "Gets a user's Avatar.\nargs: <user>." },
             { "OWStats", "Gets Overwatch stats.\nargs: <username>." },
+            { "Ping", "Pings a IP address.\nargs: <IP>"},
             { "EnableMemes", "Re-enables random memes, requires the manage server permission. Enabled by default." },
             { "DisableMemes", "Disables random memes from being sent into the server, requires the manage server permission."},
             { "Invite", "Gets an invite for Sombra Bot and Sombra Bot's discord server." },

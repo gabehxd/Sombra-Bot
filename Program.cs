@@ -182,10 +182,9 @@ namespace Sombra_Bot
             return false;
         }
 
-        private async Task Client_Logout()
-        {
-            Save.WriteAll();
-        }
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
+        private async Task Client_Logout() => Save.WriteAll();
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
 
         private static void OnTimedEvent(Object source, ElapsedEventArgs e)
         {
