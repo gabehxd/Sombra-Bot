@@ -13,12 +13,12 @@ namespace Sombra_Bot.Commands
         {
             if (die <= 0)
             {
-                await Error.Send(Context.Channel, Value: "Die can be 0 or below.");
+                await Error.Send(Context.Channel, Value: "Die cannot be 0 or below.");
                 return;
             }
             if (sides <= 1)
             {
-                await Error.Send(Context.Channel, Value: "Sides can be 1 or below.");
+                await Error.Send(Context.Channel, Value: "Sides cannot be 1 or below.");
                 return;
             }
             //Prevent RAM usage hell, thanks simon :)
