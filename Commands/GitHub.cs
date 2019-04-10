@@ -6,14 +6,44 @@ using System.Net.Http;
 using Octokit;
 using Sombra_Bot.Utils;
 using System;
+using Discord;
 
 namespace Sombra_Bot.Commands
 {
     public class GitHub : ModuleBase<SocketCommandContext>
     {
         [Command("GetRelease"), Summary("Downloads the latest release of a Github repository.")]
-        public async Task GetRelease(string user, string repo)
+        public async Task GetRelease(params string[] args)
         {
+            if (args.Length < 2)
+            {
+                await Error.Send(Context.Channel, "The input text has too few parameters.");
+                return;
+            }
+            string user = null;
+            string repo = null;
+            string tag = null;
+            bool getprerelease = false;
+
+            foreach (KeyValuePair<char, string> pair in GetFlags(args))
+            {
+                switch (pair.Key)
+                {
+                    case 't':
+                        tag = pair.Value;
+                        break;
+                    case 'p':
+                        string flag = pair.Value.ToLower();
+                        if ( flag == "false" || flag == null) getprerelease = false;
+                        else if (flag == "true") getprerelease = true;
+                        else await Error.Send(Context.Channel, Value: "Flag `p` is neither true or false.");
+                        break;
+                    default:
+                        await Error.Send(Context.Channel, Value: $"Flag `{pair.Value}` does not exist!");
+                        return;
+                }
+            }
+
             GitHubClient client = new GitHubClient(new ProductHeaderValue("Github"));
             IReadOnlyList<Release> releases;
             try
@@ -27,90 +57,39 @@ namespace Sombra_Bot.Commands
                 return;
             }
 
-            if (releases.Count == 0)
-            {
-                await Error.Send(Context.Channel, Value: "No releases made.");
-                return;
-            }
 
-            try
+            foreach (Release release in releases)
             {
-                Release latest = releases[0];
-                if (latest.Assets.Count == 1)
+                await Context.Channel.SendMessageAsync(release.TagName);
+                if (getprerelease)
                 {
-                    await Context.Channel.SendMessageAsync("Grabbing release...");
-                    await Context.Channel.TriggerTypingAsync();
-
-                    if (latest.Assets[0].Size > 8000000)
-                    {
-                        await Context.Channel.SendMessageAsync($"Here ya go!: {latest.Assets[0].BrowserDownloadUrl}");
-                        return;
-                    }
-
-                    FileInfo temp = new FileInfo(Path.Combine(Path.GetTempPath(), "Sombra-Bot", repo.ToLower(), latest.Assets[0].Name));
-                    DirectoryInfo temppath = new DirectoryInfo(Path.Combine(Path.GetTempPath(), "Sombra-Bot", repo.ToLower()));
-                    temppath.Create();
-
-                    if (temp.Exists)
-                    {
-                        if (temp.Length == latest.Assets[0].Size)
-                        {
-                            await Context.Channel.SendFileAsync(temp.FullName, "Here ya go!:");
-                            return;
-                        }
-                    }
-
-                    temp.Delete();
-                    HttpClient dlclient = new HttpClient();
-                    using (Stream asset = await dlclient.GetStreamAsync(latest.Assets[0].BrowserDownloadUrl))
-                    using (FileStream dest = temp.Create())
-                    {
-                        asset.CopyTo(dest);
-                    }
-                    await Context.Channel.SendFileAsync(temp.FullName, "Here ya go!:");
+                    //if (release.Prerelease)
                 }
-                else
-                {
-                    await Context.Channel.SendMessageAsync("Grabbing releases...");
-                    HttpClient dlclient = new HttpClient();
-                    DirectoryInfo temppath = new DirectoryInfo(Path.Combine(Path.GetTempPath(), "Sombra-Bot", repo.ToLower()));
-                    temppath.Create();
-                    foreach (ReleaseAsset asset in latest.Assets)
-                    {
-                        await Context.Channel.TriggerTypingAsync();
-                        if (asset.Size <= 8000000)
-                        {
-                            FileInfo temp = new FileInfo(Path.Combine(Path.GetTempPath(), "Sombra-Bot", repo.ToLower(), asset.Name));
-                            if (temp.Exists)
-                            {
-                                if (temp.Length == asset.Size)
-                                {
-                                    await Context.Channel.SendFileAsync(temp.FullName);
-                                    continue;
-                                }
-                            }
 
-                            using (Stream item = await dlclient.GetStreamAsync(asset.BrowserDownloadUrl))
-                            using (FileStream dest = temp.Create())
-                            {
-                                item.CopyTo(dest);
-                            }
-                            await Context.Channel.SendFileAsync(temp.FullName);
-                        }
-                        else
-                        {
-                            await Context.Channel.SendMessageAsync(asset.BrowserDownloadUrl);
-                        }
-                    }
-                    await Context.Channel.TriggerTypingAsync();
-                    await Task.Delay(500);
-                    await Context.Channel.SendMessageAsync("Done!");
+            }
+            await Context.Channel.SendMessageAsync($"{user}, {repo}");
+        }
+
+        private Dictionary<char, String> GetFlags(string[] args)
+        {
+            string k;
+
+            Dictionary<char, string> argsDict = new Dictionary<char, string>();
+            for (int i = 0; i < args.Length; i++)
+            {
+                
+                //if (args.Length % 2 == 0)
+                k = args[i];
+
+                if (k.StartsWith('-'))
+                {
+                    string v;
+                    v = args[i + 1];
+                    if (!(i + 1 >= args.Length)) argsDict[k[1]] = v;
+                    else argsDict[k[1]] = null;
                 }
             }
-            catch (Exception e)
-            {
-                await Error.Send(Context.Channel, Value: "Command failed: error reported!", et: Error.ExceptionType.Fatal, e: e);
-            }
+            return argsDict;
         }
     }
 }
