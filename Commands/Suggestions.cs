@@ -27,18 +27,18 @@ namespace Sombra_Bot.Commands
         {
             if (Save.Suggestions.Data.Count != 0)
             {
-                string mod = "";
+                string desc = "";
                 int i = 1;
                 foreach (KeyValuePair<ulong, string> pair in Save.Suggestions.Data)
                 {
-                    mod += $"{i} - <@{pair.Key}>: {pair.Value}\n";
+                    desc += $"{i} - <@{pair.Key}>: {pair.Value}\n";
                     i++;
                 }
 
                 EmbedBuilder builder = new EmbedBuilder();
                 builder.WithTitle("Suggestions");
                 builder.WithColor(Color.Purple);
-                builder.WithDescription(mod);
+                builder.WithDescription(desc);
                 builder.WithCurrentTimestamp();
                 await Context.Channel.SendMessageAsync(embed: builder.Build());
                 return;
