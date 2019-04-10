@@ -6,7 +6,8 @@
             "command": "dotnet",
             "type": "process",
             "args": [
-                "build"
+                "build",
+                "/p:DefineContants=PUBLIC"
             ],
             "problemMatcher": "$msCompile",
             "group": {
@@ -17,6 +18,37 @@
         
         {
             "label": "Publish - Release",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "publish",
+                "-c",
+                "release",
+                "/p:DefineContants=PUBLIC"
+            ],
+            "problemMatcher": "$msCompile",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+
+        {
+            "label": "build - nonpublic",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build"
+            ],
+            "problemMatcher": "$msCompile",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        
+        {
+            "label": "Publish - Release - nonpublic",
             "command": "dotnet",
             "type": "process",
             "args": [
