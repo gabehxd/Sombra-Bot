@@ -1,8 +1,8 @@
+using System.Net.NetworkInformation;
+using System.Threading.Tasks;
+using Discord;
 using Discord.Commands;
 using Sombra_Bot.Utils;
-using Discord;
-using System.Threading.Tasks;
-using System.Net.NetworkInformation;
 
 namespace Sombra_Bot.Commands
 {
@@ -11,6 +11,12 @@ namespace Sombra_Bot.Commands
         [Command("Ping"), Summary("Pings an IP.")]
         public async Task Ping(string ip)
         {
+            if (ip.ToLower().ToLower().Contains("localhost")) 
+            {
+                await Error.Send(Context.Channel, Value: "IP not premitted!");
+                return;
+            }
+
             Ping pinger = new Ping();
             try
             {
