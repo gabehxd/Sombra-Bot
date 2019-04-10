@@ -9,7 +9,7 @@ namespace Sombra_Bot.Commands
     public class RNG : ModuleBase<SocketCommandContext>
     {
         [Command("Roll"), Summary("Rolls a dice"), Alias("Dice", "DiceRoll")]
-        public async Task DiceRoll(int die = 1, int sides = 6)
+        public async Task DiceRoll(int die = 2, int sides = 6)
         {
             if (die <= 0)
             {
@@ -21,26 +21,41 @@ namespace Sombra_Bot.Commands
                 await Error.Send(Context.Channel, Value: "Sides cannot be 1 or below.");
                 return;
             }
-            //Prevent RAM usage hell, thanks simon :)
-            if (die > 100 || sides > 100)
-            {
-                await Error.Send(Context.Channel, Value: "No value can be over 100.");
-                return;
-            }
 
             Random rng = new Random();
-            List<int> rc = new List<int>();
-            int sum = 0;
-            for (int i = 0; i < die; i++)
-            {
-                int num = rng.Next(1, sides + 1);
-                sum += num;
-                rc.Add(num);
-            }
-            string msg = $"You rolled: {string.Join(", ", rc)} \uD83C\uDFB2";
-            if (rc.Count > 1) msg += $"\nSum: {sum.ToString()}";
 
-            await Context.Channel.SendMessageAsync(msg);
+            if (die > 400 || sides > 400)
+            {
+                int sum;
+                try
+                {
+                    sum = rng.Next(die, die * sides + 1);
+                }
+                catch
+                {
+                    await Error.Send(Context.Channel, Value: "Inputted values were too large!");
+                    return;
+                }
+                
+                await Context.Channel.SendMessageAsync("Value over 400, calculating sum only!");
+                await Context.Channel.SendMessageAsync($"You rolled a sum of {sum} \uD83C\uDFB2");
+
+
+            }
+            else
+            {
+                int sum = 0;
+                List<int> rc = new List<int>();
+                for (int i = 0; i < die; i++)
+                {
+                    int num = rng.Next(1, sides + 1);
+                    sum += num;
+                    rc.Add(num);
+                }
+                string msg = $"You rolled: {string.Join(", ", rc)} \uD83C\uDFB2";
+                if (rc.Count > 1) msg += $"\nSum: {sum.ToString()}";
+                await Context.Channel.SendMessageAsync(msg);
+            }
         }
 
         [Command("Flip"), Summary("Flips a coin.")]
@@ -51,14 +66,14 @@ namespace Sombra_Bot.Commands
             {
                 case 0:
                     await Context.Channel.SendMessageAsync("Heads!");
-                    break;
+                    return;
                 case 1:
                     await Context.Channel.SendMessageAsync("Tails!");
-                    break;
+                    return;
                 //just incase
                 default:
                     await Error.Send(Context.Channel, Value: "Command failed: error reported!", e: new Exception("CoinFlip: Internal value is not 0 or 1!"), et: Error.ExceptionType.Fatal);
-                    break;
+                    return;
             }
         }
     }
