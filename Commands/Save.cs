@@ -12,10 +12,16 @@ namespace Sombra_Bot.Commands
         public static readonly DirectoryInfo save = new DirectoryInfo("save");
 
         public static Dictionary<string, ISaveFile> Saves = new Dictionary<string, ISaveFile>();
+#if PUBLIC
         private static readonly string[] PreDefinedSaves = { "BannedUsers.Ulong", "DisabledMServers.Ulong", "Suggestions.UlongString" };
+#else
+        private static readonly string[] PreDefinedSaves = { "BannedUsers.Ulong", "DisabledMServers.Ulong"};
+#endif
         public static UlongSaveFile BannedUsers => Saves["BannedUsers"] as UlongSaveFile;
         public static UlongSaveFile DisabledMServers => Saves["DisabledMServers"] as UlongSaveFile;
+#if PUBLIC
         public static UlongStringSaveFile Suggestions => Saves["Suggestions"] as UlongStringSaveFile;
+#endif
 
         private static ISaveFile OpenSaveFile(FileInfo file)
         {

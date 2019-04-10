@@ -7,8 +7,6 @@ namespace Sombra_Bot.Commands
 {
     public class BotBan : ModuleBase<SocketCommandContext>
     {
-        //public static FileInfo Banned => new FileInfo(Path.Combine(Save.save.FullName, "BannedUsers.obj"));
-
         [Command("AddBotBan"), Summary("Ban a user from this bot.")]
         [RequireOwner]
         public async Task AddBan(ulong ID)

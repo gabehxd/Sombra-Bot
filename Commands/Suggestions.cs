@@ -1,4 +1,5 @@
-﻿using Discord.Commands;
+﻿#if PUBLIC
+using Discord.Commands;
 using Sombra_Bot.Utils;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -66,3 +67,4 @@ namespace Sombra_Bot.Commands
         }
     }
 }
+#endif

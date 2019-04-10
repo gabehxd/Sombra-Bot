@@ -9,7 +9,7 @@ namespace Sombra_Bot.Commands
     public class Help : ModuleBase<SocketCommandContext>
     {
 
-        static private readonly Dictionary<string, string> commands = new Dictionary<string, string>
+        static private Dictionary<string, string> commands = new Dictionary<string, string>
         {
             { "Help", "DMs you the help menu, arguments are optional.\n args: <command>." },
             { "ListRoles",  "Lists all roles in the current server." },
@@ -25,13 +25,15 @@ namespace Sombra_Bot.Commands
             { "Ping", "Pings a IP address.\nargs: <IP>"},
             { "EnableMemes", "Re-enables random memes, requires the manage server permission. Enabled by default." },
             { "DisableMemes", "Disables random memes from being sent into the server, requires the manage server permission."},
-            { "Invite", "Gets an invite for Sombra Bot and Sombra Bot's discord server." },
-            { "Suggest", $"Suggest a feature for {Program.AppInfo.Owner.Mention} to add. Do not spam this command or you will be banned from using this bot :).\nargs: <suggestion>" }
+            { "Invite", "Gets an invite for Sombra Bot and Sombra Bot's discord server." }
         };
 
         [Command("Help"), Summary("Get help.")]
         public async Task Helpmsg(string command = null)
         {
+#if PUBLIC
+            commands.add("Suggest", $"Suggest a feature for {Program.AppInfo.Owner.Mention} to add. Do not spam this command or you will be banned from using this bot :).\nargs: <suggestion>")
+#endif
             //Can the help message be automated?
             string msg = "";
             EmbedBuilder builder = new EmbedBuilder();
