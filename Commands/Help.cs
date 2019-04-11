@@ -32,7 +32,7 @@ namespace Sombra_Bot.Commands
         public async Task Helpmsg(string command = null)
         {
 #if PUBLIC
-            commands.add("Suggest", $"Suggest a feature for {Program.AppInfo.Owner.Mention} to add. Do not spam this command or you will be banned from using this bot :).\nargs: <suggestion>")
+            commands.Add("Suggest", $"Suggest a feature for {Program.AppInfo.Owner.Mention} to add. Do not spam this command or you will be banned from using this bot :).\nargs: <suggestion>");
 #endif
             //Can the help message be automated?
             string msg = "";
