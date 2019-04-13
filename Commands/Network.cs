@@ -11,12 +11,6 @@ namespace Sombra_Bot.Commands
         [Command("Ping"), Summary("Pings an IP.")]
         public async Task Ping(string ip)
         {
-            if (ip.ToLower().ToLower().Contains("localhost")) 
-            {
-                await Error.Send(Context.Channel, Value: "IP not premitted!");
-                return;
-            }
-
             Ping pinger = new Ping();
             try
             {

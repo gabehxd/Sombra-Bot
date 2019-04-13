@@ -9,7 +9,7 @@ namespace Sombra_Bot.Commands
     public class Help : ModuleBase<SocketCommandContext>
     {
 
-        static private Dictionary<string, string> commands = new Dictionary<string, string>
+        private Dictionary<string, string> commands = new Dictionary<string, string>
         {
             { "Help", "DMs you the help menu, arguments are optional.\n args: <command>." },
             { "ListRoles",  "Lists all roles in the current server." },
@@ -35,7 +35,6 @@ namespace Sombra_Bot.Commands
             commands.Add("Suggest", $"Suggest a feature for {Program.AppInfo.Owner.Mention} to add. Do not spam this command or you will be banned from using this bot :).\nargs: <suggestion>");
 #endif
             //Can the help message be automated?
-            string msg = "";
             EmbedBuilder builder = new EmbedBuilder();
             builder.WithTitle("Help Menu");
 #if !DEBUG
@@ -48,7 +47,6 @@ namespace Sombra_Bot.Commands
 
             if (command == null)
             {
-                msg = "Here are my commands:";
 
                 foreach (KeyValuePair<string, string> keyValues in commands)
                 {
@@ -57,31 +55,20 @@ namespace Sombra_Bot.Commands
             }
             else
             {
-                bool Isfound = false;
                 foreach (KeyValuePair<string, string> keyValues in commands)
                 {
                     if (keyValues.Key.ToLower() == command.ToLower())
                     {
-                        Isfound = true;
                         builder.AddField(keyValues.Key, keyValues.Value);
-                        msg = $"Here is the `{keyValues.Key}` command:";
-                        break;
+                        await Context.Channel.SendMessageAsync($"Here is the `{keyValues.Key}` command:", embed: builder.Build());
+                        return;
                     }
                 }
-
-                if (Isfound)
-                {
-                    await Context.Channel.SendMessageAsync(msg, embed: builder.Build());
-                    return;
-                }
-                else
-                {
-                    await Error.Send(Context.Channel, Key: "That command does not exist");
-                    return;
-                }
+                await Error.Send(Context.Channel, Key: "That command does not exist");
+                return;
             }
             await Context.Channel.SendMessageAsync("The help menu has been sent to your DMs!");
-            await Context.User.SendMessageAsync(msg, embed: builder.Build());
+            await Context.User.SendMessageAsync("Here are my commands:", embed: builder.Build());
         }
     }
 }
