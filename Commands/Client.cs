@@ -39,16 +39,18 @@ namespace Sombra_Bot.Commands
         [RequireOwner]
         public async Task Clear()
         {
+            string size = Misc.ConvertToReadableSize(Program.roottemppath.GetSize());
+            await Context.Channel.SendMessageAsync("Clearing temporary directory!");
             try
             {
-                Program.roottemppath.Delete(true);
+                Program.roottemppath.DeleteContents();
             }
             catch
             {
-                await Error.Send(Context.Channel, Value: "Failed to delete temp folder.");
+                await Error.Send(Context.Channel, Value: "Failed to delete temporary directory.");
                 return;
             }
-            await Context.Channel.SendMessageAsync("Done!");
+            await Context.Channel.SendMessageAsync($"Done, cleared temporary directory of {size}");
         }
     }
 }
