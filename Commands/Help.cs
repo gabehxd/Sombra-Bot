@@ -18,7 +18,7 @@ namespace Sombra_Bot.Commands
             { "Hack", "Kicks or bans a user, requires ban/kick permissions.\nargs: <level of hack, 1: kick, 2: ban> <user> <reason>." },
             { "Hacc", "Haccs a user >:3.\nargs: <user>"},
             { "GetRelease", "Gets a release from the specificed Github repository.\nargs: <repository owner> <repository name>." },
-            { "Roll", "Rolls a max of 100 die with a max of 100 sides\nargs: <die> <sides>." },
+            { "Roll", "Rolls a max of 100 die with a max of 100 sides.\nargs: <die> <sides>." },
             { "Flip", "Flips a coin."},
             { "Avatar", "Gets a user's Avatar.\nargs: <user>." },
             { "OWStats", "Gets Overwatch stats.\nargs: <username>." },
