@@ -51,7 +51,6 @@ namespace Sombra_Bot
 
             client.MessageReceived += MessageReceived;
             client.Ready += Client_Ready;
-            client.LoggedOut += Client_Logout;
             await Commands.AddModulesAsync(Assembly.GetEntryAssembly(), null);
             await client.LoginAsync(TokenType.Bot, token);
             await client.StartAsync();
@@ -181,10 +180,6 @@ namespace Sombra_Bot
 
             return false;
         }
-
-#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
-        private async Task Client_Logout() => Save.WriteAll();
-#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
 
         private static void OnTimedEvent(Object source, ElapsedEventArgs e)
         {

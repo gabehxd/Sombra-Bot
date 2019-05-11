@@ -13,7 +13,7 @@ namespace Sombra_Bot.Commands
         {
             await Context.Channel.SendMessageAsync("Logging out and shutting down.");
             await Context.Client.LogoutAsync();
-            await Task.Delay(12000);
+            Save.WriteAll();
             Environment.Exit(0);
         }
 
