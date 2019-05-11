@@ -2,8 +2,10 @@
 using Sombra_Bot.Utils;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
 using System;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace Sombra_Bot.Commands
 {
@@ -65,17 +67,65 @@ namespace Sombra_Bot.Commands
             await Context.Channel.SendMessageAsync("Saving Forced!");
         }
 
-        //STUBBED
-        //private FileInfo TempSaveImage => Program.roottemppath.GetFile("save.cfg");
-        //STUBBED
-        /* 
-        [Command("GetSave"), Summary("Gets a combined copy of the save files.")]
+        [Command("GetSave")]
         [RequireOwner]
-        public async Task GetSave()
+        public async Task GetSave(string savename)
         {
+            WriteAll();
+            if (save.GetSize() == 0)
+            {
+                await Error.Send(Context.Channel, Value: "Saves is empty!");
+                return;
+            }
             
+            if (savename == "*" || savename.ToLower() == "all")
+            {
+                MemoryStream stream = new MemoryStream();
+                ZipArchive zipfile = new ZipArchive(stream, ZipArchiveMode.Create);
+                
+                foreach (FileInfo savefile in save.GetFiles())
+                {
+                    if (savefile.Length != 0)
+                    {
+                        using (var entry = zipfile.CreateEntry(savefile.Name, CompressionLevel.Optimal).Open())
+                        {
+                            entry.Write(File.ReadAllBytes(savefile.FullName));
+                        }
+                    }
+                }
+                
+                stream.Position = 0;
+                await Context.Channel.SendFileAsync(stream, "Saves.zip");
+                stream.Close();
+                return;
+            }
+
+            foreach (FileInfo savefile in save.GetFiles())
+            {
+                if (Path.GetFileNameWithoutExtension(savefile.FullName).ToLower().Contains(savename.ToLower()))
+                {
+                    if (savefile.Length != 0)
+                    {
+                        if (savefile.Length <= 8000000)
+                        {
+                            await Context.Channel.SendFileAsync(savefile.FullName);
+                            return;
+                        }
+                        else
+                        {
+                            await Error.Send(Context.Channel, Value: "Save file is too large to send! (>8MB)");
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        await Error.Send(Context.Channel, Value: "Save is empty!");
+                        return;
+                    }
+                }
+            }
+            await Error.Send(Context.Channel, Value: "Save file not found!");
         }
-        */
 
         //STUBBED
         /* 
@@ -83,7 +133,7 @@ namespace Sombra_Bot.Commands
         [RequireOwner]
         public async Task LoadSave(bool ShouldClear = false)
         {
-           
+
         }
         */
     }
