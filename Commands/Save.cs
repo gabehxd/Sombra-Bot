@@ -77,27 +77,34 @@ namespace Sombra_Bot.Commands
                 await Error.Send(Context.Channel, Value: "Saves is empty!");
                 return;
             }
-            
+
             if (savename == "*" || savename.ToLower() == "all")
             {
-                MemoryStream stream = new MemoryStream();
-                ZipArchive zipfile = new ZipArchive(stream, ZipArchiveMode.Create);
-                
-                foreach (FileInfo savefile in save.GetFiles())
+                using (MemoryStream stream = new MemoryStream())
                 {
-                    if (savefile.Length != 0)
+                    ZipArchive zipfile = new ZipArchive(stream, ZipArchiveMode.Create);
+
+                    foreach (FileInfo savefile in save.GetFiles())
                     {
-                        using (var entry = zipfile.CreateEntry(savefile.Name, CompressionLevel.Optimal).Open())
+                        if (savefile.Length != 0)
                         {
-                            entry.Write(File.ReadAllBytes(savefile.FullName));
+                            using (var entry = zipfile.CreateEntry(savefile.Name, CompressionLevel.Optimal).Open())
+                            {
+                                entry.Write(File.ReadAllBytes(savefile.FullName));
+                            }
                         }
                     }
+
+                    if (stream.Length > 800000)
+                    {
+                        await Error.Send(Context.Channel, Value: "Zip is bigger than 8 MB!");
+                        return;
+                    }
+
+                    stream.Position = 0;
+                    await Context.Channel.SendFileAsync(stream, "Saves.zip");
+                    return;
                 }
-                
-                stream.Position = 0;
-                await Context.Channel.SendFileAsync(stream, "Saves.zip");
-                stream.Close();
-                return;
             }
 
             foreach (FileInfo savefile in save.GetFiles())
