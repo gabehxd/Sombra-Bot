@@ -1,6 +1,7 @@
 using System.Net.NetworkInformation;
 using System.Threading.Tasks;
 using Discord;
+using System;
 using Discord.Commands;
 using Sombra_Bot.Utils;
 
@@ -26,10 +27,15 @@ namespace Sombra_Bot.Commands
                     builder.AddField(s, $"RTT: {reply.RoundtripTime}ms");
                     await Context.Channel.SendMessageAsync(embed: builder.Build());
                 }
+                else
+                {
+                    await Error.Send(Context.Channel, Value: $"Ping failed!\n Status: {reply.Status.ToString()}");
+                    return;
+                }
             }
             catch
             {
-                await Error.Send(Context.Channel, Value: "Ping failed!");
+                await Error.Send(Context.Channel, Value: $"Ping failed!");
                 return;
             }
         }
