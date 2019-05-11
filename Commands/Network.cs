@@ -29,7 +29,7 @@ namespace Sombra_Bot.Commands
                 }
                 else
                 {
-                    await Error.Send(Context.Channel, Value: $"Ping failed!\n Status: {reply.Status.ToString()}");
+                    await Error.Send(Context.Channel, Value: $"Ping failed!\nStatus: {reply.Status.ToString()}");
                     return;
                 }
             }
