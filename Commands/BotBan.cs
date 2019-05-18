@@ -52,8 +52,27 @@ namespace Sombra_Bot.Commands
                 }
                 builder.WithColor(Color.Purple);
                 builder.WithTitle("Banned Users");
-                builder.WithDescription(s);
+
+                if (s.Length > 2000)
+                {
+                    string[] msgs = s.ConvertToDiscordSendable();
+                    builder.WithDescription(msgs[0]);
+                    await Context.Channel.SendMessageAsync(embed: builder.Build());
+
+                    for (int i = 1; i < msgs.Length; i++)
+                    {
+                        string msg = (string)msgs[i];
+
+                        EmbedBuilder exnt = new EmbedBuilder();
+                        exnt.WithColor(Color.Purple);
+                        if (i == msgs.Length - 1) builder.WithCurrentTimestamp();
+                        exnt.WithDescription(msg);
+                        await Context.Channel.SendMessageAsync(embed: exnt.Build());
+                    }
+                    return;
+                }
                 builder.WithCurrentTimestamp();
+                builder.WithDescription(s);
                 await Context.Channel.SendMessageAsync(embed: builder.Build());
                 return;
             }

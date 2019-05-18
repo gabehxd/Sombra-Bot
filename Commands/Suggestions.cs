@@ -35,13 +35,32 @@ namespace Sombra_Bot.Commands
                     desc += $"{i} - <@{pair.Key}>: {pair.Value}\n";
                     i++;
                 }
-
                 EmbedBuilder builder = new EmbedBuilder();
                 builder.WithTitle("Suggestions");
                 builder.WithColor(Color.Purple);
+
+                if (desc.Length > 2000)
+                {
+                    string[] msgs = desc.ConvertToDiscordSendable();
+                    builder.WithDescription(msgs[0]);
+                    await Context.Channel.SendMessageAsync(embed: builder.Build());
+                    
+                    for (int e = 1; e < msgs.Length; e++)
+                    {
+                        string msg = msgs[e];
+
+                        EmbedBuilder exnt = new EmbedBuilder();
+                        exnt.WithColor(Color.Purple);
+                        if (e == msgs.Length - 1) exnt.WithCurrentTimestamp();
+                        exnt.WithDescription(msg);
+                        await Context.Channel.SendMessageAsync(embed: exnt.Build());
+                    }
+                    return;
+                }
                 builder.WithDescription(desc);
                 builder.WithCurrentTimestamp();
                 await Context.Channel.SendMessageAsync(embed: builder.Build());
+
                 return;
             }
             await Error.Send(Context.Channel, Value: "No suggestions have been made.");
