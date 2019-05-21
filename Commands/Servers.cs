@@ -23,11 +23,12 @@ namespace Sombra_Bot.Commands
                     desc += "I am currently only in this server.";
                     break;
                 default:
-                    desc += $"```{Context.Client.Guilds.Count} total servers:\n```";
+                    desc += $"```{Context.Client.Guilds.Count} total servers:\n";
                     foreach (SocketGuild guild in Context.Client.Guilds)
                     {
                         desc += $"{guild.Name}\n";
                     }
+                    desc += "```";
                     break;
             }
 
