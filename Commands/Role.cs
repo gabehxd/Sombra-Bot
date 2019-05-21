@@ -15,11 +15,10 @@ namespace Sombra_Bot.Commands
         {
             if (!role.Members.Contains(user))
             {
-
                 await user.AddRoleAsync(role);
 
                 EmbedBuilder msg = new EmbedBuilder();
-                msg.WithColor(Color.Purple);
+                msg.WithColor(Color.Green);
                 msg.WithCurrentTimestamp();
                 msg.AddField("Success!", $"Gave role {role.Mention} to {user.Mention}.");
                 await Context.Channel.SendMessageAsync(embed: msg.Build());
@@ -40,7 +39,7 @@ namespace Sombra_Bot.Commands
                 await user.RemoveRoleAsync(role);
 
                 EmbedBuilder msg = new EmbedBuilder();
-                msg.WithColor(Color.Purple);
+                msg.WithColor(Color.Green);
                 msg.WithCurrentTimestamp();
                 msg.AddField("Success!", $"Removed role {role.Mention} from {user.Mention}.");
                 await Context.Channel.SendMessageAsync(embed: msg.Build());
