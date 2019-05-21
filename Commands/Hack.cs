@@ -36,7 +36,7 @@ namespace Sombra_Bot.Commands
                             await Error.Send(Context.Channel, Value: "User could not be kicked, not have enough permissions.");
                         }
                     }
-                    else await Error.Send(Context.Channel, Value: "User has insufficent permissions.");
+                    else await Error.Send(Context.Channel, Value: "User requires guild permission KickMembers.");
                     break;
 
                 case 2:
@@ -59,7 +59,7 @@ namespace Sombra_Bot.Commands
                             await Error.Send(Context.Channel, Value: "User could not be banned, not have enough permissions.");
                         }
                     }
-                    else await Error.Send(Context.Channel, Value: "User has insufficent permissions.");
+                    else await Error.Send(Context.Channel, Value: "User requires guild permission BanMembers.");
                     break;
 
                 default:
