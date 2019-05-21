@@ -9,7 +9,7 @@ namespace Sombra_Bot.Commands
     public class Help : ModuleBase<SocketCommandContext>
     {
 
-        private readonly Dictionary<string, string> commands = new Dictionary<string, string>
+        private static readonly Dictionary<string, string> commands = new Dictionary<string, string>
         {
             { "Help", "DMs you the help menu\n args: [command]." },
             { "ListRoles",  "Lists all roles in the current server." },
